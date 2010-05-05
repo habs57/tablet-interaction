@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace Tablection.Desktop
+namespace Tablection.MapBrowser
 {
     /// <summary>
     /// Interaction logic for App.xaml

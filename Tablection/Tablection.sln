@@ -1,12 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tablection", "Tablection\Tablection.csproj", "{A093AF5B-AC0F-4CD4-B59C-5D05208D6A6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tablection.Desktop", "Tablection\Tablection.Desktop.csproj", "{A093AF5B-AC0F-4CD4-B59C-5D05208D6A6D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F763178-C25C-4FA8-8DE2-4F2D1CA0A582}"
 	ProjectSection(SolutionItems) = preProject
 		ClassDiagram.vsd = ClassDiagram.vsd
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tablection.MapBrowser", "Tablection.MapBrowser\Tablection.MapBrowser.csproj", "{1514DBC8-E8DA-4812-8342-B4692B46D50C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tablection.Journal", "Tablection.Journal\Tablection.Journal.csproj", "{7CD491F6-1B62-4CD5-BBA2-B2B53DD5197A}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -22,6 +26,14 @@ Global
 		{A093AF5B-AC0F-4CD4-B59C-5D05208D6A6D}.Debug|x86.Build.0 = Debug|x86
 		{A093AF5B-AC0F-4CD4-B59C-5D05208D6A6D}.Release|x86.ActiveCfg = Release|x86
 		{A093AF5B-AC0F-4CD4-B59C-5D05208D6A6D}.Release|x86.Build.0 = Release|x86
+		{1514DBC8-E8DA-4812-8342-B4692B46D50C}.Debug|x86.ActiveCfg = Debug|x86
+		{1514DBC8-E8DA-4812-8342-B4692B46D50C}.Debug|x86.Build.0 = Debug|x86
+		{1514DBC8-E8DA-4812-8342-B4692B46D50C}.Release|x86.ActiveCfg = Release|x86
+		{1514DBC8-E8DA-4812-8342-B4692B46D50C}.Release|x86.Build.0 = Release|x86
+		{7CD491F6-1B62-4CD5-BBA2-B2B53DD5197A}.Debug|x86.ActiveCfg = Debug|x86
+		{7CD491F6-1B62-4CD5-BBA2-B2B53DD5197A}.Debug|x86.Build.0 = Debug|x86
+		{7CD491F6-1B62-4CD5-BBA2-B2B53DD5197A}.Release|x86.ActiveCfg = Release|x86
+		{7CD491F6-1B62-4CD5-BBA2-B2B53DD5197A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

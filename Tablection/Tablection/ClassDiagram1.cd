@@ -1,64 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Tablection.App" Collapsed="true">
+  <Class Name="Tablection.Desktop.App" Collapsed="true">
     <Position X="0.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tablection.MainWindow" Collapsed="true">
+  <Class Name="Tablection.Desktop.MainWindow" Collapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tablection.Properties.Resources" Collapsed="true">
+  <Class Name="Tablection.Desktop.Desktop.Properties.Resources" Collapsed="true">
     <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tablection.Properties.Settings" Collapsed="true">
+  <Class Name="Tablection.Desktop.Desktop.Properties.Settings" Collapsed="true">
     <Position X="5.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tablection.Icon">
+  <Class Name="Tablection.Desktop.Icon">
     <Position X="1.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Icon.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tablection.FolderIcon">
+  <Class Name="Tablection.Desktop.FolderIcon">
     <Position X="2.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Folder.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tablection.ApplicationIcon">
+  <Class Name="Tablection.Desktop.ApplicationIcon">
     <Position X="0.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ApplicationIcon.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tablection.FolderWindow">
+  <Class Name="Tablection.Desktop.FolderWindow">
     <Position X="5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>FolderWindow.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tablection.Desktop">
+  <Class Name="Tablection.Desktop.MainDesktop">
     <Position X="3.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Desktop.cs</FileName>
+      <FileName>MainDesktop.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Malgun Gothic" Size="9" />
