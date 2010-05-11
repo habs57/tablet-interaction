@@ -1,0 +1,9 @@
+﻿<Window x:Class="Tablection.Desktop.IconInfoBrowser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="IconInfoBrowser" Height="80" Width="30"
+        MinHeight="80" MinWidth="30" ResizeMode="CanResize">
+    <WrapPanel>
+        
+    </WrapPanel>
+</Window>

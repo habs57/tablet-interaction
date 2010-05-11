@@ -57,5 +57,18 @@ namespace Tablection
              */
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Desktop.ICon ic = new Desktop.ICon();
+            ic.SetParent(this);
+            ic.Background = Brushes.Black;
+            ic.Width = 100;
+            ic.Height = 100;
+            ic.SetValue(Canvas.LeftProperty, 30.0);
+            ic.SetValue(Canvas.TopProperty, 30.0);
+            mainCanvas.Children.Add(ic);
+
+        }
+
     }
 }
