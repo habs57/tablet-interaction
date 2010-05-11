@@ -1,0 +1,18 @@
+﻿<Window x:Class="Tablection.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:desktop="clr-namespace:Tablection.Desktop"
+    Title="Tablection" Height="768" Width="1024" Topmost="False">
+    <Window.Resources>
+        <ResourceDictionary Source="Themes/Generic.xaml"/>
+    </Window.Resources>
+    <Grid>
+        <ListBox x:Name="lstDebug" Background="Transparent" Height="150" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+        <Canvas>
+            <desktop:ICon Background="Black" Width="100" Height="100" Canvas.Left="30" Canvas.Top="30"/>
+            <desktop:ICon Background="Green" Width="100" Height="100" Canvas.Left="40" Canvas.Top="40"/>
+            <desktop:ICon Background="Yellow" Width="100" Height="100" Canvas.Left="50" Canvas.Top="50"/>
+            <desktop:ICon Background="OrangeRed" Width="100" Height="100" Canvas.Left="60" Canvas.Top="60"/>
+        </Canvas>
+    </Grid>    
+</Window>
