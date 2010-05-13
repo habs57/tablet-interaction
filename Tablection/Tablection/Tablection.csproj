@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="Desktop\AppIcon.cs" />
     <Compile Include="Desktop\FolderIcon.cs" />
+    <Compile Include="Desktop\IconBrowser.cs" />
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
       <SubType>Code</SubType>

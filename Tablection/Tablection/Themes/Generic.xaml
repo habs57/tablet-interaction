@@ -12,7 +12,10 @@
                 <ControlTemplate TargetType="{x:Type local:ICon}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">                       
+                            BorderThickness="{TemplateBinding BorderThickness}"> 
+                        <Border.ToolTip>                            
+                            <local:IconBrowser Width="100" Height="50"/>
+                        </Border.ToolTip>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -25,11 +28,14 @@
                 <ControlTemplate TargetType="{x:Type local:ICon}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderThickness="{TemplateBinding BorderThickness}">                        
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
     
+    <Style TargetType="{x:Type local:IconBrowser}">        
+        <Setter Property="Background" Value="Azure"/>        
+    </Style>
 </ResourceDictionary>
