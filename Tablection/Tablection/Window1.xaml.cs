@@ -26,13 +26,6 @@ namespace Tablection
 
         protected override void OnPreviewTouchMove(TouchEventArgs e)
         {
-
-            //Desktop.IconInfoBrowser win = new Desktop.IconInfoBrowser();
-            //win.Show();     // modeless
-            //if (win.ShowDialog() == true)       // model
-            //{
-            //}
-            
             TouchPointCollection collection = e.TouchDevice.GetIntermediateTouchPoints(this);
 
             if (lstDebug.Items.Count > 50)
@@ -45,28 +38,11 @@ namespace Tablection
                 lstDebug.Items.Insert(0, string.Format("pt {0} - Time: {1}  X:{2} Y{3}", item.TouchDevice.Id, e.Timestamp.ToString(), item.Position.X, item.Position.Y));
             }
 
-            base.OnPreviewTouchMove(e);
-            
-            /*
-            TouchPointCollection collection = e.TouchDevice.GetIntermediateTouchPoints(this);
-            
-            foreach (var item in collection)
-            {
-                //item.Po
-            }
-             */
+            base.OnPreviewTouchMove(e);         
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Desktop.ICon ic = new Desktop.ICon();
-            ic.SetParent(this);
-            ic.Background = Brushes.Black;
-            ic.Width = 100;
-            ic.Height = 100;
-            ic.SetValue(Canvas.LeftProperty, 30.0);
-            ic.SetValue(Canvas.TopProperty, 30.0);
-            mainCanvas.Children.Add(ic);
+        {          
 
         }
 

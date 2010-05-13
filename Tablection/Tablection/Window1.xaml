@@ -9,6 +9,8 @@
     <Grid>
         <ListBox x:Name="lstDebug" Background="Transparent" Height="150" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
         <Canvas x:Name="mainCanvas">
+            <desktop:AppIcon Canvas.Top="100" Background="{StaticResource imgJournal}" Canvas.Left="100" Width="200" Height="200"/>            
+            <desktop:FolderIcon Canvas.Top="300" Canvas.Left="300" Background="{StaticResource imgFolder}" Width="100" Height="100"/>
         </Canvas>
     </Grid>    
 </Window>

@@ -44,10 +44,8 @@ namespace Tablection.Desktop
     ///     <MyNamespace:ICon/>
     ///
     /// </summary>
-    public class ICon : ToggleButton
+    public abstract class ICon : ToggleButton
     {
-        Window _parent;
-
         static ICon()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ICon), new FrameworkPropertyMetadata(typeof(ICon)));
@@ -59,14 +57,7 @@ namespace Tablection.Desktop
         /// Saved old point for support drag
         /// </summary>
         private Point _prevPoint;
-
-        private Brush _prevBackground; 
-
-        /// <summary>
-        /// Icon Information Browser.
-        /// 아이콘 하나를 누른 상태에서 그것을 중심으로 드래그 하면 이 오브젝트가 생성되어 아이콘의 정보를 보여준다.
-        /// </summary>
-        IconInfoBrowser iib;
+        
 
 #endregion //Field
         
@@ -90,16 +81,12 @@ namespace Tablection.Desktop
             return newPoint;
         }
 
-#endregion //Private Helpers
-
-#region Public Methods
-
-        public void BeginDrag(Point currentPoint)
+        private void BeginDrag(Point currentPoint)
         {
             this._prevPoint = currentPoint;
         }
 
-        public void DoDrag(Point currentPoint)
+        private void DoDrag(Point currentPoint)
         {
             double deltaX = currentPoint.X - this._prevPoint.X;
             double deltaY = currentPoint.Y - this._prevPoint.Y;
@@ -118,7 +105,7 @@ namespace Tablection.Desktop
             _prevPoint = currentPoint;
         }
 
-        public void BringToFront()
+        private void BringToFront()
         {
             Canvas parent = (this.Parent as Canvas);
 
@@ -127,14 +114,13 @@ namespace Tablection.Desktop
             parent.Children.Insert(totalICons - 1, this);
         }
 
-        /// <summary>
-        /// 소속된 윈도우를 지정한다.
-        /// </summary>
-        /// <param name="ui">부모 윈도우</param>
-        public void SetParent(Window ui)
-        {
-            _parent = ui;
-        }
+#endregion //Private Helpers
+
+#region Public Methods
+
+        public abstract void Open();
+
+        public abstract void Close();
 
 #endregion //Public Methods
 
@@ -142,7 +128,6 @@ namespace Tablection.Desktop
 
         protected override void OnTouchUp(TouchEventArgs e)
         {
-            this.Background = _prevBackground;
             base.OnTouchUp(e);
         }
 
@@ -151,12 +136,6 @@ namespace Tablection.Desktop
             this.DoDrag(e.GetTouchPoint(Application.Current.MainWindow).Position);
 
             //System.Diagnostics.Debug.WriteLine(string.Format("IsPressed {0}, IsChecked {1}, IsMouseOver {2}, IsStylusOver {3}", this.IsPressed, this.IsChecked, this.IsMouseOver, this.IsStylusOver));
-
-            if (this.Background !=  Brushes.HotPink)
-            {
-                this._prevBackground = this.Background;
-                this.Background = Brushes.HotPink;
-            }
 
             e.Handled = true;
             base.OnTouchMove(e);           
@@ -178,18 +157,7 @@ namespace Tablection.Desktop
 #region Mouse Handlers
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
-        {
-            if (_parent == null)
-                throw new Exception("부모가 없어요! SetParent() 사용!");
-
-            Point pt = new Point(_parent.Left, _parent.Top);
-
-            ////// Show window
-            //iib = new IconInfoBrowser();
-            //iib.Top = pt.Y + Canvas.GetTop(this);
-            //iib.Left = pt.X + Canvas.GetLeft(this);
-            //iib.Show();
-
+        {        
             //// Begin Drag and put this top
             this.BeginDrag(e.GetPosition(Application.Current.MainWindow));
             this.BringToFront();
@@ -209,9 +177,6 @@ namespace Tablection.Desktop
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            // Dispose icon information browser.
-            //iib.Close();
-         
             base.OnMouseUp(e);
         }
         
