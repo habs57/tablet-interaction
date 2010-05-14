@@ -1,0 +1,18 @@
+﻿<Window x:Class="Tablection.Desktop.IconInfoBrowser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="IconInfoBrowser" Height="251" Width="297"
+        IsManipulationEnabled="True"        
+        MinHeight="80" MinWidth="30" ResizeMode="CanResize" WindowStyle="None" Topmost="True" AllowsTransparency="False" Background="Green">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="WindowFrameBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+            <GradientStop Color="CadetBlue" Offset="0.4"/>
+            <GradientStop Color="Gray" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Border Background="#50FFFFFF" CornerRadius="5" BorderBrush="{StaticResource WindowFrameBrush}" BorderThickness="2,2,2,2">
+        <Grid>
+            <TextBlock Text="Touch Window"/>
+        </Grid>
+    </Border>
+</Window>
