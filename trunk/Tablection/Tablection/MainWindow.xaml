@@ -2,10 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:TablectionSketch"        
-        Title="TablectionSketch" Height="768" Width="1024">   
-    <DockPanel>
-        <local:ToolPanel Width="150" DockPanel.Dock="Left"/>
-        <local:SlidePreivewPanel Height="150" x:Name="PreivewPanel" DockPanel.Dock="Bottom" />
-        <local:SlideMainPanel x:Name="mainPanel"/>        
-    </DockPanel>
+        Title="TablectionSketch" Height="768" Width="1024">
+    <Grid>
+        <DockPanel>
+            <local:ToolPanel Width="150" DockPanel.Dock="Left"/>
+            <local:SlidePreivewPanel Height="150" x:Name="PreivewPanel" DockPanel.Dock="Bottom" />
+            <local:SlideMainPanel x:Name="mainPanel"/>
+
+        </DockPanel>
+        <!--<Frame Source="http://www.naver.com" Opacity="0.3"/>-->
+    </Grid>
+    
 </Window>

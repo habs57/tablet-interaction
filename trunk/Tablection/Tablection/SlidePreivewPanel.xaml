@@ -24,9 +24,9 @@
                             Background="White"
                             Margin="10"
                             >
-                            <Border.Effect>
+                            <!--<Border.Effect>
                                 <DropShadowEffect Color="Gray" BlurRadius="10" ShadowDepth="1"/>
-                            </Border.Effect>
+                            </Border.Effect>-->
                             <Image Width="130" Stretch="Uniform" Source="{Binding Image}"/>                                
                         </Border>
                     </DataTemplate>
