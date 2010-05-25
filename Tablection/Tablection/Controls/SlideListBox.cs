@@ -18,7 +18,21 @@ namespace TablectionSketch
     {
         static SlideListBox()
         {
-            //DefaultStyleKeyProperty.OverrideMetadata(typeof(SlideListBox), new FrameworkPropertyMetadata(typeof(SlideListBox)));
+            //DefaultStyleKeyProperty.OverrideMetadata(typeof(SlideListBox), new FrameworkPropertyMetadata(typeof(SlideListBox)));            
+        }
+
+        public SlideListBox()
+        {
+            this.SetValue(KeyboardNavigation.DirectionalNavigationProperty, KeyboardNavigationMode.Cycle);
+            this.SetValue(ScrollViewer.PanningDecelerationProperty, 0.5);
+            this.SetValue(ScrollViewer.PanningModeProperty, PanningMode.HorizontalOnly);
+            this.SetValue(ScrollViewer.CanContentScrollProperty, false);
+            //this.AddHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler(ScrollChangedHandler));
+        }
+
+        void ScrollChangedHandler(object sender, ScrollChangedEventArgs args)
+        {
+            System.Diagnostics.Debug.WriteLine(string.Format("{0}, {1}, {2}, {3}", this.ActualHeight, args.ExtentHeight, args.ViewportHeight, args.VerticalOffset));
         }
     }
 }

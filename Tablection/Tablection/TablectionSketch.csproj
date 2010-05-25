@@ -55,20 +55,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\LoopPanel\BeginDragEventArgs.cs" />
+    <Compile Include="Controls\LoopPanel\DoubleHelper.cs" />
+    <Compile Include="Controls\LoopPanel\LoopingListBox.cs" />
+    <Compile Include="Controls\LoopPanel\LoopPanel.cs" />
+    <Compile Include="Controls\LoopPanel\RoutedEventHelper.cs" />
     <Compile Include="Controls\MultiTouchInkCanvas.cs" />
+    <Compile Include="Converter\ColorToColorToolConverter.cs" />
+    <Compile Include="Converter\DoubleToStrokeToolConverter.cs" />
+    <Compile Include="Tool\ColorTool.cs" />
+    <Compile Include="Tool\BasicTool.cs" />
+    <Compile Include="Tool\StrokeTool.cs" />
+    <Compile Include="Tool\ToolBase.cs" />
+    <Compile Include="Tool\ToolCollection.cs" />
     <Compile Include="InkCanvasSettings.cs" />
-    <Compile Include="Data\Slide.cs" />
+    <Compile Include="Slide\Slide.cs" />
     <Compile Include="Controls\SlideListBox.cs" />
-    <Compile Include="Data\SlideRepository.cs" />
-    <Compile Include="SlideMainPanel.xaml.cs">
-      <DependentUpon>SlideMainPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SlidePreivewPanel.xaml.cs">
-      <DependentUpon>SlidePreivewPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ToolPanel.xaml.cs">
-      <DependentUpon>ToolPanel.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Slide\SlideCollcection.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -81,21 +84,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SlideMainPanel.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Resource Include="Themes\Generic.xaml">
+    <Page Include="Common.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Resource>
-    <Page Include="SlidePreivewPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ToolPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -124,18 +119,16 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Slides\Chrysanthemum.jpg" />
-    <Resource Include="Slides\Desert.jpg" />
-    <Resource Include="Slides\Hydrangeas.jpg" />
-    <Resource Include="Slides\Jellyfish.jpg" />
-    <Resource Include="Slides\Koala.jpg" />
-    <Resource Include="Slides\Lighthouse.jpg" />
-    <Resource Include="Slides\Penguins.jpg" />
-    <Resource Include="Slides\Tulips.jpg" />
+    <Resource Include="Images\Chrysanthemum.jpg" />
+    <Resource Include="Images\Desert.jpg" />
+    <Resource Include="Images\Hydrangeas.jpg" />
+    <Resource Include="Images\Jellyfish.jpg" />
+    <Resource Include="Images\Koala.jpg" />
+    <Resource Include="Images\Lighthouse.jpg" />
+    <Resource Include="Images\Penguins.jpg" />
+    <Resource Include="Images\Tulips.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converter\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

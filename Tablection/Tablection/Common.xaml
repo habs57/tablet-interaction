@@ -1,0 +1,183 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:TablectionSketch"   
+    xmlns:slide="clr-namespace:TablectionSketch.Slide"
+    xmlns:tool="clr-namespace:TablectionSketch.Tool"
+    xmlns:control="clr-namespace:TablectionSketch.Controls"
+    xmlns:dw="clr-namespace:DrWPF.Windows.Controls">
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <DataTemplate x:Key="ToolDataTemplate" DataType="{x:Type tool:BasicTool}">
+        <StackPanel Background="Transparent"                    
+                    Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <Style x:Key="ToolContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="dw:LoopingListBox.IsDragHandle" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Margin" Value="5,2" />
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid x:Name="ToolButtonBackground" 
+                                  Background="#FF8F8F8F"
+                                  TextBlock.Foreground="White">
+                        <ContentPresenter 
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" x:Name="ContentHost"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Selector.IsSelected" Value="True">
+                            <Setter TargetName="ToolButtonBackground" Property="TextBlock.Foreground" Value="Black"/>
+                            <Setter TargetName="ToolButtonBackground" Property="Background" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <DataTemplate x:Key="ColorToolDataTemplate" DataType="{x:Type tool:ColorTool}">
+        <Border Width="120"
+                Height="50"
+                Background="{Binding Color}">
+            <TextBlock HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Text="{Binding Name}"/>
+        </Border>
+    </DataTemplate>
+
+    <Style x:Key="ColorToolContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="dw:LoopingListBox.IsDragHandle" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="ToolButtonBackground"                                       
+                                    TextBlock.Foreground="Aqua"                                   
+                                    >
+                        <ContentPresenter x:Name="ContentHost"                                                                                                        
+                                                  Margin="2"
+                                                  VerticalAlignment="Stretch"
+                                                  HorizontalAlignment="Stretch"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Selector.IsSelected" Value="True">
+                            <Setter TargetName="ToolButtonBackground" Property="Background" Value="#FF8F8F8F"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <DataTemplate x:Key="StrokeToolDataTemplate" DataType="{x:Type tool:StrokeTool}">
+        <Grid Width="120"
+              Height="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Ellipse Grid.Column="0"
+                     Fill="Black"
+                     Width="{Binding Width}" 
+                     Height="{Binding Height}"/>
+            <TextBlock Grid.Column="1"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Text="{Binding Name}"/>
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="StokeToolContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="dw:LoopingListBox.IsDragHandle" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="ToolButtonBackground"                                       
+                                    TextBlock.Foreground="Aqua"                                   
+                                    >
+                        <ContentPresenter x:Name="ContentHost"                                                                                                        
+                                                  Margin="2"
+                                                  VerticalAlignment="Stretch"
+                                                  HorizontalAlignment="Stretch"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Selector.IsSelected" Value="True">
+                            <Setter TargetName="ToolButtonBackground" Property="Background" Value="Magenta"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <DataTemplate x:Key="SlideDataTemplate" DataType="{x:Type slide:Slide}">
+        <StackPanel Orientation="Vertical" Margin="3" Background="Transparent">
+            <Image Width="120" Height="95" HorizontalAlignment="Center">
+                <Image.Source>
+                    <BitmapImage DecodePixelWidth="100" DecodePixelHeight="100" UriSource="{Binding Image}"/>
+                </Image.Source>
+            </Image>
+            <TextBlock Foreground="White" FontWeight="Bold" Text="{Binding Title}" TextAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <Style x:Key="SlideContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Height" Value="120"/>
+        <Setter Property="Margin" Value="5,1,5,1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid>
+                        <ContentPresenter x:Name="ContentHost"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Selector.IsSelected" Value="True">
+                            <Setter TargetName="ContentHost" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="20" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SlideListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+</ResourceDictionary>

@@ -1,16 +1,133 @@
 ﻿<Window x:Class="TablectionSketch.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:TablectionSketch"        
+        xmlns:local="clr-namespace:TablectionSketch"   
+        xmlns:slide="clr-namespace:TablectionSketch.Slide"
+        xmlns:tool="clr-namespace:TablectionSketch.Tool"
+        xmlns:control="clr-namespace:TablectionSketch.Controls"
+        xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
+        xmlns:conv="clr-namespace:TablectionSketch.Converter"
         Title="TablectionSketch" Height="768" Width="1024">
-    <Grid>
-        <DockPanel>
-            <local:ToolPanel Width="150" DockPanel.Dock="Left"/>
-            <local:SlidePreivewPanel Height="150" x:Name="PreivewPanel" DockPanel.Dock="Bottom" />
-            <local:SlideMainPanel x:Name="mainPanel"/>
+    
+    <Window.Resources>
+        <ResourceDictionary>
 
-        </DockPanel>
-        <!--<Frame Source="http://www.naver.com" Opacity="0.3"/>-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Common.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <tool:ToolCollection x:Key="Tools">
+                <tool:BasicTool Name="None" Mode="None"/>
+                <tool:BasicTool Name="Ink" Mode="Ink"/>
+                <tool:BasicTool Name="Select" Mode="Select"/>
+                <tool:BasicTool Name="Eraser" Mode="EraseByPoint"/>
+            </tool:ToolCollection>
+
+            <tool:ToolCollection x:Key="Colors">
+                <tool:ColorTool Name="Black" Color="Black"/>
+                <tool:ColorTool Name="White" Color="White"/>
+                <tool:ColorTool Name="Red" Color="Red"/>
+                <tool:ColorTool Name="Green" Color="Green"/>
+                <tool:ColorTool Name="Blue" Color="Blue"/>
+            </tool:ToolCollection>
+
+            <tool:ToolCollection x:Key="Strokes">
+                <tool:StrokeTool Name="5.0 pt" Width="5" Height="5"/>
+                <tool:StrokeTool Name="10.0 pt" Width="10" Height="10"/>
+                <tool:StrokeTool Name="20.0 pt" Width="20" Height="20"/>
+                <tool:StrokeTool Name="30.0 pt" Width="30" Height="30"/>
+                <tool:StrokeTool Name="40.0 pt" Width="40" Height="40"/>
+            </tool:ToolCollection>
+
+            <slide:SlideCollcection x:Key="Slides">
+                <slide:Slide Title="Desert" Image="Images/Desert.jpg"/>
+                <slide:Slide Title="Koala" Image="Images/Koala.jpg"/>
+                <slide:Slide Title="Lighthouse" Image="Images/Lighthouse.jpg"/>
+                <slide:Slide Title="Penguins" Image="Images/Penguins.jpg"/>
+            </slide:SlideCollcection>
+
+            <DrawingAttributes x:Key="DrawingSettings"/>           
+            
+            <conv:ColorToColorToolConverter x:Key="ColorToolConverter"/>
+            
+        </ResourceDictionary>                
+    
+    </Window.Resources>
+
+    
+
+    <Grid Background="#FF6F6F6F">
+        
+        <DockPanel>           
+            
+            <ListBox x:Name="SlideList" 
+                     SelectedIndex="0"
+                     DockPanel.Dock="Bottom" Height="150" 
+                     ScrollViewer.CanContentScroll="False"
+                     ScrollViewer.PanningMode="HorizontalOnly"
+                     ScrollViewer.PanningDeceleration="0.5"
+                     ItemsSource="{Binding Source={StaticResource Slides}}"
+                     ItemContainerStyle="{StaticResource SlideContainerStyle}"
+                     ItemTemplate="{StaticResource SlideDataTemplate}"
+                     Style="{StaticResource SlideListBoxStyle}"/>
+
+            <StackPanel DockPanel.Dock="Left"
+                        TextBlock.Foreground="Black"                        
+                        VerticalAlignment="Center"
+                        >
+                <TextBlock Margin="8" Text="Tool"/>
+                <dw:LoopingListBox x:Name="llbTools"                                                                        
+                                   Height="120"
+                                   Margin="0,0,0,15"
+                                   BorderThickness="0"
+                                   Background="Transparent"
+                                   ItemTemplate="{StaticResource ToolDataTemplate}"
+                                   ItemsSource="{Binding Source={StaticResource Tools}}"
+                                   ItemContainerStyle="{StaticResource ToolContainerStyle}"             
+                                   Orientation="Vertical"/>
+
+                <TextBlock Margin="8" Text="Color"/>
+                <dw:LoopingListBox x:Name="llbColors"
+                                   Height="120"
+                                   Margin="0,0,0,15"
+                                   BorderThickness="0"
+                                   Background="Transparent"  
+                                   SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
+                                   ItemTemplate="{StaticResource ColorToolDataTemplate}"
+                                   ItemsSource="{Binding Source={StaticResource Colors}}"
+                                   ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
+                                   Orientation="Vertical"/>
+
+                <TextBlock Margin="8" Text="Storke"/>
+                <dw:LoopingListBox x:Name="llbStroke"
+                                   Height="120"
+                                   BorderThickness="0"
+                                   Background="Transparent"                                   
+                                   ItemTemplate="{StaticResource StrokeToolDataTemplate}"
+                                   ItemsSource="{Binding Source={StaticResource Strokes}}"
+                                   ItemContainerStyle="{StaticResource ToolContainerStyle}"             
+                                   Orientation="Vertical"/>
+
+            </StackPanel>
+            
+            
+            <Grid Margin="15">
+                <Rectangle Fill="White"/>
+                <InkCanvas x:Name="DrawingCanvas"    
+                           DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
+                           EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
+                           Margin="0,5,0,5">
+                    <InkCanvas.Background>
+                        <ImageBrush                             
+                            Opacity="0.8" 
+                            Stretch="Uniform" 
+                            ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
+                    </InkCanvas.Background>
+                </InkCanvas>
+            </Grid>
+            
+        </DockPanel>      
+        <Canvas></Canvas>        
     </Grid>
     
 </Window>
