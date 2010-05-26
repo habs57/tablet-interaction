@@ -13,9 +13,11 @@
         <ResourceDictionary>
 
             <ResourceDictionary.MergedDictionaries>
+                <!-- 컨트롤들의 스타일을 지정해주는 외부 리소스 정의 파일 -->
                 <ResourceDictionary Source="Common.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <!-- 툴 목록, 더 많은 툴을 넣거나 뺄수 있다. -->
             <tool:ToolCollection x:Key="Tools">
                 <tool:BasicTool Name="None" Mode="None"/>
                 <tool:BasicTool Name="Ink" Mode="Ink"/>
@@ -23,6 +25,7 @@
                 <tool:BasicTool Name="Eraser" Mode="EraseByPoint"/>
             </tool:ToolCollection>
 
+            <!-- 색 목록, 더 많은 색을 넣거나 뺄수 있다. -->
             <tool:ToolCollection x:Key="Colors">
                 <tool:ColorTool Name="Black" Color="Black"/>
                 <tool:ColorTool Name="White" Color="White"/>
@@ -31,6 +34,7 @@
                 <tool:ColorTool Name="Blue" Color="Blue"/>
             </tool:ToolCollection>
 
+            <!-- 굵기 목록, 더 많은 굵기를 넣거나 뺄수 있다. -->
             <tool:ToolCollection x:Key="Strokes">
                 <tool:StrokeTool Name="5.0 pt" Width="5" Height="5"/>
                 <tool:StrokeTool Name="10.0 pt" Width="10" Height="10"/>
@@ -39,6 +43,7 @@
                 <tool:StrokeTool Name="40.0 pt" Width="40" Height="40"/>
             </tool:ToolCollection>
 
+            <!-- 슬라이드 목록, 더 많은 슬라이드들을 넣거나 뺄수 있다. -->
             <slide:SlideCollcection x:Key="Slides">
                 <slide:Slide Title="Desert" Image="Images/Desert.jpg"/>
                 <slide:Slide Title="Koala" Image="Images/Koala.jpg"/>
@@ -46,8 +51,10 @@
                 <slide:Slide Title="Penguins" Image="Images/Penguins.jpg"/>
             </slide:SlideCollcection>
 
-            <DrawingAttributes x:Key="DrawingSettings"/>           
-            
+            <!-- 드로잉 캔버스에서 사용하는 기본설정 -->
+            <DrawingAttributes x:Key="DrawingSettings"/>
+
+            <!-- 컨버터, 바인딩에서 값을 한곳에서 다른 형태로 바꾸는데 사용된다. -->
             <conv:ColorToColorToolConverter x:Key="ColorToolConverter"/>
             <conv:DoubleToStrokeToolConverter x:Key="StrokeToolConverter"/>
             
@@ -57,8 +64,9 @@
 
     <Grid Background="#FF6F6F6F">
         
-        <DockPanel>           
-            
+        <DockPanel>
+
+            <!-- 슬라이드 목록 -->
             <ListBox x:Name="SlideList" 
                      SelectedIndex="0"
                      DockPanel.Dock="Bottom" Height="150" 
@@ -70,10 +78,13 @@
                      ItemTemplate="{StaticResource SlideDataTemplate}"
                      Style="{StaticResource SlideListBoxStyle}"/>
 
+            <!-- 툴패널 -->
             <StackPanel DockPanel.Dock="Left"
                         TextBlock.Foreground="Black"                        
                         VerticalAlignment="Center"
                         >
+
+                <!-- 툴 목록 UI -->
                 <TextBlock Margin="8" Text="Tool"/>
                 <dw:LoopingListBox x:Name="llbTools"                                                                        
                                    Height="120"
@@ -85,6 +96,7 @@
                                    ItemContainerStyle="{StaticResource ToolContainerStyle}"             
                                    Orientation="Vertical"/>
 
+                <!-- 색 목록 UI -->
                 <TextBlock Margin="8" Text="Color"/>
                 <dw:LoopingListBox x:Name="llbColors"
                                    Height="120"
@@ -96,7 +108,8 @@
                                    ItemsSource="{Binding Source={StaticResource Colors}}"
                                    ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
                                    Orientation="Vertical"/>
-                
+
+                <!-- 굵기 목록 UI -->
                 <TextBlock Margin="8" Text="Storke"/>
                 <dw:LoopingListBox x:Name="llbStroke"
                                    Height="120"
@@ -115,8 +128,8 @@
                 </dw:LoopingListBox>
 
             </StackPanel>
-            
-            
+
+            <!-- 메인 그림패널 -->
             <Grid Margin="15">
                 <Rectangle Fill="White"/>
                 <InkCanvas x:Name="DrawingCanvas"    
