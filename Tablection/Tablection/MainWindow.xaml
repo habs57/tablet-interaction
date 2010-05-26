@@ -49,12 +49,11 @@
             <DrawingAttributes x:Key="DrawingSettings"/>           
             
             <conv:ColorToColorToolConverter x:Key="ColorToolConverter"/>
+            <conv:DoubleToStrokeToolConverter x:Key="StrokeToolConverter"/>
             
         </ResourceDictionary>                
     
     </Window.Resources>
-
-    
 
     <Grid Background="#FF6F6F6F">
         
@@ -97,7 +96,7 @@
                                    ItemsSource="{Binding Source={StaticResource Colors}}"
                                    ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
                                    Orientation="Vertical"/>
-
+                
                 <TextBlock Margin="8" Text="Storke"/>
                 <dw:LoopingListBox x:Name="llbStroke"
                                    Height="120"
@@ -106,7 +105,14 @@
                                    ItemTemplate="{StaticResource StrokeToolDataTemplate}"
                                    ItemsSource="{Binding Source={StaticResource Strokes}}"
                                    ItemContainerStyle="{StaticResource ToolContainerStyle}"             
-                                   Orientation="Vertical"/>
+                                   Orientation="Vertical">
+                    <dw:LoopingListBox.SelectedItem>
+                        <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
+                            <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
+                            <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
+                        </MultiBinding>
+                    </dw:LoopingListBox.SelectedItem>
+                </dw:LoopingListBox>
 
             </StackPanel>
             

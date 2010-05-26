@@ -10,52 +10,38 @@ using TablectionSketch.Tool;
 
 namespace TablectionSketch.Converter
 {
-    [ValueConversion(typeof(double), typeof(StrokeTool))]
-    public class DoubleToStrokeToolConverter : IValueConverter
+    [ValueConversion(typeof(double[]), typeof(StrokeTool))]
+    public class DoubleToStrokeToolConverter : IMultiValueConverter
     {
-        #region IValueConverter Members
+        #region IMultiValueConverter Members
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            double v = (double)value;
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {            
             string option = parameter as string;
             if (option != null)
             {
-                if (option.Equals("Width") == true)
-                {
-                    return new StrokeTool() { Width = v, Name = v.ToString() };
-                }
-                else if (option.Equals("Height") == true)
-                {
-                    return new StrokeTool() { Width = v, Name = v.ToString() };
-                }
+                double width = (double)values[0];
+                double height = (double)values[1];
+
+                return new StrokeTool() { Width = (double)width, Height = (double)height, Name = string.Format("{0} pt", width.ToString()) };                      
             }
-           
-            return new StrokeTool() { Width = v, Height = v, Name = v.ToString() };            
+            else
+            {
+                return new StrokeTool() { Width = 1, Height = 1, Name = "1.0 pt" };      
+            }            
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             StrokeTool tool = value as StrokeTool;
             if (tool != null)
             {
-                string option = parameter as string;
-                if (option != null)
-                {
-                    if (option.Equals("Width") == true)
-                    {
-                        return tool.Width;
-                    }
-                    else if (option.Equals("Height") == true)
-                    {
-                        return tool.Height;
-                    }                    
-                }
-
-                return Math.Max(tool.Width, tool.Height);
+                return new object[] { tool.Width, tool.Height };
             }
-
-            return 1;
+            else
+            {
+                return new object[] { 0, 0 };
+            }            
         }
 
         #endregion
