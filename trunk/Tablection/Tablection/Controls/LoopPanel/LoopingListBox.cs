@@ -86,6 +86,8 @@ namespace DrWPF.Windows.Controls
             SetIsDragging(uie, true);
             SetDragOrigin(uie, e.GetPosition(uie));
             uie.CaptureMouse();
+
+            e.Handled = true;
         }
 
         private static void OnDragHandleLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -97,6 +99,8 @@ namespace DrWPF.Windows.Controls
             {
                 uie.ReleaseMouseCapture();
             }
+
+            e.Handled = true;
         }
 
         private static void OnDragHandleMouseLeave(object sender, MouseEventArgs e)
@@ -108,6 +112,8 @@ namespace DrWPF.Windows.Controls
             {
                 uie.ReleaseMouseCapture();
             }
+
+            e.Handled = true;
         }
 
         private static void OnDragHandleMouseMove(object sender, MouseEventArgs e)
@@ -124,6 +130,8 @@ namespace DrWPF.Windows.Controls
                 }
                 RaiseBeginDragEvent(uie, e.Device, dragOrigin, e.GetPosition(uie));
             }
+
+            e.Handled = true;
         }
 
         private static void OnBeginDrag(object sender, BeginDragEventArgs e)
@@ -140,6 +148,8 @@ namespace DrWPF.Windows.Controls
                 loopingListBox.BeginDragOperation(e.Device, origin);
                 loopingListBox.UpdateDragPosition(current);
             }
+
+            e.Handled = true;
         }
 
         #endregion

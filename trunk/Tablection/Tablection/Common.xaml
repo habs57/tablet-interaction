@@ -19,10 +19,10 @@
     <Style x:Key="ToolContainerStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="dw:LoopingListBox.IsDragHandle" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Width" Value="120"/>
+        <Setter Property="Width" Value="128"/>
         <Setter Property="Height" Value="50"/>
-        <Setter Property="Margin" Value="5,2" />
-        <Setter Property="Padding" Value="3" />
+        <!--<Setter Property="Margin" Value="0" />-->
+        <!--<Setter Property="Padding" Value="3" />-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -31,12 +31,13 @@
                                   TextBlock.Foreground="White">
                         <ContentPresenter 
                                     VerticalAlignment="Center"
-                                    HorizontalAlignment="Center" x:Name="ContentHost"/>
+                                    HorizontalAlignment="Center" 
+                                    x:Name="ContentHost"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Selector.IsSelected" Value="True">
                             <Setter TargetName="ToolButtonBackground" Property="TextBlock.Foreground" Value="Black"/>
-                            <Setter TargetName="ToolButtonBackground" Property="Background" Value="Gray"/>
+                            <Setter TargetName="ToolButtonBackground" Property="Background" Value="#FF805050"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -46,34 +47,36 @@
 
     <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
 
-    <DataTemplate x:Key="ColorToolDataTemplate" DataType="{x:Type tool:ColorTool}">
-        <Border Width="120"
-                Height="50"
-                Background="{Binding Color}">
-            <TextBlock HorizontalAlignment="Center" 
-                       VerticalAlignment="Center" 
-                       Text="{Binding Name}"/>
-        </Border>
+    <DataTemplate x:Key="ColorToolDataTemplate" DataType="{x:Type tool:ColorTool}">        
+        <TextBlock Text="{Binding Name}"
+                    Background="{Binding Color}"                                                          
+                    Width="130"
+                    Height="50"
+                    Padding="15"                       
+                    />        
     </DataTemplate>
 
     <Style x:Key="ColorToolContainerStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="dw:LoopingListBox.IsDragHandle" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Padding" Value="1" />
+        <Setter Property="Width" Value="128"/>
+        <Setter Property="Height" Value="50"/>
+        <!--<Setter Property="Padding" Value="1" />-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Border x:Name="ToolButtonBackground"                                       
-                                    TextBlock.Foreground="Aqua"                                   
-                                    >
-                        <ContentPresenter x:Name="ContentHost"                                                                                                        
-                                                  Margin="2"
-                                                  VerticalAlignment="Stretch"
-                                                  HorizontalAlignment="Stretch"/>
+                    <Border x:Name="ToolButtonBackground"
+                            BorderThickness="0"
+                            TextBlock.Foreground="Aqua"                                   
+                            >
+                        <ContentPresenter x:Name="ContentHost"                                                                                                                                                  
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Selector.IsSelected" Value="True">
-                            <Setter TargetName="ToolButtonBackground" Property="Background" Value="#FF8F8F8F"/>
+                            <Setter TargetName="ToolButtonBackground" Property="BorderThickness" Value="6"/>
+                            <Setter TargetName="ToolButtonBackground" Property="BorderBrush" Value="#FF805050"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -117,8 +120,8 @@
                                                   HorizontalAlignment="Stretch"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Selector.IsSelected" Value="True">
-                            <Setter TargetName="ToolButtonBackground" Property="Background" Value="Magenta"/>
+                        <Trigger Property="Selector.IsSelected" Value="True">                            
+                            <Setter TargetName="ToolButtonBackground" Property="Background" Value="#FF805050"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -163,6 +166,8 @@
         </Setter>
     </Style>
 
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+
     <Style x:Key="SlideListBoxStyle" TargetType="{x:Type ListBox}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -170,7 +175,7 @@
                     <StackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>       
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -178,6 +183,21 @@
 
     <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
 
+    <Style x:Key="ToolHeaderStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Background" Value="#FFC0C090"/>
+        <Setter Property="Width" Value="130"/>
+        <Setter Property="Padding" Value="10, 10, 10, 10"/>
+        <Setter Property="dw:LoopingListBox.IsDragHandle" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    </Style>
 
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+    
+    <Style x:Key="LoopingListStyle" TargetType="{x:Type dw:LoopingListBox}">
+        <Setter Property="Height" Value="120"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Orientation" Value="Vertical"/>
+    </Style>
 
 </ResourceDictionary>
