@@ -50,14 +50,14 @@
                 <slide:Slide Title="Lighthouse" Image="Images/Lighthouse.jpg"/>
                 <slide:Slide Title="Penguins" Image="Images/Penguins.jpg"/>
             </slide:SlideCollcection>
-
+            
             <!-- 드로잉 캔버스에서 사용하는 기본설정 -->
             <DrawingAttributes x:Key="DrawingSettings"/>
 
             <!-- 컨버터, 바인딩에서 값을 한곳에서 다른 형태로 바꾸는데 사용된다. -->
             <conv:ColorToColorToolConverter x:Key="ColorToolConverter"/>
             <conv:DoubleToStrokeToolConverter x:Key="StrokeToolConverter"/>
-            
+
         </ResourceDictionary>                
     
     </Window.Resources>
@@ -83,49 +83,50 @@
                         TextBlock.Foreground="Black"                        
                         VerticalAlignment="Center"
                         >
+                <dw:LoopingListBox
+                    Height="400"
+                    Background="Transparent"
+                    Orientation="Vertical"
+                    BorderThickness="0"
+                    >
+                    <!-- 툴 목록 UI -->
+                    <TextBlock Text="Tool" Style="{StaticResource ToolHeaderStyle}"/>                        
+                    <dw:LoopingListBox x:Name="llbTools" 
+                                       Style="{StaticResource LoopingListStyle}"                                   
+                                       ItemTemplate="{StaticResource ToolDataTemplate}"
+                                       ItemsSource="{Binding Source={StaticResource Tools}}"
+                                       ItemContainerStyle="{StaticResource ToolContainerStyle}"             
+                                       />
 
-                <!-- 툴 목록 UI -->
-                <TextBlock Margin="8" Text="Tool"/>
-                <dw:LoopingListBox x:Name="llbTools"                                                                        
-                                   Height="120"
-                                   Margin="0,0,0,15"
-                                   BorderThickness="0"
-                                   Background="Transparent"
-                                   ItemTemplate="{StaticResource ToolDataTemplate}"
-                                   ItemsSource="{Binding Source={StaticResource Tools}}"
-                                   ItemContainerStyle="{StaticResource ToolContainerStyle}"             
-                                   Orientation="Vertical"/>
+                    <!-- 색 목록 UI -->
+                    <TextBlock Text="Color"  Style="{StaticResource ToolHeaderStyle}"/>
+                    <dw:LoopingListBox x:Name="llbColors"
+                                       Style="{StaticResource LoopingListStyle}"
+                                       SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
+                                       ItemTemplate="{StaticResource ColorToolDataTemplate}"
+                                       ItemsSource="{Binding Source={StaticResource Colors}}"
+                                       ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
+                                       />
 
-                <!-- 색 목록 UI -->
-                <TextBlock Margin="8" Text="Color"/>
-                <dw:LoopingListBox x:Name="llbColors"
-                                   Height="120"
-                                   Margin="0,0,0,15"
-                                   BorderThickness="0"
-                                   Background="Transparent"  
-                                   SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
-                                   ItemTemplate="{StaticResource ColorToolDataTemplate}"
-                                   ItemsSource="{Binding Source={StaticResource Colors}}"
-                                   ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
-                                   Orientation="Vertical"/>
-
-                <!-- 굵기 목록 UI -->
-                <TextBlock Margin="8" Text="Storke"/>
-                <dw:LoopingListBox x:Name="llbStroke"
-                                   Height="120"
-                                   BorderThickness="0"
-                                   Background="Transparent"                                   
-                                   ItemTemplate="{StaticResource StrokeToolDataTemplate}"
-                                   ItemsSource="{Binding Source={StaticResource Strokes}}"
-                                   ItemContainerStyle="{StaticResource ToolContainerStyle}"             
-                                   Orientation="Vertical">
-                    <dw:LoopingListBox.SelectedItem>
-                        <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
-                            <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
-                            <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
-                        </MultiBinding>
-                    </dw:LoopingListBox.SelectedItem>
+                    <!-- 굵기 목록 UI -->
+                    <TextBlock Text="Storke" Style="{StaticResource ToolHeaderStyle}"/>
+                    <dw:LoopingListBox x:Name="llbStroke"
+                                       Style="{StaticResource LoopingListStyle}"
+                                       ItemTemplate="{StaticResource StrokeToolDataTemplate}"
+                                       ItemsSource="{Binding Source={StaticResource Strokes}}"
+                                       ItemContainerStyle="{StaticResource ToolContainerStyle}">
+                        <dw:LoopingListBox.SelectedItem>
+                            <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
+                                <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
+                                <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
+                            </MultiBinding>
+                        </dw:LoopingListBox.SelectedItem>
+                    </dw:LoopingListBox>
+                    
+                    
                 </dw:LoopingListBox>
+                
+               
 
             </StackPanel>
 
