@@ -80,6 +80,7 @@ namespace DrWPF.Windows.Controls
             return foundElement;
         }
 
+        
         private static void OnDragHandleLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             UIElement uie = sender as UIElement;

@@ -62,12 +62,15 @@
     
     </Window.Resources>
 
-    <Grid Background="#FF6F6F6F">
-        
-        <DockPanel>
+    <Grid Background="#FF6F6F6F"
+          TouchDown="DockPanel_TouchDown"
+          TouchUp="Grid_TouchUp">
+        <!--
+        <DockPanel MouseLeftButtonUp="DockPanel_MouseLeftButtonUp"
+                   TouchMove="DockPanel_TouchDown">-->
 
             <!-- 슬라이드 목록 -->
-            <ListBox x:Name="SlideList" 
+            <!--<ListBox x:Name="SlideList" 
                      SelectedIndex="0"
                      DockPanel.Dock="Bottom" Height="150" 
                      ScrollViewer.CanContentScroll="False"
@@ -77,77 +80,82 @@
                      ItemContainerStyle="{StaticResource SlideContainerStyle}"
                      ItemTemplate="{StaticResource SlideDataTemplate}"
                      Style="{StaticResource SlideListBoxStyle}"/>
+            -->
 
-            <!-- 툴패널 -->
-            <StackPanel DockPanel.Dock="Left"
-                        TextBlock.Foreground="Black"                        
-                        VerticalAlignment="Center"
-                        >
-                <dw:LoopingListBox
-                    Height="400"
-                    Background="Transparent"
-                    Orientation="Vertical"
-                    BorderThickness="0"
-                    >
-                    <!-- 툴 목록 UI -->
-                    <TextBlock Text="Tool" Style="{StaticResource ToolHeaderStyle}"/>                        
-                    <dw:LoopingListBox x:Name="llbTools" 
-                                       Style="{StaticResource LoopingListStyle}"                                   
-                                       ItemTemplate="{StaticResource ToolDataTemplate}"
-                                       ItemsSource="{Binding Source={StaticResource Tools}}"
-                                       ItemContainerStyle="{StaticResource ToolContainerStyle}"             
-                                       />
+        <!-- 메인 그림패널 -->
+        <Grid Margin="15">
+            <Rectangle Fill="White"/>
+            <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
+                        DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
+                        EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
+                        Margin="0,5,0,5">
+                <control:MultiTouchInkCanvas.Background>
+                    <ImageBrush                             
+                        Opacity="0.8" 
+                        Stretch="Uniform" 
+                        ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
+                </control:MultiTouchInkCanvas.Background>
+            </control:MultiTouchInkCanvas>
+        </Grid>
+        
+        
+        <!-- 툴패널 -->
+        <Canvas>
+        <StackPanel x:Name="ToolPanel"
+                                TextBlock.Foreground="Black"                        
+                                VerticalAlignment="Center"
+                                Visibility="Collapsed">
+            <dw:LoopingListBox
+                            Height="400"
+                            Background="Transparent"
+                            Orientation="Vertical"
+                            BorderThickness="0"
+                            >
+                <!-- 툴 목록 UI -->
+                <TextBlock Text="Tool" Style="{StaticResource ToolHeaderStyle}"/>
+                <dw:LoopingListBox x:Name="llbTools" 
+                                    Style="{StaticResource LoopingListStyle}"                                   
+                                    ItemTemplate="{StaticResource ToolDataTemplate}"
+                                    ItemsSource="{Binding Source={StaticResource Tools}}"
+                                    ItemContainerStyle="{StaticResource ToolContainerStyle}"             
+                                    />
 
-                    <!-- 색 목록 UI -->
-                    <TextBlock Text="Color"  Style="{StaticResource ToolHeaderStyle}"/>
-                    <dw:LoopingListBox x:Name="llbColors"
-                                       Style="{StaticResource LoopingListStyle}"
-                                       SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
-                                       ItemTemplate="{StaticResource ColorToolDataTemplate}"
-                                       ItemsSource="{Binding Source={StaticResource Colors}}"
-                                       ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
-                                       />
+                <!-- 색 목록 UI -->
+                <TextBlock Text="Color"  Style="{StaticResource ToolHeaderStyle}"/>
+                <dw:LoopingListBox x:Name="llbColors"
+                                    Style="{StaticResource LoopingListStyle}"
+                                    SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
+                                    ItemTemplate="{StaticResource ColorToolDataTemplate}"
+                                    ItemsSource="{Binding Source={StaticResource Colors}}"
+                                    ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
+                                    />
 
-                    <!-- 굵기 목록 UI -->
-                    <TextBlock Text="Storke" Style="{StaticResource ToolHeaderStyle}"/>
-                    <dw:LoopingListBox x:Name="llbStroke"
-                                       Style="{StaticResource LoopingListStyle}"
-                                       ItemTemplate="{StaticResource StrokeToolDataTemplate}"
-                                       ItemsSource="{Binding Source={StaticResource Strokes}}"
-                                       ItemContainerStyle="{StaticResource ToolContainerStyle}">
-                        <dw:LoopingListBox.SelectedItem>
-                            <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
-                                <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
-                                <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
-                            </MultiBinding>
-                        </dw:LoopingListBox.SelectedItem>
-                    </dw:LoopingListBox>
-                    
-                    
+                <!-- 굵기 목록 UI -->
+                <TextBlock Text="Storke" Style="{StaticResource ToolHeaderStyle}"/>
+                <dw:LoopingListBox x:Name="llbStroke"
+                                    Style="{StaticResource LoopingListStyle}"
+                                    ItemTemplate="{StaticResource StrokeToolDataTemplate}"
+                                    ItemsSource="{Binding Source={StaticResource Strokes}}"
+                                    ItemContainerStyle="{StaticResource ToolContainerStyle}">
+                    <dw:LoopingListBox.SelectedItem>
+                        <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
+                            <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
+                            <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
+                        </MultiBinding>
+                    </dw:LoopingListBox.SelectedItem>
                 </dw:LoopingListBox>
-                
-               
 
-            </StackPanel>
 
-            <!-- 메인 그림패널 -->
-            <Grid Margin="15">
-                <Rectangle Fill="White"/>
-                <InkCanvas x:Name="DrawingCanvas"    
-                           DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
-                           EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
-                           Margin="0,5,0,5">
-                    <InkCanvas.Background>
-                        <ImageBrush                             
-                            Opacity="0.8" 
-                            Stretch="Uniform" 
-                            ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
-                    </InkCanvas.Background>
-                </InkCanvas>
-            </Grid>
+            </dw:LoopingListBox>
+
+
+
+        </StackPanel>
             
-        </DockPanel>      
-        <Canvas></Canvas>        
+        </Canvas>
+
+        <!--</DockPanel>      -->
+
     </Grid>
     
 </Window>
