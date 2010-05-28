@@ -24,6 +24,14 @@ namespace TablectionSketch
             InitializeComponent();
         }
 
-      
+        private void DockPanel_TouchDown(object sender, TouchEventArgs e)
+        {
+            ToolPanel.Visibility = Visibility.Visible;
+        }
+
+        private void Grid_TouchUp(object sender, TouchEventArgs e)
+        {
+            ToolPanel.Visibility = Visibility.Collapsed;
+        }
     }
 }

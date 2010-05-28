@@ -15,6 +15,8 @@ namespace TablectionSketch.Controls
         protected override void OnTouchDown(TouchEventArgs e)
         {
             base.OnTouchDown(e);
+
+            e.Handled = true;
         }
 
         protected override void OnTouchMove(System.Windows.Input.TouchEventArgs e)
@@ -25,12 +27,15 @@ namespace TablectionSketch.Controls
             System.Diagnostics.Debug.WriteLine(string.Format("id:{0} x:{1} y:{2}", id, touchPoint.Position.X, touchPoint.Position.Y));
 
             base.OnTouchMove(e);
+
+            e.Handled = true;
         }
 
         protected override void OnTouchUp(TouchEventArgs e)
         {
-
             base.OnTouchUp(e);
+
+            e.Handled = true;
         }
     }
 }
