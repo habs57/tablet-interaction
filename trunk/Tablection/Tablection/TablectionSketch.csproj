@@ -72,6 +72,7 @@
     <Compile Include="Slide\Slide.cs" />
     <Compile Include="Controls\SlideListBox.cs" />
     <Compile Include="Slide\SlideCollcection.cs" />
+    <Compile Include="Tool\ToolHeader.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

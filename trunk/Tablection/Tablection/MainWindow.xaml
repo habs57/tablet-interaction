@@ -6,7 +6,7 @@
         xmlns:tool="clr-namespace:TablectionSketch.Tool"
         xmlns:control="clr-namespace:TablectionSketch.Controls"
         xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
-        xmlns:conv="clr-namespace:TablectionSketch.Converter"
+        xmlns:conv="clr-namespace:TablectionSketch.Converter"        
         Title="TablectionSketch" Height="768" Width="1024">
     
     <Window.Resources>
@@ -62,33 +62,33 @@
     
     </Window.Resources>
 
-    <Grid Background="#FF6F6F6F"
-          TouchDown="DockPanel_TouchDown"
-          TouchUp="Grid_TouchUp">
-        <!--
-        <DockPanel MouseLeftButtonUp="DockPanel_MouseLeftButtonUp"
-                   TouchMove="DockPanel_TouchDown">-->
-
-            <!-- 슬라이드 목록 -->
-            <!--<ListBox x:Name="SlideList" 
-                     SelectedIndex="0"
-                     DockPanel.Dock="Bottom" Height="150" 
-                     ScrollViewer.CanContentScroll="False"
-                     ScrollViewer.PanningMode="HorizontalOnly"
-                     ScrollViewer.PanningDeceleration="0.5"
-                     ItemsSource="{Binding Source={StaticResource Slides}}"
-                     ItemContainerStyle="{StaticResource SlideContainerStyle}"
-                     ItemTemplate="{StaticResource SlideDataTemplate}"
-                     Style="{StaticResource SlideListBoxStyle}"/>
-            -->
-
+    <Grid x:Name="grdMain"
+          Background="#FF6F6F6F"          
+          MouseDown="Grid_MouseDown"
+          TouchDown="Grid_TouchDown">
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="MouseDown">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="0" To="1.0" Duration="0:0:0.1" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="TouchDown">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="0" To="1.0" Duration="0:0:0.1" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>           
+        </Grid.Triggers>
+     
         <!-- 메인 그림패널 -->
         <Grid Margin="15">
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
                         DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
-                        EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
-                        Margin="0,5,0,5">
+                        EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}">
                 <control:MultiTouchInkCanvas.Background>
                     <ImageBrush                             
                         Opacity="0.8" 
@@ -97,65 +97,150 @@
                 </control:MultiTouchInkCanvas.Background>
             </control:MultiTouchInkCanvas>
         </Grid>
-        
+
+        <!-- 슬라이드 목록 -->
+        <ListBox x:Name="SlideList"                      
+                 VerticalAlignment="Bottom"
+                 Height="150"
+                 Margin="20"
+                 SelectedIndex="0"
+                 Visibility="Collapsed"                 
+                 ScrollViewer.CanContentScroll="False"
+                 ScrollViewer.PanningMode="HorizontalOnly"
+                 ScrollViewer.PanningDeceleration="0.5"
+                 ItemsSource="{Binding Source={StaticResource Slides}}"
+                 ItemContainerStyle="{StaticResource SlideContainerStyle}"
+                 ItemTemplate="{StaticResource SlideDataTemplate}"
+                 Style="{StaticResource SlideListBoxStyle}">
+            <ListBox.Triggers>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard x:Name="SlideListHideAnimation" Completed="SlideListHideAnimation_Completed">
+                            <DoubleAnimation From="1" To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </ListBox.Triggers>
+            <ListBox.Effect>
+                <DropShadowEffect ShadowDepth="0"/>
+            </ListBox.Effect>
+        </ListBox>
+
+        <!-- 하단 슬라이드 팝업 버튼 -->
+        <Button Height="15" 
+                Margin="15,0,15,0" 
+                VerticalAlignment="Bottom"
+                Click="Button_Click">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation From="0" To="1" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+            <Button.Template>
+                <ControlTemplate>
+                    <Rectangle Fill="Transparent"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
         
         <!-- 툴패널 -->
-        <Canvas>
-        <StackPanel x:Name="ToolPanel"
-                                TextBlock.Foreground="Black"                        
-                                VerticalAlignment="Center"
-                                Visibility="Collapsed">
-            <dw:LoopingListBox
-                            Height="400"
-                            Background="Transparent"
-                            Orientation="Vertical"
-                            BorderThickness="0"
-                            >
+        <StackPanel x:Name="ToolPanel"                          
+                    Canvas.Top="50"
+                    Orientation="Horizontal"
+                    TextBlock.Foreground="Black"                        
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed">
+            <StackPanel.Effect>
+                <DropShadowEffect ShadowDepth="0"/>
+            </StackPanel.Effect>
+            <StackPanel.Triggers>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard x:Name="ToolPanelHideAnimaton" Completed="ToolPanelHideAnimaton_Completed">
+                            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TouchLeave">
+                    <BeginStoryboard>
+                        <Storyboard Completed="ToolPanelHideAnimaton_Completed">
+                            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </StackPanel.Triggers>
+           
+            <dw:LoopingListBox  Height="130"
+                                    Background="Transparent"
+                                    Orientation="Vertical"
+                                    BorderThickness="0"                                    
+                                    >
                 <!-- 툴 목록 UI -->
-                <TextBlock Text="Tool" Style="{StaticResource ToolHeaderStyle}"/>
-                <dw:LoopingListBox x:Name="llbTools" 
-                                    Style="{StaticResource LoopingListStyle}"                                   
-                                    ItemTemplate="{StaticResource ToolDataTemplate}"
-                                    ItemsSource="{Binding Source={StaticResource Tools}}"
-                                    ItemContainerStyle="{StaticResource ToolContainerStyle}"             
-                                    />
+                <TextBlock x:Name="HeaderBasicTool"
+                               Text="Tool"                                        
+                               MouseLeftButtonDown="HeaderBasicTool_MouseLeftButtonDown"
+                               Style="{StaticResource ToolHeaderStyle}"/>
 
                 <!-- 색 목록 UI -->
-                <TextBlock Text="Color"  Style="{StaticResource ToolHeaderStyle}"/>
-                <dw:LoopingListBox x:Name="llbColors"
-                                    Style="{StaticResource LoopingListStyle}"
-                                    SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
-                                    ItemTemplate="{StaticResource ColorToolDataTemplate}"
-                                    ItemsSource="{Binding Source={StaticResource Colors}}"
-                                    ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
-                                    />
+                <TextBlock x:Name="HeaderColorTool"
+                               Text="Color"  
+                               MouseLeftButtonDown="HeaderColorTool_MouseLeftButtonDown"
+                               Style="{StaticResource ToolHeaderStyle}"/>
 
                 <!-- 굵기 목록 UI -->
-                <TextBlock Text="Storke" Style="{StaticResource ToolHeaderStyle}"/>
-                <dw:LoopingListBox x:Name="llbStroke"
-                                    Style="{StaticResource LoopingListStyle}"
-                                    ItemTemplate="{StaticResource StrokeToolDataTemplate}"
-                                    ItemsSource="{Binding Source={StaticResource Strokes}}"
-                                    ItemContainerStyle="{StaticResource ToolContainerStyle}">
-                    <dw:LoopingListBox.SelectedItem>
-                        <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
-                            <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
-                            <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
-                        </MultiBinding>
-                    </dw:LoopingListBox.SelectedItem>
-                </dw:LoopingListBox>
-
+                <TextBlock x:Name="HeaderStrokeTool"
+                               Text="Storke" 
+                               MouseLeftButtonDown="HeaderStrokeTool_MouseLeftButtonDown"
+                               Style="{StaticResource ToolHeaderStyle}"/>
 
             </dw:LoopingListBox>
+            <StackPanel>
+                <RadioButton x:Name="radioTools"                                 
+                        Style="{StaticResource DetailToolContainer}">
+                    <!-- 툴 목록 UI -->
+                    <dw:LoopingListBox x:Name="llbTools"                                        
+                                       Style="{StaticResource LoopingListStyle}"                                   
+                                       ItemTemplate="{StaticResource ToolDataTemplate}"
+                                       ItemsSource="{Binding Source={StaticResource Tools}}"
+                                       ItemContainerStyle="{StaticResource ToolContainerStyle}"             
+                                       />
+                </RadioButton>
 
+                <RadioButton x:Name="radioColors"                                 
+                        Style="{StaticResource DetailToolContainer}">
+                    <!-- 색 목록 UI -->
+                    <dw:LoopingListBox x:Name="llbColors"                                       
+                                       Style="{StaticResource LoopingListStyle}"
+                                       SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
+                                       ItemTemplate="{StaticResource ColorToolDataTemplate}"
+                                       ItemsSource="{Binding Source={StaticResource Colors}}"
+                                       ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
+                                       />
+                </RadioButton>
 
+                <RadioButton x:Name="radioStrokes"
+                        Style="{StaticResource DetailToolContainer}">
+                    <!-- 굵기 목록 UI -->
+                    <dw:LoopingListBox x:Name="llbStroke"                                     
+                                       Style="{StaticResource LoopingListStyle}"
+                                       ItemTemplate="{StaticResource StrokeToolDataTemplate}"
+                                       ItemsSource="{Binding Source={StaticResource Strokes}}"
+                                       ItemContainerStyle="{StaticResource ToolContainerStyle}">
+                        <dw:LoopingListBox.SelectedItem>
+                            <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
+                                <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
+                                <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
+                            </MultiBinding>
+                        </dw:LoopingListBox.SelectedItem>
+                    </dw:LoopingListBox>
+                </RadioButton>
 
+            </StackPanel>
         </StackPanel>
-            
-        </Canvas>
-
-        <!--</DockPanel>      -->
-
     </Grid>
     
 </Window>

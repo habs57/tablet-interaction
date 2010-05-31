@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Windows.Threading;
+
 namespace TablectionSketch
 {
     /// <summary>
@@ -24,14 +26,47 @@ namespace TablectionSketch
             InitializeComponent();
         }
 
-        private void DockPanel_TouchDown(object sender, TouchEventArgs e)
+        private void Grid_TouchDown(object sender, TouchEventArgs e)
+        {
+            ToolPanel.Visibility = Visibility.Visible;            
+        }
+                
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ToolPanel.Visibility = Visibility.Visible;
         }
 
-        private void Grid_TouchUp(object sender, TouchEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.SlideList.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void SlideListHideAnimation_Completed(object sender, EventArgs e)
+        {
+            this.SlideList.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void ToolPanelHideAnimaton_Completed(object sender, EventArgs e)
         {
             ToolPanel.Visibility = Visibility.Collapsed;
         }
+
+
+
+        private void HeaderBasicTool_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.radioTools.IsChecked = true;
+        }
+
+        private void HeaderColorTool_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.radioColors.IsChecked = true;
+        }
+
+        private void HeaderStrokeTool_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.radioStrokes.IsChecked = true;
+        }
+        
     }
 }
