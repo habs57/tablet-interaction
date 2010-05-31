@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Ink;
 using TablectionSketch.Tool;
 
 namespace TablectionSketch.Converter
@@ -27,7 +28,7 @@ namespace TablectionSketch.Converter
             }
             else
             {
-                return new StrokeTool() { Width = 1, Height = 1, Name = "1.0 pt" };      
+                return new StrokeTool() { Width = DrawingAttributes.MinWidth, Height = DrawingAttributes.MinHeight, Name = string.Format("{0} pt", DrawingAttributes.MinWidth) };      
             }            
         }
 
@@ -40,7 +41,7 @@ namespace TablectionSketch.Converter
             }
             else
             {
-                return new object[] { 0, 0 };
+                return new object[] { DrawingAttributes.MinWidth, DrawingAttributes.MinHeight };
             }            
         }
 

@@ -176,7 +176,7 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>       
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="Gray"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
@@ -188,7 +188,7 @@
         <Setter Property="Width" Value="130"/>
         <Setter Property="Padding" Value="10, 10, 10, 10"/>
         <Setter Property="dw:LoopingListBox.IsDragHandle" Value="True"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />          
     </Style>
 
     <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -198,6 +198,28 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Orientation" Value="Vertical"/>
+    </Style>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+    
+    <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    
+    <Style x:Key="DetailToolContainer" TargetType="{x:Type RadioButton}">   
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="False">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>            
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <ContentPresenter/>
+                </ControlTemplate>            
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>
