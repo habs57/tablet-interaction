@@ -113,6 +113,13 @@
                  ItemTemplate="{StaticResource SlideDataTemplate}"
                  Style="{StaticResource SlideListBoxStyle}">
             <ListBox.Triggers>
+                <EventTrigger RoutedEvent="TouchLeave">
+                    <BeginStoryboard>
+                        <Storyboard Completed="SlideListHideAnimation_Completed">
+                            <DoubleAnimation From="1" To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
                 <EventTrigger RoutedEvent="MouseLeave">
                     <BeginStoryboard>
                         <Storyboard x:Name="SlideListHideAnimation" Completed="SlideListHideAnimation_Completed">
@@ -138,7 +145,7 @@
                             <DoubleAnimation From="0" To="1" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
                         </Storyboard>
                     </BeginStoryboard>
-                </EventTrigger>
+                </EventTrigger>                
             </Button.Triggers>
             <Button.Template>
                 <ControlTemplate>
