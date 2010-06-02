@@ -64,7 +64,7 @@
             </Storyboard>
 
             <Storyboard x:Key="slideListHideAnimaton" Completed="SlideListHideAnimation_Completed">
-                <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
+                <DoubleAnimation To="0" BeginTime="0:0:3" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
             </Storyboard>
 
             <Storyboard x:Key="toolPanelShowAnimaton">
@@ -149,29 +149,49 @@
                  ScrollViewer.PanningMode="HorizontalOnly"
                  ScrollViewer.PanningDeceleration="0.5"
                  TouchEnter="SlideList_TouchEnter"
+                 TouchLeave="SlideList_TouchLeave"
+                 MouseEnter="SlideList_MouseEnter"
+                 MouseLeave="SlideList_MouseLeave"
                  ItemsSource="{Binding Source={StaticResource Slides}}"
                  ItemContainerStyle="{StaticResource SlideContainerStyle}"
                  ItemTemplate="{StaticResource SlideDataTemplate}"
                  Style="{StaticResource SlideListBoxStyle}">
+            <ListBox.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <StopStoryboard BeginStoryboardName="SlideListHideAnimaton"/>
+                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimaton}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard x:Name="SlideListHideAnimaton" Storyboard="{StaticResource slideListHideAnimaton}"/>                    
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TouchEnter">
+                    <StopStoryboard BeginStoryboardName="SlideListHideAnimaton2"/>
+                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimaton}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TouchLeave">
+                    <BeginStoryboard x:Name="SlideListHideAnimaton2" Storyboard="{StaticResource slideListHideAnimaton}"/>
+                </EventTrigger>
+            </ListBox.Triggers>
             <ListBox.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </ListBox.Effect>
         </ListBox>
-        
-        
+              
         
         <!-- 툴패널 -->
         <StackPanel x:Name="ToolPanel"
                     Orientation="Horizontal"
                     TextBlock.Foreground="Black"                        
                     VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
                     Opacity="0"
+                    MouseLeave="ToolPanel_MouseLeave"
                     Visibility="Collapsed">
             <StackPanel.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </StackPanel.Effect>
                        
-            <dw:LoopingListBox  Height="130"
+            <dw:LoopingListBox  Height="90"
                                     Background="Transparent"
                                     Orientation="Vertical"
                                     BorderThickness="0"                                    
