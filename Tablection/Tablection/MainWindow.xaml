@@ -17,6 +17,13 @@
                 <!-- 컨트롤들의 스타일을 지정해주는 외부 리소스 정의 파일 -->
                 <ResourceDictionary Source="Common.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
+            <!-- 툴의 헤더 모음 -->
+            <tool:ToolCollection x:Key="ToolHeaders">
+                <tool:ToolHeader Name="Basic Tools" RelatedControlName="llbTools"/>
+                <tool:ToolHeader Name="Colors" RelatedControlName="llbColors"/>
+                <tool:ToolHeader Name="Strokes" RelatedControlName="llbStroke"/>
+            </tool:ToolCollection>
 
             <!-- 툴 목록, 더 많은 툴을 넣거나 뺄수 있다. -->
             <tool:ToolCollection x:Key="Tools">
@@ -186,6 +193,7 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     Opacity="0"
+                    
                     TouchEnter="ToolPanel_TouchEnter"
                     TouchLeave="ToolPanel_TouchLeave"
                     MouseEnter="ToolPanel_MouseEnter"
@@ -216,45 +224,10 @@
                                 Background="Transparent"
                                 Orientation="Vertical"
                                 SelectionChanged="LoopingListBox_SelectionChanged"
-                                BorderThickness="0"                                    
-                                    >
-                <!-- 툴 목록 UI -->
-                <TextBlock x:Name="HeaderBasicTool"
-                               Text="Tool"
-                               Selector.Selected="HeaderBasicTool_Selected"
-                               MouseLeftButtonDown="HeaderBasicTool_MouseLeftButtonDown"
-                               Style="{StaticResource ToolHeaderStyle}"/>
-
-                <!-- 색 목록 UI -->
-                <TextBlock x:Name="HeaderColorTool"
-                               Text="Color"  
-                               Selector.Selected="HeaderColorTool_Selected"
-                               MouseLeftButtonDown="HeaderColorTool_MouseLeftButtonDown"
-                               Style="{StaticResource ToolHeaderStyle}"/>
-
-                <!-- 굵기 목록 UI -->
-                <TextBlock x:Name="HeaderStrokeTool"
-                               Text="Storke" 
-                               Selector.Selected="HeaderStrokeTool_Selected"
-                               MouseLeftButtonDown="HeaderStrokeTool_MouseLeftButtonDown"
-                               Style="{StaticResource ToolHeaderStyle}"/>
-
-                <!-- 굵기 목록 UI -->
-                <TextBlock x:Name="Reserved1"
-                               Text="Reserved1"                                
-                               Style="{StaticResource ToolHeaderStyle}"/>
-
-                <!-- 굵기 목록 UI -->
-                <TextBlock x:Name="Reserved2"
-                               Text="Reserved2"                                
-                               Style="{StaticResource ToolHeaderStyle}"/>
-
-                <!-- 굵기 목록 UI -->
-                <TextBlock x:Name="Reserved3"
-                               Text="Reserved2"                                
-                               Style="{StaticResource ToolHeaderStyle}"/>
-
-            </dw:LoopingListBox>
+                                ItemsSource="{Binding Source={StaticResource ToolHeaders}}"
+                                ItemContainerStyle="{StaticResource ToolHeaderContainerStyle}"
+                                ItemTemplate="{StaticResource ToolHeaderDataTemplate}"
+                                BorderThickness="0"/>               
             <StackPanel
                 VerticalAlignment="Center">
                 <RadioButton x:Name="radioTools"                                 
@@ -282,7 +255,8 @@
                 <RadioButton x:Name="radioStrokes"
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 굵기 목록 UI -->
-                    <dw:LoopingListBox x:Name="llbStroke"                                     
+                    <dw:LoopingListBox x:Name="llbStroke"
+                                       SelectionChanged="llbStroke_SelectionChanged"
                                        Style="{StaticResource LoopingListStyle}"
                                        ItemTemplate="{StaticResource StrokeToolDataTemplate}"
                                        ItemsSource="{Binding Source={StaticResource Strokes}}"
