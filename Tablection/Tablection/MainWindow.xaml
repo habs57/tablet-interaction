@@ -23,6 +23,11 @@
                 <tool:ToolHeader Name="Basic Tools" RelatedControlName="llbTools"/>
                 <tool:ToolHeader Name="Colors" RelatedControlName="llbColors"/>
                 <tool:ToolHeader Name="Strokes" RelatedControlName="llbStroke"/>
+                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
+                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
+                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
+                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
+                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
             </tool:ToolCollection>
 
             <!-- 툴 목록, 더 많은 툴을 넣거나 뺄수 있다. -->
@@ -192,8 +197,7 @@
                     TextBlock.Foreground="Black"                        
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
-                    Opacity="0"
-                    
+                    Opacity="0"                    
                     TouchEnter="ToolPanel_TouchEnter"
                     TouchLeave="ToolPanel_TouchLeave"
                     MouseEnter="ToolPanel_MouseEnter"
