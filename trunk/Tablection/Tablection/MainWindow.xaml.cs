@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 
+using TablectionSketch.Tool;
+
 namespace TablectionSketch
 {
     /// <summary>
@@ -116,6 +118,23 @@ namespace TablectionSketch
         private void LoopingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("LoopingListBox_SelectionChanged");
+
+            foreach (ToolHeader item in e.AddedItems)
+            {
+                string selectedToolName = item.RelatedControlName;
+                if (selectedToolName.Equals("llbTools") == true)
+                {
+                    this.radioTools.IsChecked = true;
+                }
+                else if (selectedToolName.Equals("llbColors") == true)
+                {
+                    this.radioColors.IsChecked = true;
+                }
+                else if (selectedToolName.Equals("llbStroke") == true)
+                {
+                    this.radioStrokes.IsChecked = true;
+                }
+            }
         }
 
         private void HeaderBasicTool_Selected(object sender, RoutedEventArgs e)
@@ -131,6 +150,11 @@ namespace TablectionSketch
         private void HeaderStrokeTool_Selected(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("HeaderStrokeTool_Selected");
+        }
+
+        private void llbStroke_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("llbStroke_SelectionChanged");
         }
 
 
