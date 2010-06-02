@@ -135,6 +135,65 @@ namespace DrWPF.Windows.Controls
             e.Handled = true;
         }
 
+#region Touch Ready
+
+        private static void OnDragHandleTouchDown(object sender, TouchEventArgs e)
+        {
+            UIElement uie = sender as UIElement;
+            SetIsDragging(uie, true);
+            SetDragOrigin(uie, e.GetTouchPoint(uie).Position);
+
+            uie.CaptureTouch(e.TouchDevice);
+           
+            e.Handled = true;
+        }
+
+        private static void OnDragHandleTouchUp(object sender, TouchEventArgs e)
+        {
+            UIElement uie = sender as UIElement;
+            uie.ClearValue(DragOriginProperty);
+            uie.ClearValue(IsDraggingProperty);
+            if (e.TouchDevice.Captured == uie)
+            {
+                uie.ReleaseTouchCapture(e.TouchDevice);
+            }
+
+            e.Handled = true;
+        }
+
+        private static void OnDragHandleTouchLeave(object sender, TouchEventArgs e)
+        {
+            UIElement uie = sender as UIElement;
+            uie.ClearValue(DragOriginProperty);
+            uie.ClearValue(IsDraggingProperty);
+            if (e.TouchDevice.Captured == uie)
+            {
+                uie.ReleaseTouchCapture(e.TouchDevice);
+            }
+
+            e.Handled = true;
+        }
+
+        private static void OnDragHandleTouchMove(object sender, TouchEventArgs e)
+        {
+            UIElement uie = sender as UIElement;
+            if (GetIsDragging(uie))
+            {
+                SetIsDragging(uie, false);
+                Point dragOrigin = GetDragOrigin(uie);
+                e.Handled = true;
+                if (e.TouchDevice.Captured == uie)
+                {
+                    uie.ReleaseTouchCapture(e.TouchDevice); 
+                }
+                RaiseBeginDragEvent(uie, e.Device, dragOrigin, e.GetTouchPoint(uie).Position);
+            }
+
+            e.Handled = true;
+        }
+
+#endregion //Touch Ready
+
         private static void OnBeginDrag(object sender, BeginDragEventArgs e)
         {
             UIElement element = e.OriginalSource as UIElement;
@@ -260,6 +319,12 @@ namespace DrWPF.Windows.Controls
                     uie.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnDragHandleLeftButtonDown), true);
                     uie.AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnDragHandleLeftButtonUp), true);
                     uie.MouseMove += OnDragHandleMouseMove;
+
+                    //Touch Ready
+                    uie.TouchLeave += OnDragHandleTouchLeave;
+                    uie.AddHandler(TouchDownEvent, new EventHandler<TouchEventArgs>(OnDragHandleTouchDown), true);
+                    uie.AddHandler(TouchUpEvent, new EventHandler<TouchEventArgs>(OnDragHandleTouchUp), true);
+                    uie.TouchMove += OnDragHandleTouchMove;
                 }
                 else
                 {
@@ -267,9 +332,16 @@ namespace DrWPF.Windows.Controls
                     uie.RemoveHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnDragHandleLeftButtonDown));
                     uie.RemoveHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnDragHandleLeftButtonUp));
                     uie.MouseMove -= OnDragHandleMouseMove;
+
+                    //Touch Ready
+                    uie.TouchLeave -= OnDragHandleTouchLeave;
+                    uie.RemoveHandler(TouchDownEvent, new EventHandler<TouchEventArgs>(OnDragHandleTouchDown));
+                    uie.RemoveHandler(TouchUpEvent, new EventHandler<TouchEventArgs>(OnDragHandleTouchUp));
+                    uie.TouchMove -= OnDragHandleTouchMove;
                 }
             }
         }
+
 
         #endregion
 
@@ -393,6 +465,22 @@ namespace DrWPF.Windows.Controls
                         result = true;
                     }
                 }
+                else if (deviceToCapture is TouchDevice)
+                {
+                    TouchDevice td = deviceToCapture as TouchDevice;
+
+                    if (td.Captured != null) this.ReleaseTouchCapture(td);
+
+                    // By default, we support dragging via the left touch button.  
+                    // If another button is required for dragging, this method should be overridden.
+                    if (td.Captured == null)
+                    {
+                        CapturedDevice = td;
+                        td.Capture(this);
+                        result = true;
+                    }
+
+                }
             }
             return result;
         }
@@ -402,6 +490,10 @@ namespace DrWPF.Windows.Controls
             if (CapturedDevice is MouseDevice)
             {
                 ReleaseMouseCapture();
+            }
+            else if (CapturedDevice is TouchDevice)
+            {
+                ReleaseTouchCapture(CapturedDevice as TouchDevice);
             }
             CapturedDevice = null;
         }
@@ -413,7 +505,25 @@ namespace DrWPF.Windows.Controls
             if (CapturedDevice == null) base.OnIsMouseCapturedChanged(e);
         }
 
+        // Touch Ready
+        protected override void OnLostTouchCapture(TouchEventArgs e)
+        {
+            if (e.Device == CapturedDevice)
+            {
+                EndDragOperation();
+            }
+        }
+
         protected override void OnLostMouseCapture(MouseEventArgs e)
+        {
+            if (e.Device == CapturedDevice)
+            {
+                EndDragOperation();
+            }
+        }
+
+        // Touch Ready
+        protected override void OnTouchUp(TouchEventArgs e)
         {
             if (e.Device == CapturedDevice)
             {
@@ -427,6 +537,21 @@ namespace DrWPF.Windows.Controls
             {
                 EndDragOperation();
             }
+        }
+
+        // Touch Ready
+        protected override void OnTouchMove(TouchEventArgs e)
+        {
+            if (e.Device == CapturedDevice && LoopPanel != null)
+            {
+                UpdateDragPosition((CapturedDevice as TouchDevice).GetTouchPoint(LoopPanel).Position);
+                e.Handled = true;
+            }
+            else
+            {
+                base.OnTouchMove(e);
+            }
+            
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

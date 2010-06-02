@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Windows.Threading;
+using System.Windows.Media.Animation;
 
 namespace TablectionSketch
 {
@@ -21,26 +22,54 @@ namespace TablectionSketch
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer _toolShowTimer = new DispatcherTimer();
+        DispatcherTimer _slideShowTimer = new DispatcherTimer();
+
+
+        Storyboard _toolHideAnimation;
+        Storyboard _slideHideAnimation;
+        
+       
         public MainWindow()
         {
             InitializeComponent();
+
+
+            //this._slideHideAnimation = this.FindResource("slideListHideAnimaton") as Storyboard;
+            //this._toolHideAnimation = this.FindResource("toolPanelHideAnimaton") as Storyboard;
+
+            //_slideShowTimer.Interval = TimeSpan.FromSeconds(3);
+            //_slideShowTimer.Tick += new EventHandler(_slideShowTimer_Tick);
+
+            //_toolShowTimer.Interval = TimeSpan.FromSeconds(3);
+            //_toolShowTimer.Tick += new EventHandler(_toolShowTimer_Tick);
         }
 
-        private void Grid_TouchDown(object sender, TouchEventArgs e)
-        {
-            ToolPanel.Visibility = Visibility.Visible;            
-        }
-                
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ToolPanel.Visibility = Visibility.Visible;
-        }
+        //void _slideShowTimer_Tick(object sender, EventArgs e)
+        //{
+        //    this._slideShowTimer.Stop();
+        //    this._slideHideAnimation.Begin();
+            
+        //}
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        //void _toolShowTimer_Tick(object sender, EventArgs e)
+        //{
+        //    this._toolHideAnimation.Stop();
+        //    this._toolHideAnimation.Begin();
+        //}
+
+        private void btnBottom_Click(object sender, RoutedEventArgs e)
         {
+            //this.RestartSlideTimer();
             this.SlideList.Visibility = System.Windows.Visibility.Visible;
         }
 
+        private void btnTop_Click(object sender, RoutedEventArgs e)
+        {
+            //this.RestartToolTimer();
+            this.ToolPanel.Visibility = Visibility.Visible;
+        }
+        
         private void SlideListHideAnimation_Completed(object sender, EventArgs e)
         {
             this.SlideList.Visibility = System.Windows.Visibility.Collapsed;
@@ -48,10 +77,9 @@ namespace TablectionSketch
 
         private void ToolPanelHideAnimaton_Completed(object sender, EventArgs e)
         {
-            ToolPanel.Visibility = Visibility.Collapsed;
+            this.ToolPanel.Visibility = Visibility.Collapsed;
         }
-
-
+        
 
         private void HeaderBasicTool_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -67,6 +95,42 @@ namespace TablectionSketch
         {
             this.radioStrokes.IsChecked = true;
         }
-        
+
+        private void DrawingCanvas_TouchUp(object sender, TouchEventArgs e)
+        {
+            
+        }
+
+        private void DrawingCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        //private void RestartSlideTimer()
+        //{
+        //    if (this._slideShowTimer.IsEnabled == false)
+        //    {
+        //        this._slideShowTimer.Start();
+        //    }
+        //}
+
+        //private void RestartToolTimer()
+        //{
+        //    if (this._toolShowTimer.IsEnabled == false)
+        //    {
+        //        this._toolShowTimer.Start();
+        //    }
+        //}
+
+        private void SlideList_TouchEnter(object sender, TouchEventArgs e)
+        {
+            
+        }
+
+        private void SlideList_TouchLeave(object sender, TouchEventArgs e)
+        {
+
+        }
+
     }
 }

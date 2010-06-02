@@ -16,7 +16,7 @@ namespace TablectionSketch.Controls
         {
             base.OnTouchDown(e);
 
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         protected override void OnTouchMove(System.Windows.Input.TouchEventArgs e)
@@ -35,7 +35,7 @@ namespace TablectionSketch.Controls
         {
             base.OnTouchUp(e);
 
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         //protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize)

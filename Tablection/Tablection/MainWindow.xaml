@@ -58,43 +58,82 @@
             <conv:ColorToColorToolConverter x:Key="ColorToolConverter"/>
             <conv:DoubleToStrokeToolConverter x:Key="StrokeToolConverter"/>
 
+            <!-- 애니메이션 -->            
+            <Storyboard x:Key="toolPanelHideAnimaton" Completed="ToolPanelHideAnimaton_Completed">
+                <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
+            </Storyboard>
+
+            <Storyboard x:Key="slideListHideAnimaton" Completed="SlideListHideAnimation_Completed">
+                <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
+            </Storyboard>
+
+            <Storyboard x:Key="toolPanelShowAnimaton">
+                <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
+            </Storyboard>
+
+            <Storyboard x:Key="slideListShowAnimaton">
+                <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
+            </Storyboard>
+
         </ResourceDictionary>                
     
     </Window.Resources>
 
     <Grid x:Name="grdMain"
-          Background="#FF6F6F6F"          
-          MouseDown="Grid_MouseDown"
-          TouchDown="Grid_TouchDown">
-        <Grid.Triggers>
-            <EventTrigger RoutedEvent="MouseDown">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <DoubleAnimation From="0" To="1.0" Duration="0:0:0.1" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-            <EventTrigger RoutedEvent="TouchDown">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <DoubleAnimation From="0" To="1.0" Duration="0:0:0.1" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>           
-        </Grid.Triggers>
-     
+          Background="#FF6F6F6F">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="85"/>
+        </Grid.RowDefinitions>
+
+        <!-- 하단 슬라이드 팝업 버튼 -->
+        <Button x:Name="btnTop"
+                Grid.Row="0"
+                Click="btnTop_Click">
+            <Button.Triggers>                
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimaton}"/>
+                </EventTrigger>
+            </Button.Triggers>
+            <Button.Template>
+                <ControlTemplate>
+                    <Rectangle Fill="Blue"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+
+        <!-- 하단 슬라이드 팝업 버튼 -->
+        <Button x:Name="btnBottom"
+                Grid.Row="1"
+                VerticalAlignment="Stretch"
+                Click="btnBottom_Click">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimaton}"/>
+                </EventTrigger>
+            </Button.Triggers>
+            <Button.Template>
+                <ControlTemplate>
+                    <Rectangle Fill="Orange"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+
         <!-- 메인 그림패널 -->
-        <Grid Margin="15">
+        <Grid Margin="85" Grid.RowSpan="2">
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
-                        DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
-                        EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}">
+                                         DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
+                                         EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}">
                 <control:MultiTouchInkCanvas.Background>
                     <ImageBrush                             
                         Opacity="0.8" 
                         Stretch="Uniform" 
                         ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
                 </control:MultiTouchInkCanvas.Background>
+                
             </control:MultiTouchInkCanvas>
         </Grid>
 
@@ -104,83 +143,34 @@
                  Height="150"
                  Margin="20"
                  SelectedIndex="0"
+                 Opacity="0"
                  Visibility="Collapsed"                 
                  ScrollViewer.CanContentScroll="False"
                  ScrollViewer.PanningMode="HorizontalOnly"
                  ScrollViewer.PanningDeceleration="0.5"
+                 TouchEnter="SlideList_TouchEnter"
                  ItemsSource="{Binding Source={StaticResource Slides}}"
                  ItemContainerStyle="{StaticResource SlideContainerStyle}"
                  ItemTemplate="{StaticResource SlideDataTemplate}"
                  Style="{StaticResource SlideListBoxStyle}">
-            <ListBox.Triggers>
-                <EventTrigger RoutedEvent="TouchLeave">
-                    <BeginStoryboard>
-                        <Storyboard Completed="SlideListHideAnimation_Completed">
-                            <DoubleAnimation From="1" To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard>
-                        <Storyboard x:Name="SlideListHideAnimation" Completed="SlideListHideAnimation_Completed">
-                            <DoubleAnimation From="1" To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </ListBox.Triggers>
             <ListBox.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </ListBox.Effect>
         </ListBox>
-
-        <!-- 하단 슬라이드 팝업 버튼 -->
-        <Button Height="15" 
-                Margin="15,0,15,0" 
-                VerticalAlignment="Bottom"
-                Click="Button_Click">
-            <Button.Triggers>
-                <EventTrigger RoutedEvent="Button.Click">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation From="0" To="1" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>                
-            </Button.Triggers>
-            <Button.Template>
-                <ControlTemplate>
-                    <Rectangle Fill="Transparent"/>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+        
+        
         
         <!-- 툴패널 -->
-        <StackPanel x:Name="ToolPanel"                          
-                    Canvas.Top="50"
+        <StackPanel x:Name="ToolPanel"
                     Orientation="Horizontal"
                     TextBlock.Foreground="Black"                        
                     VerticalAlignment="Center"
+                    Opacity="0"
                     Visibility="Collapsed">
             <StackPanel.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </StackPanel.Effect>
-            <StackPanel.Triggers>
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard>
-                        <Storyboard x:Name="ToolPanelHideAnimaton" Completed="ToolPanelHideAnimaton_Completed">
-                            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="TouchLeave">
-                    <BeginStoryboard>
-                        <Storyboard Completed="ToolPanelHideAnimaton_Completed">
-                            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </StackPanel.Triggers>
-           
+                       
             <dw:LoopingListBox  Height="130"
                                     Background="Transparent"
                                     Orientation="Vertical"
