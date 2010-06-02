@@ -60,7 +60,7 @@
 
             <!-- 애니메이션 -->            
             <Storyboard x:Key="toolPanelHideAnimaton" Completed="ToolPanelHideAnimaton_Completed">
-                <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
+                <DoubleAnimation To="0" BeginTime="0:0:3" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
             </Storyboard>
 
             <Storyboard x:Key="slideListHideAnimaton" Completed="SlideListHideAnimation_Completed">
@@ -190,11 +190,28 @@
             <StackPanel.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </StackPanel.Effect>
+            <StackPanel.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <StopStoryboard BeginStoryboardName="ToolPanelHideAnimaton"/>
+                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimaton}"/>
+                </EventTrigger>               
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard x:Name="ToolPanelHideAnimaton" Storyboard="{StaticResource toolPanelHideAnimaton}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TouchEnter">
+                    <StopStoryboard BeginStoryboardName="ToolPanelHideAnimaton2"/>
+                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimaton}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TouchLeave">
+                    <BeginStoryboard x:Name="ToolPanelHideAnimaton2" Storyboard="{StaticResource toolPanelHideAnimaton}"/>
+                </EventTrigger>
+            </StackPanel.Triggers>
                        
-            <dw:LoopingListBox  Height="90"
-                                    Background="Transparent"
-                                    Orientation="Vertical"
-                                    BorderThickness="0"                                    
+            <dw:LoopingListBox  Height="260"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                Orientation="Vertical"
+                                BorderThickness="0"                                    
                                     >
                 <!-- 툴 목록 UI -->
                 <TextBlock x:Name="HeaderBasicTool"
@@ -214,8 +231,24 @@
                                MouseLeftButtonDown="HeaderStrokeTool_MouseLeftButtonDown"
                                Style="{StaticResource ToolHeaderStyle}"/>
 
+                <!-- 굵기 목록 UI -->
+                <TextBlock x:Name="Reserved1"
+                               Text="Reserved1"                                
+                               Style="{StaticResource ToolHeaderStyle}"/>
+
+                <!-- 굵기 목록 UI -->
+                <TextBlock x:Name="Reserved2"
+                               Text="Reserved2"                                
+                               Style="{StaticResource ToolHeaderStyle}"/>
+
+                <!-- 굵기 목록 UI -->
+                <TextBlock x:Name="Reserved3"
+                               Text="Reserved2"                                
+                               Style="{StaticResource ToolHeaderStyle}"/>
+
             </dw:LoopingListBox>
-            <StackPanel>
+            <StackPanel
+                VerticalAlignment="Center">
                 <RadioButton x:Name="radioTools"                                 
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 툴 목록 UI -->
@@ -235,8 +268,7 @@
                                        SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
                                        ItemTemplate="{StaticResource ColorToolDataTemplate}"
                                        ItemsSource="{Binding Source={StaticResource Colors}}"
-                                       ItemContainerStyle="{StaticResource ColorToolContainerStyle}"             
-                                       />
+                                       ItemContainerStyle="{StaticResource ColorToolContainerStyle}"/>
                 </RadioButton>
 
                 <RadioButton x:Name="radioStrokes"
