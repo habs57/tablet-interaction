@@ -118,6 +118,21 @@ namespace TablectionSketch
             System.Diagnostics.Debug.WriteLine("LoopingListBox_SelectionChanged");
         }
 
+        private void HeaderBasicTool_Selected(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("HeaderBasicTool_Selected");
+        }
+
+        private void HeaderColorTool_Selected(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("HeaderColorTool_Selected");
+        }
+
+        private void HeaderStrokeTool_Selected(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("HeaderStrokeTool_Selected");
+        }
+
 
     }
 }

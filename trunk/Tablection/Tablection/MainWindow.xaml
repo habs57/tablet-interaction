@@ -7,7 +7,7 @@
         xmlns:control="clr-namespace:TablectionSketch.Controls"
         xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
         xmlns:conv="clr-namespace:TablectionSketch.Converter" 
-        IsManipulationEnabled="True"
+        IsManipulationEnabled="False"
         Title="TablectionSketch" Height="768" Width="1024">
     
     <Window.Resources>
@@ -220,19 +220,22 @@
                                     >
                 <!-- 툴 목록 UI -->
                 <TextBlock x:Name="HeaderBasicTool"
-                               Text="Tool"                                        
+                               Text="Tool"
+                               Selector.Selected="HeaderBasicTool_Selected"
                                MouseLeftButtonDown="HeaderBasicTool_MouseLeftButtonDown"
                                Style="{StaticResource ToolHeaderStyle}"/>
 
                 <!-- 색 목록 UI -->
                 <TextBlock x:Name="HeaderColorTool"
                                Text="Color"  
+                               Selector.Selected="HeaderColorTool_Selected"
                                MouseLeftButtonDown="HeaderColorTool_MouseLeftButtonDown"
                                Style="{StaticResource ToolHeaderStyle}"/>
 
                 <!-- 굵기 목록 UI -->
                 <TextBlock x:Name="HeaderStrokeTool"
                                Text="Storke" 
+                               Selector.Selected="HeaderStrokeTool_Selected"
                                MouseLeftButtonDown="HeaderStrokeTool_MouseLeftButtonDown"
                                Style="{StaticResource ToolHeaderStyle}"/>
 
