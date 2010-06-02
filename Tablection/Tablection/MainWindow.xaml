@@ -215,6 +215,7 @@
                                 VerticalAlignment="Center"
                                 Background="Transparent"
                                 Orientation="Vertical"
+                                SelectionChanged="LoopingListBox_SelectionChanged"
                                 BorderThickness="0"                                    
                                     >
                 <!-- 툴 목록 UI -->

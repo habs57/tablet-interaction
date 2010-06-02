@@ -113,6 +113,11 @@ namespace TablectionSketch
             System.Diagnostics.Debug.WriteLine("ToolPanel_TouchLeave");
         }
 
+        private void LoopingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("LoopingListBox_SelectionChanged");
+        }
+
 
     }
 }
