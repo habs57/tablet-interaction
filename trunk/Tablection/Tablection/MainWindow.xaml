@@ -58,20 +58,20 @@
             <conv:ColorToColorToolConverter x:Key="ColorToolConverter"/>
             <conv:DoubleToStrokeToolConverter x:Key="StrokeToolConverter"/>
 
-            <!-- 애니메이션 -->            
-            <Storyboard x:Key="toolPanelHideAnimaton" Completed="ToolPanelHideAnimaton_Completed">
+            <!-- 애니메이션 -->
+            <Storyboard x:Key="toolPanelHideAnimation" Completed="ToolPanelHideAnimaton_Completed">
                 <DoubleAnimation To="0" BeginTime="0:0:3" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
             </Storyboard>
 
-            <Storyboard x:Key="slideListHideAnimaton" Completed="SlideListHideAnimation_Completed">
+            <Storyboard x:Key="slideListHideAnimation" Completed="SlideListHideAnimation_Completed">
                 <DoubleAnimation To="0" BeginTime="0:0:3" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
             </Storyboard>
 
-            <Storyboard x:Key="toolPanelShowAnimaton">
+            <Storyboard x:Key="toolPanelShowAnimation">
                 <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
             </Storyboard>
 
-            <Storyboard x:Key="slideListShowAnimaton">
+            <Storyboard x:Key="slideListShowAnimation">
                 <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>
             </Storyboard>
 
@@ -92,7 +92,7 @@
                 Click="btnTop_Click">
             <Button.Triggers>                
                 <EventTrigger RoutedEvent="Button.Click">
-                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimaton}"/>
+                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
                 </EventTrigger>
             </Button.Triggers>
             <Button.Template>
@@ -110,7 +110,7 @@
                 Click="btnBottom_Click">
             <Button.Triggers>
                 <EventTrigger RoutedEvent="Button.Click">
-                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimaton}"/>
+                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
                 </EventTrigger>
             </Button.Triggers>
             <Button.Template>
@@ -156,20 +156,20 @@
                  ItemContainerStyle="{StaticResource SlideContainerStyle}"
                  ItemTemplate="{StaticResource SlideDataTemplate}"
                  Style="{StaticResource SlideListBoxStyle}">
-            <ListBox.Triggers>
+            <ListBox.Triggers>                
                 <EventTrigger RoutedEvent="MouseEnter">
-                    <StopStoryboard BeginStoryboardName="SlideListHideAnimaton"/>
-                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimaton}"/>
+                    <StopStoryboard BeginStoryboardName="SlideListHideAnimation"/>
+                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard x:Name="SlideListHideAnimaton" Storyboard="{StaticResource slideListHideAnimaton}"/>                    
+                    <BeginStoryboard x:Name="SlideListHideAnimation" Storyboard="{StaticResource slideListHideAnimation}"/>                    
                 </EventTrigger>
                 <EventTrigger RoutedEvent="TouchEnter">
-                    <StopStoryboard BeginStoryboardName="SlideListHideAnimaton2"/>
-                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimaton}"/>
+                    <StopStoryboard BeginStoryboardName="SlideListHideAnimation2"/>
+                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="TouchLeave">
-                    <BeginStoryboard x:Name="SlideListHideAnimaton2" Storyboard="{StaticResource slideListHideAnimaton}"/>
+                    <BeginStoryboard x:Name="SlideListHideAnimation2" Storyboard="{StaticResource slideListHideAnimation}"/>
                 </EventTrigger>
             </ListBox.Triggers>
             <ListBox.Effect>
@@ -185,6 +185,9 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     Opacity="0"
+                    TouchEnter="ToolPanel_TouchEnter"
+                    TouchLeave="ToolPanel_TouchLeave"
+                    MouseEnter="ToolPanel_MouseEnter"
                     MouseLeave="ToolPanel_MouseLeave"
                     Visibility="Collapsed">
             <StackPanel.Effect>
@@ -192,18 +195,18 @@
             </StackPanel.Effect>
             <StackPanel.Triggers>
                 <EventTrigger RoutedEvent="MouseEnter">
-                    <StopStoryboard BeginStoryboardName="ToolPanelHideAnimaton"/>
-                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimaton}"/>
+                    <StopStoryboard BeginStoryboardName="ToolPanelHideAnimation"/>
+                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
                 </EventTrigger>               
                 <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard x:Name="ToolPanelHideAnimaton" Storyboard="{StaticResource toolPanelHideAnimaton}"/>
+                    <BeginStoryboard x:Name="ToolPanelHideAnimation" Storyboard="{StaticResource toolPanelHideAnimation}"/>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="TouchEnter">
-                    <StopStoryboard BeginStoryboardName="ToolPanelHideAnimaton2"/>
-                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimaton}"/>
+                    <StopStoryboard BeginStoryboardName="ToolPanelHideAnimation2"/>
+                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="TouchLeave">
-                    <BeginStoryboard x:Name="ToolPanelHideAnimaton2" Storyboard="{StaticResource toolPanelHideAnimaton}"/>
+                    <BeginStoryboard x:Name="ToolPanelHideAnimation2" Storyboard="{StaticResource toolPanelHideAnimation}"/>
                 </EventTrigger>
             </StackPanel.Triggers>
                        
