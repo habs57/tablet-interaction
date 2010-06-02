@@ -6,7 +6,8 @@
         xmlns:tool="clr-namespace:TablectionSketch.Tool"
         xmlns:control="clr-namespace:TablectionSketch.Controls"
         xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
-        xmlns:conv="clr-namespace:TablectionSketch.Converter"        
+        xmlns:conv="clr-namespace:TablectionSketch.Converter" 
+        IsManipulationEnabled="True"
         Title="TablectionSketch" Height="768" Width="1024">
     
     <Window.Resources>
