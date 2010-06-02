@@ -29,7 +29,7 @@ namespace TablectionSketch
 
         private void btnBottom_Click(object sender, RoutedEventArgs e)
         {        
-            this.SlideList.Visibility = System.Windows.Visibility.Visible;
+            this.SlideList.Visibility = Visibility.Visible;
         }
 
         private void btnTop_Click(object sender, RoutedEventArgs e)
@@ -39,7 +39,7 @@ namespace TablectionSketch
         
         private void SlideListHideAnimation_Completed(object sender, EventArgs e)
         {
-            this.SlideList.Visibility = System.Windows.Visibility.Collapsed;
+            this.SlideList.Visibility = Visibility.Collapsed;
         }
 
         private void ToolPanelHideAnimaton_Completed(object sender, EventArgs e)
@@ -82,12 +82,7 @@ namespace TablectionSketch
         {
             System.Diagnostics.Debug.WriteLine("SlideList_TouchLeave");
         }
-
-        private void ToolPanel_MouseLeave(object sender, MouseEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("ToolPanel_MouseLeave");
-        }
-
+    
         private void SlideList_MouseEnter(object sender, MouseEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("SlideList_MouseEnter");
@@ -96,6 +91,26 @@ namespace TablectionSketch
         private void SlideList_MouseLeave(object sender, MouseEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("SlideList_MouseLeave");
+        }
+
+        private void ToolPanel_MouseEnter(object sender, MouseEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("ToolPanel_MouseEnter");
+        }
+
+        private void ToolPanel_MouseLeave(object sender, MouseEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("ToolPanel_MouseLeave");
+        }
+
+        private void ToolPanel_TouchEnter(object sender, TouchEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("ToolPanel_TouchEnter");
+        }
+
+        private void ToolPanel_TouchLeave(object sender, TouchEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("ToolPanel_TouchLeave");
         }
 
 
