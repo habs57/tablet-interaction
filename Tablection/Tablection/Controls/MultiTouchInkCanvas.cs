@@ -38,6 +38,8 @@ namespace TablectionSketch.Controls
             //e.Handled = true;
         }
 
+        #region Test
+
         //protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize)
         //{
         //    System.Diagnostics.Debug.WriteLine("ArrangeOverride");
@@ -127,5 +129,7 @@ namespace TablectionSketch.Controls
         //    System.Diagnostics.Debug.WriteLine("OnVisualParentChanged");
         //    base.OnVisualParentChanged(oldParent);
         //}
+
+        #endregion
     }
 }
