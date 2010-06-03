@@ -497,6 +497,7 @@ namespace DrWPF.Windows.Controls
             }
             CapturedDevice = null;
         }
+       
 
         protected override void OnIsMouseCapturedChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -505,6 +506,7 @@ namespace DrWPF.Windows.Controls
             if (CapturedDevice == null) base.OnIsMouseCapturedChanged(e);
         }
 
+
         // Touch Ready
         protected override void OnLostTouchCapture(TouchEventArgs e)
         {
@@ -512,6 +514,8 @@ namespace DrWPF.Windows.Controls
             {
                 EndDragOperation();
             }
+
+            //base.OnLostTouchCapture(e);
         }
 
         protected override void OnLostMouseCapture(MouseEventArgs e)
@@ -528,7 +532,35 @@ namespace DrWPF.Windows.Controls
             if (e.Device == CapturedDevice)
             {
                 EndDragOperation();
+                                
+                VisualTreeHelper.HitTest(this, new HitTestFilterCallback(testfilter), new HitTestResultCallback(testResult), new PointHitTestParameters(e.GetTouchPoint(this).Position)); 
+            }                       
+        }
+
+        gvzxszzs
+
+        HitTestFilterBehavior testfilter(DependencyObject o)
+        {
+            ListBoxItem item = o as ListBoxItem;
+            if (item != null)
+            {
+                item.IsSelected = true;
+                return HitTestFilterBehavior.Stop;
             }
+
+            return HitTestFilterBehavior.Continue;
+        }
+
+        HitTestResultBehavior testResult(HitTestResult o)
+        {
+            ListBoxItem item = o.VisualHit as ListBoxItem;
+            if (item != null)
+            {
+                item.IsSelected = true;
+                return HitTestResultBehavior.Stop;
+            }
+
+            return HitTestResultBehavior.Continue;
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
