@@ -542,8 +542,8 @@ namespace DrWPF.Windows.Controls
             ListBoxItem item = o as ListBoxItem;
             if (item != null)
             {
-                //item.IsSelected = true;
-                return HitTestFilterBehavior.ContinueSkipChildren;
+                item.IsSelected = true;
+                return HitTestFilterBehavior.Stop;
             }
 
             return HitTestFilterBehavior.Continue;
