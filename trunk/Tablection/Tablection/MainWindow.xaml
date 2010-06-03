@@ -51,8 +51,11 @@
             <tool:ToolCollection x:Key="Strokes">
                 <tool:StrokeTool Name="5.0 pt" Width="5" Height="5"/>
                 <tool:StrokeTool Name="10.0 pt" Width="10" Height="10"/>
+                <tool:StrokeTool Name="15.0 pt" Width="15" Height="15"/>
                 <tool:StrokeTool Name="20.0 pt" Width="20" Height="20"/>
+                <tool:StrokeTool Name="25.0 pt" Width="25" Height="25"/>
                 <tool:StrokeTool Name="30.0 pt" Width="30" Height="30"/>
+                <tool:StrokeTool Name="35.0 pt" Width="35" Height="35"/>
                 <tool:StrokeTool Name="40.0 pt" Width="40" Height="40"/>
             </tool:ToolCollection>
 
