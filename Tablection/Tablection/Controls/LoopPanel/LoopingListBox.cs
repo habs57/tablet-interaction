@@ -535,17 +535,15 @@ namespace DrWPF.Windows.Controls
                                 
                 VisualTreeHelper.HitTest(this, new HitTestFilterCallback(testfilter), new HitTestResultCallback(testResult), new PointHitTestParameters(e.GetTouchPoint(this).Position)); 
             }                       
-        }
-
-        gvzxszzs
+        }       
 
         HitTestFilterBehavior testfilter(DependencyObject o)
         {
             ListBoxItem item = o as ListBoxItem;
             if (item != null)
             {
-                item.IsSelected = true;
-                return HitTestFilterBehavior.Stop;
+                //item.IsSelected = true;
+                return HitTestFilterBehavior.ContinueSkipChildren;
             }
 
             return HitTestFilterBehavior.Continue;
@@ -567,7 +565,7 @@ namespace DrWPF.Windows.Controls
         {
             if (e.Device == CapturedDevice)
             {
-                EndDragOperation();
+                EndDragOperation();                
             }
         }
 
