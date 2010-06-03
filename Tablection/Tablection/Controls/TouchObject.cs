@@ -11,10 +11,10 @@ namespace TablectionSketch.Controls
 {
     public class TouchObject : Button
     {
-        static TouchObject()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(TouchObject), new FrameworkPropertyMetadata(typeof(TouchObject)));
-        }
+        //static TouchObject()
+        //{
+        //    DefaultStyleKeyProperty.OverrideMetadata(typeof(TouchObject), new FrameworkPropertyMetadata(typeof(TouchObject)));
+        //}
 
         public TouchObject()
         {
