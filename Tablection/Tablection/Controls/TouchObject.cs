@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace TablectionSketch.Controls
 {
-    public class TouchObject : Control
+    public class TouchObject : Button
     {
         static TouchObject()
         {
