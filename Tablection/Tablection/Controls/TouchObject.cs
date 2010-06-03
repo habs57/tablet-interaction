@@ -9,8 +9,13 @@ using System.Windows.Shapes;
 
 namespace TablectionSketch.Controls
 {
-    public class TouchObject : Canvas
+    public class TouchObject : Control
     {
+        static TouchObject()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TouchObject), new FrameworkPropertyMetadata(typeof(TouchObject)));
+        }
+
         public TouchObject()
         {
             this.SetValue(TouchObject.IsManipulationEnabledProperty, true);

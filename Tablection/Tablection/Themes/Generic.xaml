@@ -4,6 +4,21 @@
     xmlns:control="clr-namespace:TablectionSketch.Controls"
     xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
     xmlns:local="clr-namespace:TablectionSketch">
+    
+    <Style TargetType="{x:Type control:TouchObject}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Background="White" CornerRadius="3">
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0"/>
+                        </Border.Effect>
+                        <ContentPresenter/>                        
+                    </Border>                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="{x:Type dw:LoopingListBox}" BasedOn="{StaticResource {x:Type ListBox}}">
         <Setter Property="Padding" Value="2" />
