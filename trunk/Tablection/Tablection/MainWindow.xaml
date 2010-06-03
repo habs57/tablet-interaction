@@ -149,7 +149,9 @@
                         Stretch="Uniform" 
                         ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
                 </control:MultiTouchInkCanvas.Background>
-                
+                <control:TouchObject Width="200" Height="200"/>
+                <control:TouchObject Width="200" Height="200"/>
+                    
             </control:MultiTouchInkCanvas>
         </Grid>
 
