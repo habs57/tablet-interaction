@@ -105,9 +105,15 @@
         <!-- 하단 슬라이드 팝업 버튼 -->
         <Button x:Name="btnTop"
                 Grid.Row="0"
+                IsManipulationEnabled="False"
+                ManipulationStarted="btnTop_ManipulationStarted"
+                ManipulationDelta="btnTop_ManipulationDelta"
                 Click="btnTop_Click">
             <Button.Triggers>                
                 <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="ManipulationStarted">
                     <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
                 </EventTrigger>
             </Button.Triggers>
