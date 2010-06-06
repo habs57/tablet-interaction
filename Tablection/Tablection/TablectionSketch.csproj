@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Controls\LoopPanel\BeginDragEventArgs.cs" />
     <Compile Include="Controls\LoopPanel\DoubleHelper.cs" />
+    <Compile Include="Controls\LoopPanel\HitTestHelper.cs" />
     <Compile Include="Controls\LoopPanel\LoopingListBox.cs" />
     <Compile Include="Controls\LoopPanel\LoopPanel.cs" />
     <Compile Include="Controls\LoopPanel\RoutedEventHelper.cs" />
