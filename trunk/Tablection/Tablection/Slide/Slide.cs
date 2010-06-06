@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Ink;
+
 using System.Windows.Media;
 using System.ComponentModel;
 
@@ -37,7 +41,24 @@ namespace TablectionSketch.Slide
                 _image = value;
                 RaisePropertyChanged("Image");
             }
-        }        
+        }
+
+
+        private StrokeCollection _strokes = null;
+        public StrokeCollection Strokes
+        {
+            get
+            {
+                if (this._strokes == null)
+                {
+                    this._strokes = new StrokeCollection();
+                }
+                return this._strokes;
+            }
+
+        }
+
+
 
 
         #region INotifyPropertyChanged Members

@@ -157,10 +157,14 @@ namespace TablectionSketch
             System.Diagnostics.Debug.WriteLine("llbStroke_SelectionChanged");
         }
 
+
+#region Button Top for Tools 
+        
         private void btnTop_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("btnTop_ManipulationDelta");
-           
+        {            
+            //툴 스크롤
+            this.llbToolHeaders.Offset += e.DeltaManipulation.Translation.Length;
+            System.Diagnostics.Debug.WriteLine(string.Format("btnTop_ManipulationDelta : Offset - {0}, Trans - {1}",this.llbToolHeaders.Offset, e.DeltaManipulation.Translation.Length));
         }
 
         private void btnTop_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
@@ -168,6 +172,30 @@ namespace TablectionSketch
             System.Diagnostics.Debug.WriteLine("btnTop_ManipulationStarted");
             this.ToolPanel.Visibility = Visibility.Visible;
         }
+
+#endregion
+
+#region Button Bottom for Tools 
+                
+        private void btnBottom_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+            //페이지 넘기기 인터렉션
+            int currentIndex = this.SlideList.SelectedIndex;
+            int totalSlides = this.SlideList.Items.Count;
+
+            double trans = e.DeltaManipulation.Translation.X;
+
+            System.Diagnostics.Debug.WriteLine(string.Format("btnBottom_ManipulationDelta : X - {0}", trans));
+
+        }
+
+        private void btnBottom_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("btnBottom_ManipulationStarted");            
+        }
+        
+#endregion
+
 
 
     }

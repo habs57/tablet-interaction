@@ -31,6 +31,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using TablectionSketch.Controls.LoopPanel;
 
 namespace DrWPF.Windows.Controls
 {
@@ -533,33 +534,11 @@ namespace DrWPF.Windows.Controls
             {
                 EndDragOperation();
                                 
-                VisualTreeHelper.HitTest(this, new HitTestFilterCallback(testfilter), new HitTestResultCallback(testResult), new PointHitTestParameters(e.GetTouchPoint(this).Position)); 
+                //VisualTreeHelper.HitTest(this, new HitTestFilterCallback(testfilter), new HitTestResultCallback(testResult), new PointHitTestParameters(e.GetTouchPoint(this).Position)); 
             }                       
         }       
 
-        HitTestFilterBehavior testfilter(DependencyObject o)
-        {
-            ListBoxItem item = o as ListBoxItem;
-            if (item != null)
-            {
-                item.IsSelected = true;
-                return HitTestFilterBehavior.Stop;
-            }
-
-            return HitTestFilterBehavior.Continue;
-        }
-
-        HitTestResultBehavior testResult(HitTestResult o)
-        {
-            ListBoxItem item = o.VisualHit as ListBoxItem;
-            if (item != null)
-            {
-                item.IsSelected = true;
-                return HitTestResultBehavior.Stop;
-            }
-
-            return HitTestResultBehavior.Continue;
-        }
+     
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
@@ -606,7 +585,22 @@ namespace DrWPF.Windows.Controls
                 ? (_lastDragPosition.X - currentDragPosition.X)
                 : (_lastDragPosition.Y - currentDragPosition.Y));
             _lastDragPosition = currentDragPosition;
+
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine(string.Format("UpdateDragPosition : {0}", currentDragPosition));
+
+            System.Diagnostics.Debug.WriteLine(string.Format("Center : x {0}, y {1}", _centerPoint.X, _centerPoint.Y));
+#endif
+            this.HitTestHelper.SelectItemAt(this._centerPoint);            
         }
+                
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            _centerPoint = new Point((int)this.ActualWidth >> 1, (int)this.ActualHeight >> 1);
+
+            base.OnRenderSizeChanged(sizeInfo);
+        }
+             
 
         #endregion
 
@@ -669,7 +663,22 @@ namespace DrWPF.Windows.Controls
 
         #region fields
 
+        private SelectHitTestHelper _hitTestHelper = null;
+        private SelectHitTestHelper HitTestHelper
+        {
+            get
+            {
+                if (this._hitTestHelper == null)
+                {
+                    this._hitTestHelper = new SelectHitTestHelper(this);
+                }
+                return this._hitTestHelper;
+            }
+        }
+
         private Point _lastDragPosition;
+
+        private Point _centerPoint;
 
         #endregion
     }

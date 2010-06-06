@@ -105,7 +105,7 @@
         <!-- 하단 슬라이드 팝업 버튼 -->
         <Button x:Name="btnTop"
                 Grid.Row="0"
-                IsManipulationEnabled="False"
+                IsManipulationEnabled="True"
                 ManipulationStarted="btnTop_ManipulationStarted"
                 ManipulationDelta="btnTop_ManipulationDelta"
                 Click="btnTop_Click">
@@ -128,10 +128,16 @@
         <!-- 하단 슬라이드 팝업 버튼 -->
         <Button x:Name="btnBottom"
                 Grid.Row="1"
+                IsManipulationEnabled="True"
+                ManipulationStarted="btnBottom_ManipulationStarted"
+                ManipulationDelta="btnBottom_ManipulationDelta"
                 VerticalAlignment="Stretch"
                 Click="btnBottom_Click">
             <Button.Triggers>
                 <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="ManipulationStarted">
                     <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
                 </EventTrigger>
             </Button.Triggers>
@@ -148,15 +154,16 @@
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
-                                         EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}">
+                                         EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
+                                         Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}">
                 <control:MultiTouchInkCanvas.Background>
                     <ImageBrush                             
                         Opacity="0.8" 
                         Stretch="Uniform" 
                         ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
                 </control:MultiTouchInkCanvas.Background>
-                <control:TouchObject Width="200" Height="200"/>
-                <control:TouchObject Width="200" Height="200"/>
+                <!--<control:TouchObject Width="200" Height="200"/>
+                <control:TouchObject Width="200" Height="200"/>-->
                     
             </control:MultiTouchInkCanvas>
         </Grid>
@@ -234,7 +241,8 @@
                 </EventTrigger>
             </StackPanel.Triggers>
                        
-            <dw:LoopingListBox  Height="260"
+            <dw:LoopingListBox  x:Name="llbToolHeaders"
+                                Height="260"
                                 VerticalAlignment="Center"
                                 Background="Transparent"
                                 Orientation="Vertical"
