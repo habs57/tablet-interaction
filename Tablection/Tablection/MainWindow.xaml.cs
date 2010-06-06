@@ -157,6 +157,18 @@ namespace TablectionSketch
             System.Diagnostics.Debug.WriteLine("llbStroke_SelectionChanged");
         }
 
+        private void btnTop_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("btnTop_ManipulationDelta");
+           
+        }
+
+        private void btnTop_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("btnTop_ManipulationStarted");
+            this.ToolPanel.Visibility = Visibility.Visible;
+        }
+
 
     }
 }
