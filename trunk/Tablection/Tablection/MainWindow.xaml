@@ -7,6 +7,7 @@
         xmlns:control="clr-namespace:TablectionSketch.Controls"
         xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
         xmlns:conv="clr-namespace:TablectionSketch.Converter" 
+        xmlns:data="clr-namespace:TablectionSketch.Data"
         IsManipulationEnabled="False"
         Title="TablectionSketch" Height="768" Width="1024">
     
@@ -17,6 +18,7 @@
                 <!-- 컨트롤들의 스타일을 지정해주는 외부 리소스 정의 파일 -->
                 <ResourceDictionary Source="Common.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+                       
             
             <!-- 툴의 헤더 모음 -->
             <tool:ToolCollection x:Key="ToolHeaders">
@@ -162,9 +164,24 @@
                         Stretch="Uniform" 
                         ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
                 </control:MultiTouchInkCanvas.Background>
-                <!--<control:TouchObject Width="200" Height="200"/>
-                <control:TouchObject Width="200" Height="200"/>-->
-                    
+                <ItemsControl ItemsSource="{Binding SelectedItem.Objects, ElementName=SlideList}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas Background="Transparent" Width="{Binding ActualWidth, ElementName=DrawingCanvas, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=DrawingCanvas, Mode=OneWay}"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>              
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
+                            <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type data:TouchableItem}">
+                            <control:TouchableObject Width="100" Height="100" DataContext="{Binding}" Content="{Binding Child}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </control:MultiTouchInkCanvas>
         </Grid>
 

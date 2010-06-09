@@ -4,16 +4,16 @@
     xmlns:control="clr-namespace:TablectionSketch.Controls"
     xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
     xmlns:local="clr-namespace:TablectionSketch">
-    
-    <Style TargetType="{x:Type control:TouchObject}">
+
+    <Style TargetType="{x:Type control:TouchableObject}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
+                <ControlTemplate TargetType="{x:Type control:TouchableObject}">
                     <Border Background="White" CornerRadius="3">
                         <Border.Effect>
                             <DropShadowEffect ShadowDepth="0"/>
                         </Border.Effect>
-                        <ContentPresenter/>                        
+                        <ContentPresenter Content="{TemplateBinding Content}"/>                        
                     </Border>                    
                 </ControlTemplate>
             </Setter.Value>

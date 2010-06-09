@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Windows;
+﻿using System.Collections;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Ink;
 
 using System.Windows.Media;
-using System.ComponentModel;
+
+using TablectionSketch.Controls;
+using TablectionSketch.Data;
+
 
 namespace TablectionSketch.Slide
 {
@@ -43,7 +43,9 @@ namespace TablectionSketch.Slide
             }
         }
 
-
+        /// <summary>
+        /// 펜으로 그린 데이터 
+        /// </summary>
         private StrokeCollection _strokes = null;
         public StrokeCollection Strokes
         {
@@ -55,10 +57,22 @@ namespace TablectionSketch.Slide
                 }
                 return this._strokes;
             }
-
         }
-
-
+                
+        private ObservableCollection<TouchableItem> _objectCanvas = null;
+        public ObservableCollection<TouchableItem> Objects
+        {
+            get
+            {
+                if (this._objectCanvas == null)
+                {
+                    this._objectCanvas = new ObservableCollection<TouchableItem>();
+                    TouchableItem obj = new TouchableItem() { Child = new Canvas() { Background = Brushes.Brown, Width = 80, Height = 80 } };
+                    this._objectCanvas.Add(obj);
+                }
+                return this._objectCanvas;
+            }         
+        }
 
 
         #region INotifyPropertyChanged Members

@@ -7,18 +7,20 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
+using TablectionSketch.Data;
+
 namespace TablectionSketch.Controls
 {
-    public class TouchObject : Button
+    public class TouchableObject : Button
     {
-        //static TouchObject()
-        //{
-        //    DefaultStyleKeyProperty.OverrideMetadata(typeof(TouchObject), new FrameworkPropertyMetadata(typeof(TouchObject)));
-        //}
-
-        public TouchObject()
+        static TouchableObject()
         {
-            this.SetValue(TouchObject.IsManipulationEnabledProperty, true);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TouchableObject), new FrameworkPropertyMetadata(typeof(TouchableObject)));
+        }
+
+        public TouchableObject()
+        {
+            this.SetValue(TouchableObject.IsManipulationEnabledProperty, true);
         }
 
         protected override void OnManipulationStarting(System.Windows.Input.ManipulationStartingEventArgs e)
@@ -74,6 +76,43 @@ namespace TablectionSketch.Controls
             e.Handled = true;
             //base.OnManipulationInertiaStarting(e);
         }
-        
+
+        Point _startPoint;
+
+        protected override void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _startPoint = e.GetPosition(this);
+
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                Point pt = e.GetPosition((UIElement)this.Parent);
+
+                System.Diagnostics.Debug.WriteLine(string.Format("x;{0} y:{1}", pt.X, pt.Y));
+
+                this.SetPosition(pt);
+            }
+
+            base.OnMouseMove(e);
+        }
+
+        private void SetPosition(Point pt)
+        {
+            TouchableItem item = this.DataContext as TouchableItem;
+            if (item != null)
+            {
+                item.X = pt.X;
+                item.Y = pt.Y;
+            }
+        }
+
+        ~TouchableObject()
+        {
+            System.Diagnostics.Debug.WriteLine("Destruct Touch Object");
+        }
     }
 }
