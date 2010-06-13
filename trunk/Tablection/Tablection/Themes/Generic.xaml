@@ -4,7 +4,7 @@
     xmlns:control="clr-namespace:TablectionSketch.Controls"
     xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
     xmlns:local="clr-namespace:TablectionSketch">
-
+    
     <Style TargetType="{x:Type control:TouchableObject}">
         <Setter Property="Template">
             <Setter.Value>

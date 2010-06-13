@@ -67,7 +67,9 @@ namespace TablectionSketch.Slide
                 if (this._objectCanvas == null)
                 {
                     this._objectCanvas = new ObservableCollection<TouchableItem>();
-                    TouchableItem obj = new TouchableItem() { Child = new Canvas() { Background = Brushes.Brown, Width = 80, Height = 80 } };
+                    Canvas cv = new Canvas() { Background = Brushes.Brown, Width = 100, Height = 100 };
+                    cv.Children.Add(new TextBlock() { Text = "Drag!" });
+                    TouchableItem obj = new TouchableItem() { Child = cv };
                     this._objectCanvas.Add(obj);
                 }
                 return this._objectCanvas;

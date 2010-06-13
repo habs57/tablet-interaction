@@ -164,6 +164,7 @@
                         Stretch="Uniform" 
                         ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
                 </control:MultiTouchInkCanvas.Background>
+                <!-- 캔버스의 자식에 직접 바인딩 할수 없기 때문에 이와 같이 ItemsControl을 이용하여 패널을 커스터마이징한다.-->
                 <ItemsControl ItemsSource="{Binding SelectedItem.Objects, ElementName=SlideList}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -172,13 +173,14 @@
                     </ItemsControl.ItemsPanel>              
                     <ItemsControl.ItemContainerStyle>
                         <Style>
+                            <!-- 여기에 터치아이템의 정보와 실제 컨트롤의 모양등의 스타일을 연결할수 있다.-->
                             <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
                             <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
                         </Style>
                     </ItemsControl.ItemContainerStyle>                    
-                    <ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemTemplate>                        
                         <DataTemplate DataType="{x:Type data:TouchableItem}">
-                            <control:TouchableObject Width="100" Height="100" DataContext="{Binding}" Content="{Binding Child}"/>
+                            <control:TouchableObject Width="{Binding Width}" Height="{Binding Height}" DataContext="{Binding}" Content="{Binding Child}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
