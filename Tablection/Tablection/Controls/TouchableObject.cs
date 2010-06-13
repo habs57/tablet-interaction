@@ -77,27 +77,46 @@ namespace TablectionSketch.Controls
             //base.OnManipulationInertiaStarting(e);
         }
 
-        Point _startPoint;
+        Point _oldMousePoint;
 
         protected override void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e)
         {
-            _startPoint = e.GetPosition(this);
+            _oldMousePoint = e.GetPosition((UIElement)this.Parent);
 
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
         {
+            Point currentMousePoint = e.GetPosition((UIElement)this.Parent);
+            
             if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
-            {
-                Point pt = e.GetPosition((UIElement)this.Parent);
+            {                
+                Point mouseDelta = new Point(currentMousePoint.X - _oldMousePoint.X, currentMousePoint.Y - _oldMousePoint.Y);
 
-                System.Diagnostics.Debug.WriteLine(string.Format("x;{0} y:{1}", pt.X, pt.Y));
+                Point currentPosition = this.GetPosition();
+                Point newPosition = new Point(currentPosition.X + mouseDelta.X, currentPosition.Y + mouseDelta.Y);
+                this.SetPosition(newPosition);
 
-                this.SetPosition(pt);
+                System.Diagnostics.Debug.WriteLine(string.Format("x;{0} y:{1}", newPosition.X, newPosition.Y));
             }
 
+            this._oldMousePoint = currentMousePoint;
+
             base.OnMouseMove(e);
+        }
+
+        private Point GetPosition()
+        {
+            TouchableItem item = this.DataContext as TouchableItem;
+            if (item != null)
+            {
+                return new Point(item.X, item.Y);
+            }
+            else
+            {
+                return new Point();
+            }
         }
 
         private void SetPosition(Point pt)

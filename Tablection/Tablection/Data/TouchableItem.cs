@@ -11,8 +11,29 @@ namespace TablectionSketch.Data
 {
     public class TouchableItem : INotifyPropertyChanged
     {
+        private double _width = 0;
+        public double Width
+        {
+            get { return _width; }
+            set 
+            { 
+                _width = value;
+                this.RaisePropertyChanged("Width");
+            }
+        }
 
-        private double _x = 100;
+        private double _height = 0;
+        public double Height
+        {
+            get { return _height; }
+            set 
+            { 
+                _height = value;
+                this.RaisePropertyChanged("Height");
+            }
+        }
+
+        private double _x = 0;
         public double X
         {
             get { return _x; }
@@ -23,8 +44,7 @@ namespace TablectionSketch.Data
             }
         }
 
-
-        private double _y = 100;
+        private double _y = 0;
         public double Y
         {
             get { return _y; }
@@ -33,21 +53,7 @@ namespace TablectionSketch.Data
                 _y = value;
                 this.RaisePropertyChanged("Y");
             }
-        }
-        
-        
-
-        private Thickness _margin = new Thickness();
-        public Thickness Margin
-        {
-            get { return _margin; }
-            set 
-            {
-                _margin = value;
-                this.RaisePropertyChanged("Margin");
-            }
-        }        
-                
+        }               
 
         private UIElement _child;
         public UIElement Child
