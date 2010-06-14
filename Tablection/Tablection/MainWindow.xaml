@@ -190,6 +190,7 @@
         <!-- 슬라이드 목록 -->
         <ListBox x:Name="SlideList"                      
                  VerticalAlignment="Bottom"
+                 MaxWidth="800"
                  Height="150"
                  Margin="20"
                  SelectedIndex="0"
