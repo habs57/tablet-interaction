@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>Lib\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -66,6 +69,7 @@
     <Compile Include="Converter\ColorToColorToolConverter.cs" />
     <Compile Include="Converter\DoubleToStrokeToolConverter.cs" />
     <Compile Include="Data\TouchableItem.cs" />
+    <Compile Include="MainWindowVM.cs" />
     <Compile Include="Tool\ColorTool.cs" />
     <Compile Include="Tool\BasicTool.cs" />
     <Compile Include="Tool\StrokeTool.cs" />
@@ -132,7 +136,9 @@
     <Resource Include="Images\Penguins.jpg" />
     <Resource Include="Images\Tulips.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Lib\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
