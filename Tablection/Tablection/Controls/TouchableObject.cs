@@ -20,13 +20,18 @@ namespace TablectionSketch.Controls
 
         public TouchableObject()
         {
+            
             this.SetValue(TouchableObject.IsManipulationEnabledProperty, true);
         }
+
+        
 
         protected override void OnManipulationStarting(System.Windows.Input.ManipulationStartingEventArgs e)
         {
             e.ManipulationContainer = this;
             e.Handled = true;
+
+            this.SetSelected(true);
             //base.OnManipulationStarting(e);
         }
 
@@ -77,15 +82,21 @@ namespace TablectionSketch.Controls
             //base.OnManipulationInertiaStarting(e);
         }
 
+
         Point _oldMousePoint;
 
         protected override void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e)
         {
             _oldMousePoint = e.GetPosition(null);
 
+            this.SetSelected(true);
+
             base.OnMouseDown(e);
+
+            e.Handled = true;
         }
 
+    
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
         {
             Point currentMousePoint = e.GetPosition(null);
@@ -100,10 +111,21 @@ namespace TablectionSketch.Controls
 
                 System.Diagnostics.Debug.WriteLine(string.Format("x;{0} y:{1}", newPosition.X, newPosition.Y));
             }
-
+            
             this._oldMousePoint = currentMousePoint;
-
+                
             base.OnMouseMove(e);
+
+            e.Handled = true;
+        }
+
+        private void SetSelected(bool flag)
+        {
+             TouchableItem item = this.DataContext as TouchableItem;
+             if (item != null)
+             {
+                 item.IsSelected = flag;
+             }
         }
 
         private Point GetPosition()

@@ -23,10 +23,11 @@ namespace TablectionSketch
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {  
+    {
+
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();      
         }
 
         private void btnBottom_Click(object sender, RoutedEventArgs e)
@@ -190,7 +191,7 @@ namespace TablectionSketch
         }
 
         private void btnBottom_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
-        {
+        {            
             System.Diagnostics.Debug.WriteLine("btnBottom_ManipulationStarted");            
         }
         

@@ -12,6 +12,7 @@
         IsManipulationEnabled="False"
         Title="TablectionSketch" Height="768" Width="1024">
     
+    <!-- MVVM 스타일로 View와 VM을 연결한다. -->
     <Window.DataContext>
         <local:MainWindowVM/>
     </Window.DataContext>
@@ -23,8 +24,6 @@
                 <!-- 컨트롤들의 스타일을 지정해주는 외부 리소스 정의 파일 -->
                 <ResourceDictionary Source="Common.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <local:CanvasDropHandler x:Key="CanvasDropHandler"/>
 
             <!-- 툴의 헤더 모음 -->
             <tool:ToolCollection x:Key="ToolHeaders">
@@ -127,7 +126,7 @@
             </Button.Triggers>
             <Button.Template>
                 <ControlTemplate>
-                    <Rectangle Fill="Blue"/>
+                    <Rectangle Fill="Transparent"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
@@ -151,7 +150,7 @@
             </Button.Triggers>
             <Button.Template>
                 <ControlTemplate>
-                    <Rectangle Fill="Orange"/>
+                    <Rectangle Fill="Transparent"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
@@ -163,6 +162,7 @@
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
                                          dd:DragDrop.IsDropTarget="True"
                                          dd:DragDrop.DropHandler="{Binding}"
+                                         
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
                                          EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
                                          Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}">
@@ -188,14 +188,16 @@
                     </ItemsControl.ItemContainerStyle>                    
                     <ItemsControl.ItemTemplate>                        
                         <DataTemplate DataType="{x:Type data:TouchableItem}">
-                            <control:TouchableObject Width="{Binding Width}" Height="{Binding Height}" DataContext="{Binding}" Content="{Binding Child}"/>
+                            <control:TouchableObject Width="{Binding Width}" Height="{Binding Height}" DataContext="{Binding}">
+                                <ContentPresenter Content="{Binding Child}"/>
+                            </control:TouchableObject>                            
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </control:MultiTouchInkCanvas>
           
         </Grid>
-
+        
         <!-- 슬라이드 목록 -->
         <ListBox x:Name="SlideList"                      
                  VerticalAlignment="Bottom"

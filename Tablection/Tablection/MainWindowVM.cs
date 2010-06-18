@@ -21,8 +21,8 @@ namespace TablectionSketch
 {
     public class MainWindowVM : INotifyPropertyChanged, IDropTarget
     {
-        private object _selectedSlide = null;
-        public object SelectedSlide
+        private Slide.Slide _selectedSlide = null;
+        public Slide.Slide SelectedSlide
         {
             get
             {
@@ -31,7 +31,7 @@ namespace TablectionSketch
             set
             {
                 _selectedSlide = value;
-                this.NotifyPropertyChanged("SelectedSlide");
+                this.RaisePropertyChanged("SelectedSlide");
             }
         }
 
@@ -46,7 +46,7 @@ namespace TablectionSketch
             set 
             { 
                 _selectedTool = value;
-                this.NotifyPropertyChanged("SelectedTool");
+                this.RaisePropertyChanged("SelectedTool");
             }
         }
 
@@ -55,9 +55,10 @@ namespace TablectionSketch
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(string name)
+        protected void RaisePropertyChanged(string name)
         {
-            this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
         #endregion
@@ -89,7 +90,8 @@ namespace TablectionSketch
 
                     Image img = new Image() { Source = bmp };
 
-                    TablectionSketch.Data.TouchableItem tobj = new TablectionSketch.Data.TouchableItem() { Width = bmp.PixelWidth, Height = bmp.PixelHeight, Child = img };
+                    Point pt = System.Windows.Input.Mouse.GetPosition(target);
+                    TablectionSketch.Data.TouchableItem tobj = new TablectionSketch.Data.TouchableItem(this.SelectedSlide) { X = pt.X - (bmp.PixelWidth >> 1), Y = pt.Y - (bmp.PixelHeight >> 1),  Width = bmp.PixelWidth, Height = bmp.PixelHeight, Child = img };
                     silde.Objects.Add(tobj);                    
                 }
             }
