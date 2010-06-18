@@ -8,18 +8,24 @@
         xmlns:dw="clr-namespace:DrWPF.Windows.Controls"
         xmlns:conv="clr-namespace:TablectionSketch.Converter" 
         xmlns:data="clr-namespace:TablectionSketch.Data"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         IsManipulationEnabled="False"
         Title="TablectionSketch" Height="768" Width="1024">
     
+    <Window.DataContext>
+        <local:MainWindowVM/>
+    </Window.DataContext>
+    
     <Window.Resources>
         <ResourceDictionary>
-
+           
             <ResourceDictionary.MergedDictionaries>
                 <!-- 컨트롤들의 스타일을 지정해주는 외부 리소스 정의 파일 -->
                 <ResourceDictionary Source="Common.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-                       
-            
+
+            <local:CanvasDropHandler x:Key="CanvasDropHandler"/>
+
             <!-- 툴의 헤더 모음 -->
             <tool:ToolCollection x:Key="ToolHeaders">
                 <tool:ToolHeader Name="Basic Tools" RelatedControlName="llbTools"/>
@@ -155,6 +161,8 @@
         <Grid Margin="85" Grid.RowSpan="2">
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
+                                         dd:DragDrop.IsDropTarget="True"
+                                         dd:DragDrop.DropHandler="{Binding}"
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
                                          EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
                                          Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}">
@@ -185,6 +193,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </control:MultiTouchInkCanvas>
+          
         </Grid>
 
         <!-- 슬라이드 목록 -->
@@ -203,6 +212,7 @@
                  TouchLeave="SlideList_TouchLeave"
                  MouseEnter="SlideList_MouseEnter"
                  MouseLeave="SlideList_MouseLeave"
+                 SelectedItem="{Binding SelectedSlide}"
                  ItemsSource="{Binding Source={StaticResource Slides}}"
                  ItemContainerStyle="{StaticResource SlideContainerStyle}"
                  ItemTemplate="{StaticResource SlideDataTemplate}"
@@ -266,6 +276,7 @@
                                 VerticalAlignment="Center"
                                 Background="Transparent"
                                 Orientation="Vertical"
+                                SelectedItem="{Binding SelectedTool}"
                                 SelectionChanged="LoopingListBox_SelectionChanged"
                                 ItemsSource="{Binding Source={StaticResource ToolHeaders}}"
                                 ItemContainerStyle="{StaticResource ToolHeaderContainerStyle}"

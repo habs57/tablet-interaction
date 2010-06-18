@@ -81,14 +81,14 @@ namespace TablectionSketch.Controls
 
         protected override void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e)
         {
-            _oldMousePoint = e.GetPosition((UIElement)this.Parent);
+            _oldMousePoint = e.GetPosition(null);
 
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
         {
-            Point currentMousePoint = e.GetPosition((UIElement)this.Parent);
+            Point currentMousePoint = e.GetPosition(null);
             
             if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
             {                

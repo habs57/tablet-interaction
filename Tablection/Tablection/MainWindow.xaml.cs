@@ -195,8 +195,6 @@ namespace TablectionSketch
         }
         
 #endregion
-
-
-
+        
     }
 }
