@@ -27,12 +27,64 @@ namespace TablectionSketch
 
         public MainWindow()
         {
-            InitializeComponent();      
+            InitializeComponent();                         
         }
-
+        
         private void btnBottom_Click(object sender, RoutedEventArgs e)
         {        
-            this.SlideList.Visibility = Visibility.Visible;
+            this.SlideList.Visibility = Visibility.Visible;       
+        }
+
+        private void RefreshCurrentPreview()
+        {
+            Slide.Slide currentSlide = this.SlideList.SelectedItem as Slide.Slide;
+            if (currentSlide != null)
+            {
+                RenderTargetBitmap rtb = new RenderTargetBitmap((int)this.DrawingCanvas.ActualWidth, (int)this.DrawingCanvas.ActualHeight, 100, 100, PixelFormats.Default);                
+                rtb.Render(this.DrawingCanvas);
+
+                currentSlide.Thumbnail = rtb;
+            }
+        }
+
+        public RenderTargetBitmap SaveControl(FrameworkElement Target)
+        {
+
+            FrameworkElement Parent = Target.Parent as FrameworkElement;
+            double ParentWidth, ParentHeight;
+
+            if (Parent == null)
+            {
+                ParentWidth = 1000;
+                ParentHeight = 1000;
+
+                Canvas ParentCanvas = new Canvas();
+                ParentCanvas.Children.Add(Target);
+                Parent = ParentCanvas;
+            }
+            else
+            {
+                ParentWidth = Parent.ActualWidth;
+                ParentHeight = Parent.ActualHeight;
+            }
+
+
+            Target.Measure(new Size(ParentWidth, ParentHeight));
+            Target.Arrange(new Rect(0, 0, ParentWidth, ParentHeight));
+
+            Target.Measure(new Size(Target.ActualWidth, Target.ActualHeight));
+            Target.Arrange(new Rect(0, 0, Target.ActualWidth, Target.ActualHeight));
+
+            Rect Rect = Target.TransformToVisual(Parent).TransformBounds(new Rect(0, 0, Target.ActualWidth, Target.ActualHeight));
+
+
+            Target.Arrange(new Rect(-Rect.Left, -Rect.Top, Target.ActualWidth, Target.ActualHeight));
+
+            RenderTargetBitmap r = new RenderTargetBitmap((int)Rect.Width, (int)Rect.Height, 96.0, 96.0, PixelFormats.Pbgra32);
+            r.Render(Target);
+
+            return r;
+
         }
 
         private void btnTop_Click(object sender, RoutedEventArgs e)
@@ -64,16 +116,6 @@ namespace TablectionSketch
         private void HeaderStrokeTool_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.radioStrokes.IsChecked = true;
-        }
-
-        private void DrawingCanvas_TouchUp(object sender, TouchEventArgs e)
-        {
-            
-        }
-
-        private void DrawingCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            
         }
         
         private void SlideList_TouchEnter(object sender, TouchEventArgs e)
@@ -196,6 +238,21 @@ namespace TablectionSketch
         }
         
 #endregion
+
+        private void DrawingCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.RefreshCurrentPreview();
+        }
+
+        private void DrawingCanvas_PreviewTouchUp(object sender, TouchEventArgs e)
+        {
+            this.RefreshCurrentPreview();
+        }
+
+        //private void DrawingCanvas_PreviewDrop(object sender, DragEventArgs e)
+        //{
+        //    this.RefreshCurrentPreview();
+        //}
         
     }
 }
