@@ -65,14 +65,6 @@
                 <tool:StrokeTool Name="35.0 pt" Width="35" Height="35"/>
                 <tool:StrokeTool Name="40.0 pt" Width="40" Height="40"/>
             </tool:ToolCollection>
-
-            <!-- 슬라이드 목록, 더 많은 슬라이드들을 넣거나 뺄수 있다. -->
-            <slide:SlideCollcection x:Key="Slides">
-                <slide:Slide Title="Desert" Image="Images/Desert.jpg"/>
-                <slide:Slide Title="Koala" Image="Images/Koala.jpg"/>
-                <slide:Slide Title="Lighthouse" Image="Images/Lighthouse.jpg"/>
-                <slide:Slide Title="Penguins" Image="Images/Penguins.jpg"/>
-            </slide:SlideCollcection>
             
             <!-- 드로잉 캔버스에서 사용하는 기본설정 -->
             <DrawingAttributes x:Key="DrawingSettings"/>
@@ -161,8 +153,9 @@
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
                                          dd:DragDrop.IsDropTarget="True"
-                                         dd:DragDrop.DropHandler="{Binding}"
-                                         
+                                         dd:DragDrop.DropHandler="{Binding}"                                        
+                                         PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
+                                         PreviewTouchUp="DrawingCanvas_PreviewTouchUp"
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
                                          EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
                                          Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}">
@@ -199,9 +192,10 @@
         </Grid>
         
         <!-- 슬라이드 목록 -->
-        <ListBox x:Name="SlideList"                      
+        <dw:LoopingListBox x:Name="SlideList"                      
                  VerticalAlignment="Bottom"
                  MaxWidth="800"
+                 MinWidth="200"
                  Height="150"
                  Margin="20"
                  SelectedIndex="0"
@@ -213,13 +207,13 @@
                  TouchEnter="SlideList_TouchEnter"
                  TouchLeave="SlideList_TouchLeave"
                  MouseEnter="SlideList_MouseEnter"
-                 MouseLeave="SlideList_MouseLeave"
+                 MouseLeave="SlideList_MouseLeave"                                  
                  SelectedItem="{Binding SelectedSlide}"
-                 ItemsSource="{Binding Source={StaticResource Slides}}"
+                 ItemsSource="{Binding SlideCollection}"
                  ItemContainerStyle="{StaticResource SlideContainerStyle}"
                  ItemTemplate="{StaticResource SlideDataTemplate}"
                  Style="{StaticResource SlideListBoxStyle}">
-            <ListBox.Triggers>                
+            <dw:LoopingListBox.Triggers>                
                 <EventTrigger RoutedEvent="MouseEnter">
                     <StopStoryboard BeginStoryboardName="SlideListHideAnimation"/>
                     <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
@@ -234,11 +228,11 @@
                 <EventTrigger RoutedEvent="TouchLeave">
                     <BeginStoryboard x:Name="SlideListHideAnimation2" Storyboard="{StaticResource slideListHideAnimation}"/>
                 </EventTrigger>
-            </ListBox.Triggers>
-            <ListBox.Effect>
+            </dw:LoopingListBox.Triggers>
+            <dw:LoopingListBox.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
-            </ListBox.Effect>
-        </ListBox>
+            </dw:LoopingListBox.Effect>
+        </dw:LoopingListBox>
               
         
         <!-- 툴패널 -->

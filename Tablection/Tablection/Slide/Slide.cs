@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Ink;
 
+using System;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 using TablectionSketch.Controls;
 using TablectionSketch.Data;
@@ -40,6 +42,41 @@ namespace TablectionSketch.Slide
             {
                 _image = value;
                 RaisePropertyChanged("Image");
+
+                if (this.Thumbnail == null)
+                {
+                    this.Thumbnail = this.LoadThumbnail(_image);                    
+                }                
+            }
+        }
+
+        private BitmapImage LoadThumbnail(string path)
+        {   
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+
+            bitmapImage.UriSource = new Uri(path, UriKind.Relative);
+            bitmapImage.CacheOption = BitmapCacheOption.OnDemand;
+
+            bitmapImage.EndInit();
+
+            bitmapImage.DecodePixelHeight = bitmapImage.PixelHeight >> 2;
+            bitmapImage.DecodePixelWidth = bitmapImage.PixelWidth >> 2;            
+
+            return bitmapImage;
+        }
+        
+        /// <summary>
+        /// 썸네일 이미지
+        /// </summary>
+        private ImageSource _thumnail = null;
+        public ImageSource Thumbnail
+        {
+            get { return _thumnail; }
+            set 
+            { 
+                _thumnail = value;
+                RaisePropertyChanged("Thumbnail");
             }
         }
 

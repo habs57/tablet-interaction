@@ -17,10 +17,52 @@ using TablectionSketch.Tool;
 using TablectionSketch.Controls;
 
 
+using System.IO;
+
 namespace TablectionSketch
 {
     public class MainWindowVM : INotifyPropertyChanged, IDropTarget
     {
+        public MainWindowVM()
+        {
+            FileInfo fi = new FileInfo(System.Reflection.Assembly.GetAssembly(typeof(MainWindowVM)).Location);
+            DirectoryInfo[] di = fi.Directory.GetDirectories("Images");
+            foreach (var item in di)
+            {
+                LoadSlides(item.FullName);               
+            }            
+        }
+
+        private void LoadSlides(string folderPath)
+        {            
+            string[] files = Directory.GetFiles(folderPath, "*.jpg");
+            foreach (var item in files)
+            {
+                FileInfo fi = new FileInfo(item);
+                Slide.Slide slide = new Slide.Slide() { Image = item, Title = fi.Name };
+                this.SlideCollection.Add(slide);
+            }
+        }
+
+        private Slide.SlideCollcection _slideCollection = null;
+        public Slide.SlideCollcection SlideCollection
+        {
+            get 
+            {
+                if (this._slideCollection == null)
+                {
+                    _slideCollection = new Slide.SlideCollcection();
+                }            
+                return _slideCollection; 
+            }
+            set 
+            {
+                _slideCollection = value;
+                this.RaisePropertyChanged("SlideCollection");
+            }
+        }
+        
+
         private Slide.Slide _selectedSlide = null;
         public Slide.Slide SelectedSlide
         {
