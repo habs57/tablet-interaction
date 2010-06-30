@@ -234,7 +234,8 @@ namespace TablectionSketch
 
         private void btnBottom_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
         {            
-            System.Diagnostics.Debug.WriteLine("btnBottom_ManipulationStarted");            
+            System.Diagnostics.Debug.WriteLine("btnBottom_ManipulationStarted");
+            this.SlideList.Visibility = Visibility.Visible;   
         }
         
 #endregion
