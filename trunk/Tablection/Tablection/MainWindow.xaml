@@ -38,7 +38,8 @@
                 <tool:BasicTool Name="None" Mode="None"/>
                 <tool:BasicTool Name="Ink" Mode="Ink"/>
                 <tool:BasicTool Name="Select" Mode="Select"/>
-                <tool:BasicTool Name="Eraser" Mode="EraseByPoint"/>
+                <tool:BasicTool Name="Eraser - Point" Mode="EraseByPoint"/>
+                <tool:BasicTool Name="Eraser - Stroke" Mode="EraseByStroke"/>
             </tool:ToolCollection>
 
             <!-- 색 목록, 더 많은 색을 넣거나 뺄수 있다. -->
