@@ -30,11 +30,7 @@
                 <tool:ToolHeader Name="Basic Tools" RelatedControlName="llbTools"/>
                 <tool:ToolHeader Name="Colors" RelatedControlName="llbColors"/>
                 <tool:ToolHeader Name="Strokes" RelatedControlName="llbStroke"/>
-                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
-                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
-                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
-                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
-                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>
+                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>                
             </tool:ToolCollection>
 
             <!-- 툴 목록, 더 많은 툴을 넣거나 뺄수 있다. -->
@@ -267,11 +263,10 @@
                 </EventTrigger>
             </StackPanel.Triggers>
                        
-            <dw:LoopingListBox  x:Name="llbToolHeaders"
-                                Height="260"
+            <ListBox  x:Name="llbToolHeaders"
+                                Height="Auto"
                                 VerticalAlignment="Center"
                                 Background="Transparent"
-                                Orientation="Vertical"
                                 SelectedItem="{Binding SelectedTool}"
                                 SelectionChanged="LoopingListBox_SelectionChanged"
                                 ItemsSource="{Binding Source={StaticResource ToolHeaders}}"
@@ -283,41 +278,41 @@
                 <RadioButton x:Name="radioTools"                                 
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 툴 목록 UI -->
-                    <dw:LoopingListBox x:Name="llbTools"                                        
-                                       Style="{StaticResource LoopingListStyle}"                                   
-                                       ItemTemplate="{StaticResource ToolDataTemplate}"
-                                       ItemsSource="{Binding Source={StaticResource Tools}}"
-                                       ItemContainerStyle="{StaticResource ToolContainerStyle}"             
-                                       />
+                    <ListBox x:Name="llbTools"                                        
+                                Style="{StaticResource LoopingListStyle}"                                   
+                                ItemTemplate="{StaticResource ToolDataTemplate}"
+                                ItemsSource="{Binding Source={StaticResource Tools}}"
+                                ItemContainerStyle="{StaticResource ToolContainerStyle}"             
+                                />
                 </RadioButton>
 
                 <RadioButton x:Name="radioColors"                                 
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 색 목록 UI -->
-                    <dw:LoopingListBox x:Name="llbColors"                                       
-                                       Style="{StaticResource LoopingListStyle}"
-                                       SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
-                                       ItemTemplate="{StaticResource ColorToolDataTemplate}"
-                                       ItemsSource="{Binding Source={StaticResource Colors}}"
-                                       ItemContainerStyle="{StaticResource ColorToolContainerStyle}"/>
+                    <ListBox x:Name="llbColors"                                       
+                                Style="{StaticResource LoopingListStyle}"
+                                SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
+                                ItemTemplate="{StaticResource ColorToolDataTemplate}"
+                                ItemsSource="{Binding Source={StaticResource Colors}}"
+                                ItemContainerStyle="{StaticResource ColorToolContainerStyle}"/>
                 </RadioButton>
 
                 <RadioButton x:Name="radioStrokes"
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 굵기 목록 UI -->
-                    <dw:LoopingListBox x:Name="llbStroke"
-                                       SelectionChanged="llbStroke_SelectionChanged"
-                                       Style="{StaticResource LoopingListStyle}"
-                                       ItemTemplate="{StaticResource StrokeToolDataTemplate}"
-                                       ItemsSource="{Binding Source={StaticResource Strokes}}"
-                                       ItemContainerStyle="{StaticResource ToolContainerStyle}">
-                        <dw:LoopingListBox.SelectedItem>
+                    <ListBox x:Name="llbStroke"
+                                SelectionChanged="llbStroke_SelectionChanged"
+                                Style="{StaticResource LoopingListStyle}"
+                                ItemTemplate="{StaticResource StrokeToolDataTemplate}"
+                                ItemsSource="{Binding Source={StaticResource Strokes}}"
+                                ItemContainerStyle="{StaticResource ToolContainerStyle}">
+                        <ListBox.SelectedItem>
                             <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
                                 <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
                                 <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
                             </MultiBinding>
-                        </dw:LoopingListBox.SelectedItem>
-                    </dw:LoopingListBox>
+                        </ListBox.SelectedItem>
+                    </ListBox>
                 </RadioButton>
 
             </StackPanel>
