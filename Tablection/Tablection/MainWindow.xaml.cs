@@ -206,8 +206,8 @@ namespace TablectionSketch
         private void btnTop_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {            
             //툴 스크롤
-            this.llbToolHeaders.Offset += e.DeltaManipulation.Translation.Length;
-            System.Diagnostics.Debug.WriteLine(string.Format("btnTop_ManipulationDelta : Offset - {0}, Trans - {1}",this.llbToolHeaders.Offset, e.DeltaManipulation.Translation.Length));
+            //this.llbToolHeaders.Offset += e.DeltaManipulation.Translation.Length;
+            //System.Diagnostics.Debug.WriteLine(string.Format("btnTop_ManipulationDelta : Offset - {0}, Trans - {1}",this.llbToolHeaders.Offset, e.DeltaManipulation.Translation.Length));
         }
 
         private void btnTop_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
