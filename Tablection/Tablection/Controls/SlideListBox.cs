@@ -12,10 +12,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TablectionSketch
+namespace TablectionSketch.Controls
 {
     public class SlideListBox : ListBox
     {
+        private SelectHitTestHelper _hitTestHelper = null;
+        private SelectHitTestHelper HitTestHelper
+        {
+            get
+            {
+                if (this._hitTestHelper == null)
+                {
+                    this._hitTestHelper = new SelectHitTestHelper(this);
+                }
+                return this._hitTestHelper;
+            }
+        }
+
         static SlideListBox()
         {
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(SlideListBox), new FrameworkPropertyMetadata(typeof(SlideListBox)));            
@@ -33,6 +46,15 @@ namespace TablectionSketch
         void ScrollChangedHandler(object sender, ScrollChangedEventArgs args)
         {
             System.Diagnostics.Debug.WriteLine(string.Format("{0}, {1}, {2}, {3}", this.ActualHeight, args.ExtentHeight, args.ViewportHeight, args.VerticalOffset));
+        }
+
+        protected override void OnPreviewTouchDown(TouchEventArgs e)
+        {
+            //오브젝트 선택
+            TouchPoint pt = e.GetTouchPoint(null);
+            this.HitTestHelper.SelectItemAt(pt.Position);
+
+            base.OnPreviewTouchDown(e);
         }
     }
 }
