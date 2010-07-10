@@ -51,7 +51,7 @@ namespace TablectionSketch.Controls
         protected override void OnPreviewTouchDown(TouchEventArgs e)
         {
             //오브젝트 선택
-            TouchPoint pt = e.GetTouchPoint(null);
+            TouchPoint pt = e.GetTouchPoint(this);
             this.HitTestHelper.SelectItemAt(pt.Position);
 
             base.OnPreviewTouchDown(e);
