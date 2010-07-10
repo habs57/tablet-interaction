@@ -30,7 +30,7 @@
                 <tool:ToolHeader Name="Basic Tools" RelatedControlName="llbTools"/>
                 <tool:ToolHeader Name="Colors" RelatedControlName="llbColors"/>
                 <tool:ToolHeader Name="Strokes" RelatedControlName="llbStroke"/>
-                <tool:ToolHeader Name="Reserved" RelatedControlName="Reserved"/>                
+                <tool:ToolHeader Name="Rulers" RelatedControlName="Reserved"/>                
             </tool:ToolCollection>
 
             <!-- 툴 목록, 더 많은 툴을 넣거나 뺄수 있다. -->
@@ -263,22 +263,24 @@
                 </EventTrigger>
             </StackPanel.Triggers>
                        
-            <ListBox  x:Name="llbToolHeaders"
-                                Height="Auto"
-                                VerticalAlignment="Center"
-                                Background="Transparent"
-                                SelectedItem="{Binding SelectedTool}"
-                                SelectionChanged="LoopingListBox_SelectionChanged"
-                                ItemsSource="{Binding Source={StaticResource ToolHeaders}}"
-                                ItemContainerStyle="{StaticResource ToolHeaderContainerStyle}"
-                                ItemTemplate="{StaticResource ToolHeaderDataTemplate}"
-                                BorderThickness="0"/>               
+            <local:SlideListBox  x:Name="llbToolHeaders"
+                        Height="Auto"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        
+                        SelectedItem="{Binding SelectedTool}"
+                        SelectionChanged="LoopingListBox_SelectionChanged"
+                        ItemsSource="{Binding Source={StaticResource ToolHeaders}}"
+                        ItemContainerStyle="{StaticResource ToolHeaderContainerStyle}"
+                        ItemTemplate="{StaticResource ToolHeaderDataTemplate}"
+                        BorderThickness="0"/>               
             <StackPanel
                 VerticalAlignment="Center">
                 <RadioButton x:Name="radioTools"                                 
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 툴 목록 UI -->
-                    <ListBox x:Name="llbTools"                                        
+                    <ListBox x:Name="llbTools"        
+                                SelectedIndex="0"
                                 Style="{StaticResource LoopingListStyle}"                                   
                                 ItemTemplate="{StaticResource ToolDataTemplate}"
                                 ItemsSource="{Binding Source={StaticResource Tools}}"
@@ -289,18 +291,20 @@
                 <RadioButton x:Name="radioColors"                                 
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 색 목록 UI -->
-                    <ListBox x:Name="llbColors"                                       
-                                Style="{StaticResource LoopingListStyle}"
-                                SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
-                                ItemTemplate="{StaticResource ColorToolDataTemplate}"
-                                ItemsSource="{Binding Source={StaticResource Colors}}"
-                                ItemContainerStyle="{StaticResource ColorToolContainerStyle}"/>
+                    <ListBox x:Name="llbColors" 
+                             SelectedIndex="0"
+                             Style="{StaticResource LoopingListStyle}"
+                             SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
+                             ItemTemplate="{StaticResource ColorToolDataTemplate}"
+                             ItemsSource="{Binding Source={StaticResource Colors}}"
+                             ItemContainerStyle="{StaticResource ColorToolContainerStyle}"/>
                 </RadioButton>
 
                 <RadioButton x:Name="radioStrokes"
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 굵기 목록 UI -->
                     <ListBox x:Name="llbStroke"
+                                SelectedIndex="0"
                                 SelectionChanged="llbStroke_SelectionChanged"
                                 Style="{StaticResource LoopingListStyle}"
                                 ItemTemplate="{StaticResource StrokeToolDataTemplate}"

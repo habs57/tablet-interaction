@@ -165,15 +165,15 @@ namespace TablectionSketch
             foreach (ToolHeader item in e.AddedItems)
             {
                 string selectedToolName = item.RelatedControlName;
-                if (selectedToolName.Equals("llbTools") == true)
+                if (this.radioTools != null && selectedToolName.Equals("llbTools") == true)
                 {
                     this.radioTools.IsChecked = true;
                 }
-                else if (selectedToolName.Equals("llbColors") == true)
+                else if (this.radioColors != null && selectedToolName.Equals("llbColors") == true)
                 {
                     this.radioColors.IsChecked = true;
                 }
-                else if (selectedToolName.Equals("llbStroke") == true)
+                else if (this.radioStrokes != null && selectedToolName.Equals("llbStroke") == true)
                 {
                     this.radioStrokes.IsChecked = true;
                 }
