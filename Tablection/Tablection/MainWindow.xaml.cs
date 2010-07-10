@@ -258,12 +258,19 @@ namespace TablectionSketch
 
         private void DrawingCanvas_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
+            //펜을 캔버스에 대면 자동적으로 쓰기모드
             this.llbTools.SelectedIndex = 1;
         }
 
         private void DrawingCanvas_PreviewTouchDown(object sender, TouchEventArgs e)
         {
-            this.llbTools.SelectedIndex = 0;
+            //손가락을 캔버스에 대면 자동적으로 선택모드
+            this.llbTools.SelectedIndex = 3;
+        }
+
+        private void DrawingCanvas_TouchDown(object sender, TouchEventArgs e)
+        {
+
         }
 
         //private void DrawingCanvas_PreviewDrop(object sender, DragEventArgs e)
