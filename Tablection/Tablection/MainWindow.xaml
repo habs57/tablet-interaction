@@ -149,7 +149,9 @@
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
                                          dd:DragDrop.IsDropTarget="True"
-                                         dd:DragDrop.DropHandler="{Binding}"                                        
+                                         dd:DragDrop.DropHandler="{Binding}" 
+                                         PreviewTouchDown="DrawingCanvas_PreviewTouchDown"
+                                         PreviewStylusDown="DrawingCanvas_PreviewStylusDown"
                                          PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
                                          PreviewTouchUp="DrawingCanvas_PreviewTouchUp"
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
@@ -278,7 +280,7 @@
                 <RadioButton x:Name="radioTools"                                 
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 툴 목록 UI -->
-                    <ListBox x:Name="llbTools"        
+                    <control:SlideListBox x:Name="llbTools"        
                                 SelectedIndex="0"
                                 Style="{StaticResource LoopingListStyle}"                                   
                                 ItemTemplate="{StaticResource ToolDataTemplate}"
@@ -290,7 +292,7 @@
                 <RadioButton x:Name="radioColors"                                 
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 색 목록 UI -->
-                    <ListBox x:Name="llbColors" 
+                    <control:SlideListBox x:Name="llbColors" 
                              SelectedIndex="0"
                              Style="{StaticResource LoopingListStyle}"
                              SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
@@ -302,20 +304,20 @@
                 <RadioButton x:Name="radioStrokes"
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 굵기 목록 UI -->
-                    <ListBox x:Name="llbStroke"
+                    <control:SlideListBox x:Name="llbStroke"
                                 SelectedIndex="0"
                                 SelectionChanged="llbStroke_SelectionChanged"
                                 Style="{StaticResource LoopingListStyle}"
                                 ItemTemplate="{StaticResource StrokeToolDataTemplate}"
                                 ItemsSource="{Binding Source={StaticResource Strokes}}"
                                 ItemContainerStyle="{StaticResource ToolContainerStyle}">
-                        <ListBox.SelectedItem>
+                        <control:SlideListBox.SelectedItem>
                             <MultiBinding Mode="OneWayToSource" Converter="{StaticResource StrokeToolConverter}">
                                 <Binding Path="Width" Source="{StaticResource DrawingSettings}"/>
                                 <Binding Path="Height" Source="{StaticResource DrawingSettings}"/>
                             </MultiBinding>
-                        </ListBox.SelectedItem>
-                    </ListBox>
+                        </control:SlideListBox.SelectedItem>
+                    </control:SlideListBox>
                 </RadioButton>
 
             </StackPanel>

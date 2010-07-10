@@ -256,6 +256,16 @@ namespace TablectionSketch
             this.RefreshCurrentPreview();
         }
 
+        private void DrawingCanvas_PreviewStylusDown(object sender, StylusDownEventArgs e)
+        {
+            this.llbTools.SelectedIndex = 1;
+        }
+
+        private void DrawingCanvas_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            this.llbTools.SelectedIndex = 0;
+        }
+
         //private void DrawingCanvas_PreviewDrop(object sender, DragEventArgs e)
         //{
         //    this.RefreshCurrentPreview();
