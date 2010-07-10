@@ -263,11 +263,10 @@
                 </EventTrigger>
             </StackPanel.Triggers>
                        
-            <local:SlideListBox  x:Name="llbToolHeaders"
+            <control:SlideListBox  x:Name="llbToolHeaders"
                         Height="Auto"
                         VerticalAlignment="Center"
                         Background="Transparent"
-                        
                         SelectedItem="{Binding SelectedTool}"
                         SelectionChanged="LoopingListBox_SelectionChanged"
                         ItemsSource="{Binding Source={StaticResource ToolHeaders}}"

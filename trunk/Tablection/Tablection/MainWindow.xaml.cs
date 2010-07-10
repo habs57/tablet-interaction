@@ -177,6 +177,12 @@ namespace TablectionSketch
                 {
                     this.radioStrokes.IsChecked = true;
                 }
+                else
+                {
+                    this.radioTools.IsChecked = false;
+                    this.radioColors.IsChecked = false;
+                    this.radioStrokes.IsChecked = false;
+                }
             }
         }
 
