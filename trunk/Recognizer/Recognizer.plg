@@ -1,0 +1,50 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Recognizer - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x412 /fo"Debug/main.res" /d "_DEBUG" "Z:\PROJECT\Windows API 소스\Recognizer _ver1.01_블루투스 수신2\main.rc"" 
+Creating temporary file "C:\DOCUME~1\bit\LOCALS~1\Temp\RSP2D3.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Debug/Recognizer.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"Z:\PROJECT\Windows API 소스\Recognizer _ver1.01_블루투스 수신2\Library.cpp"
+"Z:\PROJECT\Windows API 소스\Recognizer _ver1.01_블루투스 수신2\LowpassFilter.cpp"
+"Z:\PROJECT\Windows API 소스\Recognizer _ver1.01_블루투스 수신2\main.cpp"
+"Z:\PROJECT\Windows API 소스\Recognizer _ver1.01_블루투스 수신2\Normal_src.cpp"
+"Z:\PROJECT\Windows API 소스\Recognizer _ver1.01_블루투스 수신2\regulation.cpp"
+"Z:\PROJECT\Windows API 소스\Recognizer _ver1.01_블루투스 수신2\serial_bluetooth.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\bit\LOCALS~1\Temp\RSP2D3.tmp" 
+Creating temporary file "C:\DOCUME~1\bit\LOCALS~1\Temp\RSP2D4.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Recognizer.pdb" /debug /machine:I386 /out:"Debug/Recognizer.exe" /pdbtype:sept 
+".\Debug\Library.obj"
+".\Debug\LowpassFilter.obj"
+".\Debug\main.obj"
+".\Debug\Normal_src.obj"
+".\Debug\regulation.obj"
+".\Debug\serial_bluetooth.obj"
+".\Debug\main.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\bit\LOCALS~1\Temp\RSP2D4.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+Library.cpp
+LowpassFilter.cpp
+main.cpp
+Normal_src.cpp
+regulation.cpp
+serial_bluetooth.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+Recognizer.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
