@@ -36,11 +36,13 @@ void socket_init(void)
 	servAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	servAddr.sin_port=htons(9985);
 
-	if(bind(ServerSock, (SOCKADDR*)&servAddr, sizeof(servAddr))==SOCKET_ERROR)
+
+	if(connect(ServerSock, (struct sockaddr*)&servAddr, sizeof(servAddr)) == SOCKET_ERROR)
 	{
+		MessageBox(hWnd, "Connet func error", "Error", MB_ICONERROR);
 		WSACleanup();
-		return;
 	}
+
 	init_complete = true;
 }
 
