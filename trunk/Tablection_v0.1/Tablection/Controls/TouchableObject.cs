@@ -113,7 +113,7 @@ namespace TablectionSketch.Controls
             }
             
             this._oldMousePoint = currentMousePoint;
-                
+
             base.OnMouseMove(e);
 
             e.Handled = true;

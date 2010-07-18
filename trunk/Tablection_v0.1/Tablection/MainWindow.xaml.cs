@@ -12,6 +12,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+
+using System.Diagnostics;
+
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 
@@ -22,12 +28,80 @@ namespace TablectionSketch
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+
+    public class UdpState
+    {
+        public UdpClient u;
+        public IPEndPoint e;
+    }
+
+    
+
     public partial class MainWindow : Window
     {
 
+        private int gSensor_val;
+        
         public MainWindow()
         {
-            InitializeComponent();                         
+            InitializeComponent();
+            InitializeUdpSocket();       
+            
+        }
+
+        private void InitializeUdpSocket()
+        {
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 9985);
+            UdpClient newsock = new UdpClient(ipep);
+
+            UdpState s = new UdpState();
+                        
+            s.e = ipep;
+            s.u = newsock;
+
+            newsock.BeginReceive(new AsyncCallback(OnReceive), s);                        
+        }
+        
+        public delegate void myDelegate(int val);
+
+       
+        public void OnReceive(IAsyncResult ar)
+        {
+            UdpState s = new UdpState();
+
+            UdpClient u = (UdpClient)((UdpState)(ar.AsyncState)).u;
+            IPEndPoint e = (IPEndPoint)((UdpState)(ar.AsyncState)).e;
+
+            s.u = u;
+            s.e = e;
+
+            Byte[] receiveBytes = u.EndReceive(ar, ref e);
+            Debug.WriteLine(string.Format("Pen Signal Data : {0}",Encoding.ASCII.GetString(receiveBytes, 0, receiveBytes.Length)));
+
+            if (Encoding.ASCII.GetString(receiveBytes, 0, receiveBytes.Length) == "NONE" )
+            {
+                gSensor_val = 1;
+                //this.Dispatcher.Invoke(new myDelegate(DrawingCanvas_PreviewStylusDownBySensor),1);
+                //this.llbTools.SelectedIndex = 1;
+            }
+            else if (Encoding.ASCII.GetString(receiveBytes, 0, receiveBytes.Length) == "WEAK")
+            {
+                gSensor_val = 2;
+                //this.Dispatcher.Invoke(new myDelegate(DrawingCanvas_PreviewStylusDownBySensor), 2);
+            }
+            else if (Encoding.ASCII.GetString(receiveBytes, 0, receiveBytes.Length) == "STNG")
+            {
+                gSensor_val = 3;
+                //this.Dispatcher.Invoke(new myDelegate(DrawingCanvas_PreviewStylusDownBySensor), 3);
+            }
+            else
+            {
+                gSensor_val = 4;
+                //this.Dispatcher.Invoke(new myDelegate(DrawingCanvas_PreviewStylusDownBySensor), 4);
+            }
+
+            u.BeginReceive(new AsyncCallback(OnReceive), s);
         }
         
         private void btnBottom_Click(object sender, RoutedEventArgs e)
@@ -256,16 +330,48 @@ namespace TablectionSketch
             this.RefreshCurrentPreview();
         }
 
+        
+
+
+        private void DrawingCanvas_PreviewStylusDownBySensor(int val)
+        {
+            System.Diagnostics.Debug.WriteLine("Pen의 센서 데이터를 이용해서 쓰기모드");
+            //펜을 캔버스에 대면 자동적으로 쓰기모드
+            switch (val)
+            {
+                case 1:
+                    this.llbTools.SelectedIndex = 4;
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                    this.llbTools.SelectedIndex = 1;
+                    break;
+
+            }
+            
+        }
+
         private void DrawingCanvas_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
+            //System.Diagnostics.Debug.WriteLine("DrawingCanvas_PreviewStylusDown [펜을 캔버스에 대면 자동적으로 쓰기모드]");
             //펜을 캔버스에 대면 자동적으로 쓰기모드
-            this.llbTools.SelectedIndex = 1;
+            //this.llbTools.SelectedIndex = 1;
         }
 
         private void DrawingCanvas_PreviewTouchDown(object sender, TouchEventArgs e)
         {
+            //System.Diagnostics.Debug.WriteLine("DrawingCanvas_PreviewTouchDown[손가락을 캔버스에 대면 자동적으로 선택모드]");
             //손가락을 캔버스에 대면 자동적으로 선택모드
-            this.llbTools.SelectedIndex = 4;
+            //this.llbTools.SelectedIndex = 4;
+            if (gSensor_val == 1)
+            {
+                this.llbTools.SelectedIndex = 4;
+            }
+            else
+            {
+                this.llbTools.SelectedIndex = 1;
+            }
         }
 
         private void DrawingCanvas_TouchDown(object sender, TouchEventArgs e)
