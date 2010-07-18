@@ -36,5 +36,10 @@ int coordinate_cnt = 0;       //원래 모든 좌표들을 손실없이 처리 할꺼라고 생각하
 extern HANDLE g_handle;       //스레드를 대기하기 위한 전역 핸들.
                               //실제로는 Sending_flag를 쓰기때문에 지워야 할 부분.
 
+extern int under_weak;
+extern int weak_strong;
+extern int strong_hard;
+extern int over_hard;
+
 
 #endif

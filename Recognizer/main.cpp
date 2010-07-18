@@ -4,6 +4,12 @@
 
 
 
+int under_weak;
+int weak_strong;
+int strong_hard;
+int over_hard;
+
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				   PSTR szCmdLine, int iCmdShow)
 {
@@ -53,25 +59,25 @@ BOOL CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 
-		case IDC_BUTTON_FILTER:            
-			{                               
+		case IDC_BUTTON_SET:            
+			{    
+				char pEditBox[24];
 
+				GetDlgItemText(hWnd, IDC_EDIT_NONE, pEditBox, 24);
+				under_weak = atoi(pEditBox);
+
+				GetDlgItemText(hWnd, IDC_EDIT_NONE_WEAK, pEditBox, 24);
+				weak_strong = atoi(pEditBox);
+
+				GetDlgItemText(hWnd, IDC_EDIT_WEAK_STRONG, pEditBox, 24);
+				strong_hard = atoi(pEditBox);
+
+				GetDlgItemText(hWnd, IDC_EDIT_OVER_STRONG, pEditBox, 24);
+				over_hard = atoi(pEditBox);
 
 			}
 			break;		
-		case IDC_BUTTON_NORMAL:          
-
-			break;
-		case IDC_BUTTON_REGUL:           
-
-			break;
-
-		case IDC_BUTTON_ALL:             
-			{				            
-				
-			}
-			break;
-
+    
 		case IDC_BUTTON_SAVE:       
 			{				       
 
@@ -106,36 +112,23 @@ void init_controls(HWND hCombo ,HWND hCombo2, HWND hListCrl, HWND hListCrl_filte
 	SendMessage(hCombo2, CB_SETCURSEL,0,0);
 
 
-	COL.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	COL.fmt = LVCFMT_CENTER;
-	COL.cx = 60;
-	COL.pszText = "     X";
-	COL.iSubItem = 0;
-	SendMessage(hListCrl, LVM_INSERTCOLUMN, 0, (LPARAM)&COL);
-	COL.pszText = "Y";
-	COL.iSubItem = 1;
-	SendMessage(hListCrl, LVM_INSERTCOLUMN, 1, (LPARAM)&COL);			
-	COL.pszText = "Z";
-	COL.iSubItem = 2;
-	SendMessage(hListCrl, LVM_INSERTCOLUMN, 2, (LPARAM)&COL);
-	COL.pszText = "Reserved";
-	COL.iSubItem = 3;
-	COL.cx = 80;
-	SendMessage(hListCrl, LVM_INSERTCOLUMN, 3, (LPARAM)&COL);
+	SetDlgItemText(hWnd, IDC_EDIT_NONE, "200");
+	SetDlgItemText(hWnd, IDC_EDIT_NONE_WEAK, "400");
+	SetDlgItemText(hWnd, IDC_EDIT_WEAK_STRONG, "600");
+	SetDlgItemText(hWnd, IDC_EDIT_OVER_STRONG, "700");
 
-	/*
+	char pEditBox[24];
 
-	COL.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	COL.fmt = LVCFMT_CENTER;
-	COL.cx = 130;
-	COL.pszText = "             X";
-	COL.iSubItem = 0;
-	SendMessage(hListCrl_filter, LVM_INSERTCOLUMN, 0, (LPARAM)&COL);
-	COL.pszText = "Y";
-	COL.iSubItem = 1;
-	SendMessage(hListCrl_filter, LVM_INSERTCOLUMN, 1, (LPARAM)&COL);			
-	COL.pszText = "Z";
-	COL.iSubItem = 2;
-	SendMessage(hListCrl_filter, LVM_INSERTCOLUMN, 2, (LPARAM)&COL);
-	*/
+	GetDlgItemText(hWnd, IDC_EDIT_NONE, pEditBox, 24);
+	under_weak = atoi(pEditBox);
+
+	GetDlgItemText(hWnd, IDC_EDIT_NONE_WEAK, pEditBox, 24);
+	weak_strong = atoi(pEditBox);
+
+	GetDlgItemText(hWnd, IDC_EDIT_WEAK_STRONG, pEditBox, 24);
+	strong_hard = atoi(pEditBox);
+
+	GetDlgItemText(hWnd, IDC_EDIT_OVER_STRONG, pEditBox, 24);
+	over_hard = atoi(pEditBox);
+
 }
