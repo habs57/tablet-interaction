@@ -9,6 +9,7 @@
 #define IDC_BUTTON_FILTER               1005
 #define IDC_LIST_CONTROL                1006
 #define IDC_BUTTON_FILE                 1007
+#define IDC_BUTTON_SET                  1007
 #define IDC_LIST_CONTROL_FILTERED       1008
 #define IDC_LIST_CONTROL2               1008
 #define IDC_COM_PORT                    1009
@@ -21,10 +22,15 @@
 #define IDC_EDIT_FILE                   1018
 #define IDC_EDIT1                       1019
 #define IDC_EDIT2                       1020
+#define IDC_EDIT_UNDER_NONE             1020
+#define IDC_EDIT_NONE                   1020
 #define IDC_EDIT5                       1023
 #define IDC_EDIT6                       1024
+#define IDC_EDIT_NONE_WEAK              1024
 #define IDC_EDIT7                       1025
+#define IDC_EDIT_WEAK_STRONG            1025
 #define IDC_EDIT8                       1026
+#define IDC_EDIT_OVER_STRONG            1026
 #define IDC_BUTTON1                     1027
 
 // Next default values for new objects
