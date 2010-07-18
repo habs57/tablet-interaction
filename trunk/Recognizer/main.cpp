@@ -106,16 +106,16 @@ void init_controls(HWND hCombo ,HWND hCombo2, HWND hListCrl, HWND hListCrl_filte
 
 	for(i = 0 ; i < 19 ; i++)
 	{
-		SendMessage(hCombo2,CB_ADDSTRING,0,(LPARAM)Ports[i]);
+		SendMessage(hCombo2,CB_ADDSTRING,2,(LPARAM)Ports[i]);
 	}
 	
 	SendMessage(hCombo2, CB_SETCURSEL,0,0);
 
 
-	SetDlgItemText(hWnd, IDC_EDIT_NONE, "200");
-	SetDlgItemText(hWnd, IDC_EDIT_NONE_WEAK, "400");
-	SetDlgItemText(hWnd, IDC_EDIT_WEAK_STRONG, "600");
-	SetDlgItemText(hWnd, IDC_EDIT_OVER_STRONG, "700");
+	SetDlgItemText(hWnd, IDC_EDIT_NONE, "250");
+	SetDlgItemText(hWnd, IDC_EDIT_NONE_WEAK, "600");
+	SetDlgItemText(hWnd, IDC_EDIT_WEAK_STRONG, "760");
+	SetDlgItemText(hWnd, IDC_EDIT_OVER_STRONG, "800");
 
 	char pEditBox[24];
 
