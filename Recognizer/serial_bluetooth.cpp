@@ -158,7 +158,7 @@ DWORD WINAPI RecvData( VOID * dummy )
 
 					val = atoi(Buffer);
 
-					if(cnt%20 == 0)
+					//if(cnt%20 == 0)
 						sneding_value(val);
 					
 					cnt++;

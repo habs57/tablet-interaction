@@ -62,19 +62,40 @@ void sneding_value(unsigned int val)
 {
 	char buf[16];
 	int len;
+	static int before_state = -1;
+
+
 
 	if(val < under_weak)
-	{
-		send(ServerSock, NONE, 4, 0);
+	{		
+		if(before_state != 1)
+		{
+			send(ServerSock, NONE, 4, 0);
+			before_state = 1;
+		}		
 	}else if( val < weak_strong)
 	{
-		send(ServerSock, WEAK, 4, 0);
+		if(before_state != 2)
+		{
+			send(ServerSock, WEAK, 4, 0);
+			before_state = 2;
+		}
+		
 	}else if(val < strong_hard)
 	{
-		send(ServerSock, STRING, 4, 0);
+		if(before_state != 3)
+		{
+			send(ServerSock, STRING, 4, 0);
+			before_state = 3;
+		}
+
 	}else
 	{
-		send(ServerSock, HARD, 4, 0);
+		if(before_state !=4)
+		{
+			send(ServerSock, HARD, 4, 0);
+			before_state = 4;
+		}		
 	}
 
 	//sprintf(buf,"%04d", val);
