@@ -1,0 +1,12 @@
+﻿<Window x:Class="WpfApplication3.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Window1" Height="600" Width="600">
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="button"/>
+	</Window.Triggers>
+    <Grid>
+    	<Button Margin="172,0,249,109" VerticalAlignment="Bottom" Height="70" Content="Connect" x:Name="button" Click="button_Click" />
+        
+    </Grid>
+</Window>

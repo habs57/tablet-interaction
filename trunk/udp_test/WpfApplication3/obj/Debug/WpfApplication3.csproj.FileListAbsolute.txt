@@ -1,0 +1,25 @@
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\Window1.baml
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\Window1.g.cs
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\App.g.cs
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3_MarkupCompile.cache
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3.g.resources
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3.Properties.Resources.resources
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3.csproj.GenerateResource.Cache
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\bin\Debug\WpfApplication3.exe
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\bin\Debug\WpfApplication3.pdb
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3.exe
+C:\Users\risa243\Documents\Visual Studio 2008\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3.pdb
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\WpfApplication3.exe
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\WpfApplication3.pdb
+M:\svn_tablet\udp_test\WpfApplication3\bin\Debug\WpfApplication3.exe
+M:\svn_tablet\udp_test\WpfApplication3\bin\Debug\WpfApplication3.pdb
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\ResolveAssemblyReference.cache
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\Window1.baml
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\Window1.g.cs
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\App.g.cs
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\WpfApplication3_MarkupCompile.cache
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\WpfApplication3.g.resources
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\WpfApplication3.Properties.Resources.resources
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\ResGen.read.1.tlog
+M:\svn_tablet\udp_test\WpfApplication3\obj\Debug\ResGen.write.1.tlog
