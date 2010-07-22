@@ -178,11 +178,17 @@ namespace TablectionSketch
                 {
                     this.radioStrokes.IsChecked = true;
                 }
+                else if (this.radioStrokes != null && selectedToolName.Equals("ctl_Search") == true)
+                {
+                    //검색창 띄움
+                    this.radioSearch.IsChecked = true;
+                }
                 else
                 {
                     this.radioTools.IsChecked = false;
                     this.radioColors.IsChecked = false;
                     this.radioStrokes.IsChecked = false;
+                    this.radioSearch.IsChecked = false;
                 }
             }
         }
