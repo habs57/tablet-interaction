@@ -130,10 +130,11 @@ namespace TablectionSketch
                     BitmapImage bmp = new BitmapImage(new Uri(item));
                     bmp.CacheOption = BitmapCacheOption.OnDemand;
 
-                    Image img = new Image() { Source = bmp };
-
                     Point pt = System.Windows.Input.Mouse.GetPosition(target);
-                    TablectionSketch.Data.TouchableItem tobj = new TablectionSketch.Data.TouchableItem(this.SelectedSlide) { X = pt.X - (bmp.PixelWidth >> 1), Y = pt.Y - (bmp.PixelHeight >> 1),  Width = bmp.PixelWidth, Height = bmp.PixelHeight, Child = img };
+                    TablectionSketch.Data.TouchableItem tobj = new TablectionSketch.Data.TouchableItem(this.SelectedSlide) { 
+                        X = pt.X - (bmp.PixelWidth >> 1), Y = pt.Y - (bmp.PixelHeight >> 1),  
+                        Width = bmp.PixelWidth, Height = bmp.PixelHeight, 
+                        Source = bmp };
                     silde.Objects.Add(tobj);                    
                 }
             }
