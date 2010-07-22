@@ -181,9 +181,9 @@
                     </ItemsControl.ItemContainerStyle>                    
                     <ItemsControl.ItemTemplate>                        
                         <DataTemplate DataType="{x:Type data:TouchableItem}">
-                            <control:TouchableObject Width="{Binding Width}" Height="{Binding Height}" DataContext="{Binding}">
-                                <ContentPresenter Content="{Binding Child}"/>
-                            </control:TouchableObject>                            
+                            <control:TouchableImage Width="{Binding Width}" Height="{Binding Height}" 
+                                                    Source="{Binding Source}" DataContext="{Binding}"
+                                                    Style="{StaticResource stl_TouchableImage}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

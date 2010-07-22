@@ -251,5 +251,15 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <Style x:Key="stl_TouchableImage" TargetType="{x:Type control:TouchableImage}">
+        <Style.Setters>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="3"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
 
 </ResourceDictionary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 using System.ComponentModel;
 
@@ -82,19 +83,19 @@ namespace TablectionSketch.Data
                 _y = value;
                 this.RaisePropertyChanged("Y");
             }
-        }               
-
-        private UIElement _child;
-        public UIElement Child
-        {
-            get { return _child; }
-            set 
-            { 
-                _child = value;
-                this.RaisePropertyChanged("Child");
-            }
         }
 
+        private BitmapSource _source;
+        public BitmapSource Source
+        {
+            get { return _source; }
+            set
+            {
+                _source = value;
+                this.RaisePropertyChanged("Source");
+            }
+        }
+        
         #region INotifyPropertyChanged Members
 
         /// <summary>
