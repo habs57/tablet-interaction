@@ -66,6 +66,7 @@
     <Compile Include="Controls\LoopPanel\LoopPanel.cs" />
     <Compile Include="Controls\LoopPanel\RoutedEventHelper.cs" />
     <Compile Include="Controls\MultiTouchInkCanvas.cs" />
+    <Compile Include="Controls\TouchableImage.cs" />
     <Compile Include="Controls\TouchableObject.cs" />
     <Compile Include="Converter\ColorToColorToolConverter.cs" />
     <Compile Include="Converter\DoubleToStrokeToolConverter.cs" />

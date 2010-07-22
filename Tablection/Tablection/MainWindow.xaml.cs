@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Windows.Ink;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 
@@ -270,7 +271,15 @@ namespace TablectionSketch
 
         private void DrawingCanvas_TouchDown(object sender, TouchEventArgs e)
         {
-            
+           
+        }
+
+        private void DrawingCanvas_StrokeErasing(object sender, InkCanvasStrokeErasingEventArgs e)
+        {
+            //DrawingAttributes attrib = new DrawingAttributes();
+            //attrib.Color.
+
+            //e.Stroke.DrawingAttributes = System.Windows.Ink.DrawingAttributes
         }
 
         //private void DrawingCanvas_PreviewDrop(object sender, DragEventArgs e)

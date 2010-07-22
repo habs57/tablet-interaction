@@ -155,6 +155,7 @@
                                          PreviewStylusDown="DrawingCanvas_PreviewStylusDown"
                                          PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
                                          PreviewTouchUp="DrawingCanvas_PreviewTouchUp"
+                                         StrokeErasing="DrawingCanvas_StrokeErasing"
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
                                          EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
                                          Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}">
