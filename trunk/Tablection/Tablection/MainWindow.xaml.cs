@@ -127,45 +127,45 @@ namespace TablectionSketch
             this.radioStrokes.IsChecked = true;
         }
         
-        private void SlideList_TouchEnter(object sender, TouchEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("SlideList_TouchEnter");
-        }
+        //private void SlideList_TouchEnter(object sender, TouchEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("SlideList_TouchEnter");
+        //}
 
-        private void SlideList_TouchLeave(object sender, TouchEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("SlideList_TouchLeave");
-        }
+        //private void SlideList_TouchLeave(object sender, TouchEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("SlideList_TouchLeave");
+        //}
     
-        private void SlideList_MouseEnter(object sender, MouseEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("SlideList_MouseEnter");
-        }
+        //private void SlideList_MouseEnter(object sender, MouseEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("SlideList_MouseEnter");
+        //}
 
-        private void SlideList_MouseLeave(object sender, MouseEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("SlideList_MouseLeave");
-        }
+        //private void SlideList_MouseLeave(object sender, MouseEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("SlideList_MouseLeave");
+        //}
 
-        private void ToolPanel_MouseEnter(object sender, MouseEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("ToolPanel_MouseEnter");
-        }
+        //private void ToolPanel_MouseEnter(object sender, MouseEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("ToolPanel_MouseEnter");
+        //}
 
-        private void ToolPanel_MouseLeave(object sender, MouseEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("ToolPanel_MouseLeave");
-        }
+        //private void ToolPanel_MouseLeave(object sender, MouseEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("ToolPanel_MouseLeave");
+        //}
 
-        private void ToolPanel_TouchEnter(object sender, TouchEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("ToolPanel_TouchEnter");
-        }
+        //private void ToolPanel_TouchEnter(object sender, TouchEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("ToolPanel_TouchEnter");
+        //}
 
-        private void ToolPanel_TouchLeave(object sender, TouchEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("ToolPanel_TouchLeave");
-        }
+        //private void ToolPanel_TouchLeave(object sender, TouchEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("ToolPanel_TouchLeave");
+        //}
 
         private void LoopingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -201,26 +201,7 @@ namespace TablectionSketch
             }
         }
 
-        private void HeaderBasicTool_Selected(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("HeaderBasicTool_Selected");
-        }
-
-        private void HeaderColorTool_Selected(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("HeaderColorTool_Selected");
-        }
-
-        private void HeaderStrokeTool_Selected(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("HeaderStrokeTool_Selected");
-        }
-
-        private void llbStroke_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("llbStroke_SelectionChanged");
-        }
-
+      
 
 #region Button Top for Tools 
         
@@ -332,7 +313,118 @@ namespace TablectionSketch
         {
             //펜을 캔버스에 대면 자동적으로 쓰기모드
             this.llbTools.SelectedIndex = 1;
-        }       
+        }
+
+        private void BackupChildObj(SelectionChangedEventArgs e)
+        {
+            //이전거 백업 
+            if (e.RemovedItems != null && e.RemovedItems.Count > 0)
+            {
+                Slide.Slide oldSlide = e.RemovedItems[0] as Slide.Slide;
+                if (oldSlide != null)
+                {
+                    oldSlide.Children.Clear();
+                    foreach (UIElement item in this.DrawingCanvas.Children)
+                    {
+                        oldSlide.Children.Add(cloneElement(item));
+                    }
+                    this.DrawingCanvas.Children.Clear();
+                }
+            }
+        }
+
+        private void RestoreChildObj(SelectionChangedEventArgs e)
+        {
+            //새거 로드
+            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                Slide.Slide newSlide = e.AddedItems[0] as Slide.Slide;
+                if (newSlide != null)
+                {
+                    foreach (UIElement item in newSlide.Children)
+                    {
+                        this.DrawingCanvas.Children.Add(item);
+                    }
+                }
+            }           
+        }
+
+        private void SlideList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.BackupChildObj(e);
+            this.RestoreChildObj(e);
+        }
+
+        /// <summary>
+        /// clones a UIElement
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <returns></returns>
+        public static UIElement cloneElement(UIElement orig)
+        {
+            if (orig == null)
+            {
+                return (null);
+            }
+
+            var s = System.Windows.Markup.XamlWriter.Save(orig);
+            var stringReader = new System.IO.StringReader(s);
+            var xmlReader = System.Xml.XmlTextReader.Create(stringReader, new System.Xml.XmlReaderSettings());
+
+            return (UIElement)System.Windows.Markup.XamlReader.Load(xmlReader);
+
+        }
+
+        #region 드래그드롭 기능 
+
+        private string[] supportedFormats = new string[] { ".jpg", ".bmp", ".gif", ".png" };
+
+        private void DrawingCanvas_DragOver(object sender, DragEventArgs e)
+        {
+            DoWithSupportedImage(e, (path, args) => 
+            {
+                string extension = System.IO.Path.GetExtension(path).ToLower();
+                bool isSupportedFormat = supportedFormats.Contains(extension);
+                if (isSupportedFormat == true)
+                {
+                    args.Effects = DragDropEffects.Copy | DragDropEffects.Move;
+                }
+            });           
+        }
+
+        private void DrawingCanvas_Drop(object sender, DragEventArgs e)
+        {
+            DoWithSupportedImage(e, (path, args) =>
+            {
+                BitmapImage image = new BitmapImage(new Uri(path));
+                TouchableImage ti = new TouchableImage();
+                ti.Source = image;
+                ti.Width = (double)(image.PixelWidth >> 1);
+                ti.Height = (double)(image.PixelHeight >> 1);
+                this.DrawingCanvas.Children.Add(ti);
+
+                Point pt = e.GetPosition(this.DrawingCanvas);
+                InkCanvas.SetLeft(ti, pt.X - (image.PixelWidth >> 2));
+                InkCanvas.SetTop(ti, pt.Y - (image.PixelHeight >> 2));
+            });           
+        }
+
+        private void DoWithSupportedImage(DragEventArgs e, Action<string, DragEventArgs> doAction)
+        {
+            bool isFileExist = e.Data.GetDataPresent("FileNameW");
+            if (isFileExist == true)
+            {
+                string[] path = e.Data.GetData("FileNameW") as string[];
+                if (path != null && path.Length > 0)
+                {
+                    string file = path[0];
+                    doAction(file, e);
+                }
+            }
+
+        }
+
+        #endregion
 
     }
 }
