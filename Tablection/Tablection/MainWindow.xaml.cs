@@ -295,7 +295,7 @@ namespace TablectionSketch
             bool IsMultiTouch = _modeRecognizer.IsMultiTouch;
             if (IsMultiTouch == true)
             {
-                //this.llbTools.SelectedIndex = 3;
+                //this.llbTools.SelectedIndex = 0;
                 //VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
             }
             else
@@ -306,11 +306,11 @@ namespace TablectionSketch
 
         private void DrawingCanvas_TouchUp(object sender, TouchEventArgs e)
         {
-
+            //this.llbTools.SelectedIndex = 0;            
         }
 
         private void DrawingCanvas_StylusDown(object sender, StylusDownEventArgs e)
-        {
+        {            
             //펜을 캔버스에 대면 자동적으로 쓰기모드
             //this.llbTools.SelectedIndex = 1;
         }

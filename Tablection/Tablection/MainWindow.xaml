@@ -267,7 +267,7 @@
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 툴 목록 UI -->
                     <control:SlideListBox x:Name="llbTools"        
-                                SelectedIndex="2"
+                                SelectedIndex="0"
                                 Style="{StaticResource LoopingListStyle}"                                   
                                 ItemTemplate="{StaticResource ToolDataTemplate}"
                                 ItemsSource="{Binding Source={StaticResource Tools}}"
