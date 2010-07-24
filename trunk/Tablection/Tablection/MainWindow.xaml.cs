@@ -29,7 +29,14 @@ namespace TablectionSketch
 
         public MainWindow()
         {
-            InitializeComponent();                         
+            InitializeComponent();
+
+            this.DrawingCanvas.Gesture += new RecongnitionGestrueHandler(DrawingCanvas_Gesture);
+        }
+
+        void DrawingCanvas_Gesture(ApplicationGesture Gestrue)
+        {
+            System.Diagnostics.Debug.WriteLine(Gestrue.ToString());
         }
         
         private void btnBottom_Click(object sender, RoutedEventArgs e)
@@ -261,27 +268,28 @@ namespace TablectionSketch
 
         private void DrawingCanvas_PreviewTouchUp(object sender, TouchEventArgs e)
         {
+            //PreviewRefresh
             this.RefreshCurrentPreview();
         }
 
+       
         private void DrawingCanvas_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
             //펜을 캔버스에 대면 자동적으로 쓰기모드
-            this.llbTools.SelectedIndex = 1;
+            //this.llbTools.SelectedIndex = 1;        
         }
 
         private void DrawingCanvas_PreviewTouchDown(object sender, TouchEventArgs e)
         {
-            VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position);
+            
 
-            //손가락을 캔버스에 대면 자동적으로 선택모드
-            this.llbTools.SelectedIndex = 4;
         }
 
         private HitTestFilterBehavior FilterCallBack(DependencyObject e)
         {
             if (e is TouchableImage)
             {
+                (e as TouchableImage).Focus();
                 return HitTestFilterBehavior.Stop;
             }
 
@@ -299,28 +307,32 @@ namespace TablectionSketch
             return HitTestResultBehavior.Continue;
         }
 
+        private TouchModeRecognizer _modeRecognizer = new TouchModeRecognizer();
         private void DrawingCanvas_TouchDown(object sender, TouchEventArgs e)
         {
-           
+            _modeRecognizer.Recognize(e);
+            bool IsMultiTouch = _modeRecognizer.IsMultiTouch;
+            if (IsMultiTouch == true)
+            {
+                this.llbTools.SelectedIndex = 0;
+                VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
+            }
+            else
+            {                
+                this.llbTools.SelectedIndex = 5;
+            }
         }
 
-        private void DrawingCanvas_StrokeErasing(object sender, InkCanvasStrokeErasingEventArgs e)
+        private void DrawingCanvas_TouchUp(object sender, TouchEventArgs e)
         {
-            //DrawingAttributes attrib = new DrawingAttributes();
-            //attrib.Color.
 
-            //e.Stroke.DrawingAttributes = System.Windows.Ink.DrawingAttributes
         }
 
-        private void DrawingCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        private void DrawingCanvas_StylusDown(object sender, StylusDownEventArgs e)
         {
-           
-        }
+            //펜을 캔버스에 대면 자동적으로 쓰기모드
+            this.llbTools.SelectedIndex = 1;
+        }       
 
-        //private void DrawingCanvas_PreviewDrop(object sender, DragEventArgs e)
-        //{
-        //    this.RefreshCurrentPreview();
-        //}
-        
     }
 }
