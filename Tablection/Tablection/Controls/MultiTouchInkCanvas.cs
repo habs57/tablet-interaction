@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
@@ -10,21 +11,52 @@ using System.Windows.Input.StylusPlugIns;
 
 namespace TablectionSketch.Controls
 {
+    public delegate void RecongnitionGestrueHandler(ApplicationGesture Gestrue);
+
     public class MultiTouchInkCanvas : InkCanvas 
     {
+        public RecognitionConfidence Confidence { get; set; }
+        public ObservableCollection<ApplicationGesture> EnabledGestures { get; private set; }
+        public new event RecongnitionGestrueHandler Gesture;
+
+
+        public MultiTouchInkCanvas()
+        {
+            EnabledGestures = new ObservableCollection<ApplicationGesture>();
+            EnabledGestures.CollectionChanged += (S, E) => SetEnabledGestures(EnabledGestures);
+
+            EnabledGestures.Add(ApplicationGesture.AllGestures);
+        }
+
+
+        protected override void OnGesture(InkCanvasGestureEventArgs e)
+        {
+            GestureRecognitionResult Result = e.GetGestureRecognitionResults()[0];
+
+            if (Result.ApplicationGesture != ApplicationGesture.NoGesture && Result.RecognitionConfidence <= Confidence)
+            {
+                if (this.Gesture != null)
+                {
+                    Gesture(Result.ApplicationGesture);                    
+                }
+            }            
+        }
+
         protected override void OnTouchDown(TouchEventArgs e)
         {
             base.OnTouchDown(e);
+
+
 
             //e.Handled = true;
         }
 
         protected override void OnTouchMove(System.Windows.Input.TouchEventArgs e)
         {
-            int id = e.TouchDevice.Id;
-            TouchPoint touchPoint = e.GetTouchPoint(this);
+            //int id = e.TouchDevice.Id;
+            //TouchPoint touchPoint = e.GetTouchPoint(this);
 
-            System.Diagnostics.Debug.WriteLine(string.Format("id:{0} x:{1} y:{2}", id, touchPoint.Position.X, touchPoint.Position.Y));
+            //System.Diagnostics.Debug.WriteLine(string.Format("id:{0} x:{1} y:{2}", id, touchPoint.Position.X, touchPoint.Position.Y));
 
             base.OnTouchMove(e);
 
@@ -38,98 +70,5 @@ namespace TablectionSketch.Controls
             //e.Handled = true;
         }
 
-        #region Test
-
-        //protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("ArrangeOverride");
-        //    return base.ArrangeOverride(arrangeSize);
-        //}
-
-        //protected override Geometry GetLayoutClip(System.Windows.Size layoutSlotSize)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("GetLayoutClip");
-        //    return base.GetLayoutClip(layoutSlotSize);
-        //}
-
-        //protected override System.Windows.DependencyObject GetUIParentCore()
-        //{
-        //    System.Diagnostics.Debug.WriteLine("GetUIParentCore");
-        //    return base.GetUIParentCore();
-        //}
-
-        //protected override Visual GetVisualChild(int index)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("GetVisualChild");
-        //    return base.GetVisualChild(index);
-        //}
-
-        //protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("HitTestCore - Geometry");
-        //    return base.HitTestCore(hitTestParameters);
-        //}
-
-        //protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParams)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("HitTestCore - Point");
-        //    return base.HitTestCore(hitTestParams);
-        //}
-
-        //protected override System.Windows.Size MeasureOverride(System.Windows.Size availableSize)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("MeasureOverride");
-        //    return base.MeasureOverride(availableSize);
-        //}
-
-        //protected override void OnChildDesiredSizeChanged(System.Windows.UIElement child)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("OnChildDesiredSizeChanged");
-        //    base.OnChildDesiredSizeChanged(child);
-        //}
-
-        //protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
-        //{
-        //    System.Diagnostics.Debug.WriteLine("OnCreateAutomationPeer");
-        //    return base.OnCreateAutomationPeer();
-        //}
-
-        //protected override void OnInitialized(EventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("OnInitialized");
-        //    base.OnInitialized(e);
-        //}
-
-        //protected override void OnRender(DrawingContext drawingContext)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("OnRender");
-        //    base.OnRender(drawingContext);
-        //}
-
-        //protected override void OnRenderSizeChanged(System.Windows.SizeChangedInfo sizeInfo)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("OnRenderSizeChanged");
-        //    base.OnRenderSizeChanged(sizeInfo);
-        //}
-
-        //protected override void OnVisualChildrenChanged(System.Windows.DependencyObject visualAdded, System.Windows.DependencyObject visualRemoved)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("OnVisualChildrenChanged");
-        //    base.OnVisualChildrenChanged(visualAdded, visualRemoved);
-        //}
-
-        //protected override void ParentLayoutInvalidated(System.Windows.UIElement child)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("ParentLayoutInvalidated");
-        //    base.ParentLayoutInvalidated(child);
-        //}
-
-        //protected override void OnVisualParentChanged(System.Windows.DependencyObject oldParent)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("OnVisualParentChanged");
-        //    base.OnVisualParentChanged(oldParent);
-        //}
-
-        #endregion
     }
 }

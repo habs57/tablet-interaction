@@ -38,6 +38,7 @@
             <tool:ToolCollection x:Key="Tools">
                 <tool:BasicTool Name="None" Mode="None"/>
                 <tool:BasicTool Name="Ink" Mode="Ink"/>
+                <tool:BasicTool Name="Gesture" Mode="GestureOnly"/>
                 <tool:BasicTool Name="Select" Mode="Select"/>
                 <tool:BasicTool Name="Eraser - Point" Mode="EraseByPoint"/>
                 <tool:BasicTool Name="Eraser - Stroke" Mode="EraseByStroke"/>
@@ -153,13 +154,14 @@
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
                                          dd:DragDrop.IsDropTarget="True"
-                                         dd:DragDrop.DropHandler="{Binding}" 
-                                         MouseDown="DrawingCanvas_MouseDown"
+                                         dd:DragDrop.DropHandler="{Binding}"   
+                                         TouchDown="DrawingCanvas_TouchDown"
+                                         TouchUp="DrawingCanvas_TouchUp"
+                                         StylusDown="DrawingCanvas_StylusDown"
                                          PreviewTouchDown="DrawingCanvas_PreviewTouchDown"
                                          PreviewStylusDown="DrawingCanvas_PreviewStylusDown"
                                          PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
-                                         PreviewTouchUp="DrawingCanvas_PreviewTouchUp"
-                                         StrokeErasing="DrawingCanvas_StrokeErasing"
+                                         PreviewTouchUp="DrawingCanvas_PreviewTouchUp"                                   
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
                                          EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
                                          Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}">
@@ -185,7 +187,8 @@
                     </ItemsControl.ItemContainerStyle>                    
                     <ItemsControl.ItemTemplate>                        
                         <DataTemplate DataType="{x:Type data:TouchableItem}">
-                            <control:TouchableImage Width="{Binding Width}" Height="{Binding Height}" 
+                            <control:TouchableImage IsManipulationEnabled="True"
+                                                    Width="{Binding Width}" Height="{Binding Height}" 
                                                     Source="{Binding Source}" DataContext="{Binding}"
                                                     Style="{StaticResource stl_TouchableImage}"/>
                         </DataTemplate>
@@ -287,7 +290,7 @@
                         Style="{StaticResource DetailToolContainer}">
                     <!-- 툴 목록 UI -->
                     <control:SlideListBox x:Name="llbTools"        
-                                SelectedIndex="0"
+                                SelectedIndex="2"
                                 Style="{StaticResource LoopingListStyle}"                                   
                                 ItemTemplate="{StaticResource ToolDataTemplate}"
                                 ItemsSource="{Binding Source={StaticResource Tools}}"
