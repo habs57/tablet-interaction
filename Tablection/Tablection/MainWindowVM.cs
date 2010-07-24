@@ -21,7 +21,7 @@ using System.IO;
 
 namespace TablectionSketch
 {
-    public class MainWindowVM : INotifyPropertyChanged, IDropTarget
+    public class MainWindowVM : INotifyPropertyChanged
     {
         public MainWindowVM()
         {
@@ -105,41 +105,6 @@ namespace TablectionSketch
 
         #endregion
 
-        #region IDropTarget Members
-
-        public void DragOver(DropInfo dropInfo)
-        {
-            MultiTouchInkCanvas element = dropInfo.VisualTarget as MultiTouchInkCanvas;
-            DataObject data = dropInfo.Data as DataObject;
-            if (element != null && data != null && this.SelectedSlide != null)
-            {
-                dropInfo.Effects = DragDropEffects.Move | DragDropEffects.Copy;
-            }
-        }
-
-        public void Drop(DropInfo dropInfo)
-        {
-            MultiTouchInkCanvas target = dropInfo.VisualTarget as MultiTouchInkCanvas;
-            DataObject data = dropInfo.Data as DataObject;
-            TablectionSketch.Slide.Slide silde = this.SelectedSlide as TablectionSketch.Slide.Slide;
-            if (target != null && data != null && silde != null)
-            {                
-                System.Collections.Specialized.StringCollection fileNames = data.GetFileDropList();
-                foreach (var item in fileNames)
-                {
-                    BitmapImage bmp = new BitmapImage(new Uri(item));
-                    bmp.CacheOption = BitmapCacheOption.OnDemand;
-
-                    Point pt = System.Windows.Input.Mouse.GetPosition(target);
-                    TablectionSketch.Data.TouchableItem tobj = new TablectionSketch.Data.TouchableItem(this.SelectedSlide) { 
-                        X = pt.X - (bmp.PixelWidth >> 1), Y = pt.Y - (bmp.PixelHeight >> 1),  
-                        Width = bmp.PixelWidth, Height = bmp.PixelHeight, 
-                        Source = bmp };
-                    silde.Objects.Add(tobj);                    
-                }
-            }
-        }
-
-        #endregion
+        
     }
 }

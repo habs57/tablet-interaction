@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Ink;
 
 using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -95,18 +96,18 @@ namespace TablectionSketch.Slide
                 return this._strokes;
             }
         }
-                
-        private ObservableCollection<TouchableItem> _objectCanvas = null;
-        public ObservableCollection<TouchableItem> Objects
+
+        private ObservableCollection<UIElement> _children = null;
+        public ObservableCollection<UIElement> Children
         {
             get
             {
-                if (this._objectCanvas == null)
+                if (this._children == null)
                 {
-                    this._objectCanvas = new ObservableCollection<TouchableItem>();                
+                    this._children = new ObservableCollection<UIElement>();
                 }
-                return this._objectCanvas;
-            }         
+                return this._children;
+            }
         }
 
 

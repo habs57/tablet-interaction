@@ -30,16 +30,16 @@ namespace TablectionSketch.Data
                 _isSelected = value;
                 this.RaisePropertyChanged("IsSelected");
 
-                this.BringToTop();
+                //this.BringToTop();
             }
         }
 
-        private void BringToTop()
-        {
-            int current = _slide.Objects.IndexOf(this);
-            int top = _slide.Objects.IndexOf(_slide.Objects.Last());
-            _slide.Objects.Move(current, top);
-        }
+        //private void BringToTop()
+        //{
+        //    int current = _slide.Objects.IndexOf(this);
+        //    int top = _slide.Objects.IndexOf(_slide.Objects.Last());
+        //    _slide.Objects.Move(current, top);
+        //}
 
         private double _width = 0;
         public double Width
