@@ -154,6 +154,7 @@
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
                                          dd:DragDrop.IsDropTarget="True"
                                          dd:DragDrop.DropHandler="{Binding}" 
+                                         MouseDown="DrawingCanvas_MouseDown"
                                          PreviewTouchDown="DrawingCanvas_PreviewTouchDown"
                                          PreviewStylusDown="DrawingCanvas_PreviewStylusDown"
                                          PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
