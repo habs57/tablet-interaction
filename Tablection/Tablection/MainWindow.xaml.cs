@@ -295,12 +295,12 @@ namespace TablectionSketch
             bool IsMultiTouch = _modeRecognizer.IsMultiTouch;
             if (IsMultiTouch == true)
             {
-                this.llbTools.SelectedIndex = 0;
-                VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
+                //this.llbTools.SelectedIndex = 3;
+                //VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
             }
             else
             {                
-                this.llbTools.SelectedIndex = 5;
+                //this.llbTools.SelectedIndex = 5;
             }
         }
 
@@ -312,7 +312,7 @@ namespace TablectionSketch
         private void DrawingCanvas_StylusDown(object sender, StylusDownEventArgs e)
         {
             //펜을 캔버스에 대면 자동적으로 쓰기모드
-            this.llbTools.SelectedIndex = 1;
+            //this.llbTools.SelectedIndex = 1;
         }
 
         private void BackupChildObj(SelectionChangedEventArgs e)
@@ -425,6 +425,59 @@ namespace TablectionSketch
         }
 
         #endregion
+
+        private void DrawingCanvas_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
+        {
+            e.TranslationBehavior = new System.Windows.Input.InertiaTranslationBehavior();
+            e.TranslationBehavior.InitialVelocity = e.InitialVelocities.LinearVelocity;
+            e.TranslationBehavior.DesiredDeceleration = 10.0 * 96.0 / (1000.0 * 1000.0);
+
+            e.ExpansionBehavior = new System.Windows.Input.InertiaExpansionBehavior();
+            e.ExpansionBehavior.InitialVelocity = e.InitialVelocities.ExpansionVelocity;
+            e.ExpansionBehavior.DesiredDeceleration = 0.1 * 96 / (1000.0 * 1000.0);
+
+            e.RotationBehavior = new InertiaRotationBehavior();
+            e.RotationBehavior.InitialVelocity = e.InitialVelocities.AngularVelocity;
+            e.RotationBehavior.DesiredDeceleration = 720 / (1000.0 * 1000.0);
+        }
+
+        private void DrawingCanvas_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+            TouchableImage image = e.OriginalSource as TouchableImage;
+            if (image != null)
+            {
+                Rect containingRect = new Rect(((FrameworkElement)e.ManipulationContainer).RenderSize);
+                Rect shapeBounds = image.transformGroup.TransformBounds(new Rect(image.RenderSize));
+
+                if (e.IsInertial && !containingRect.Contains(shapeBounds))
+                {
+                    e.Complete();
+                }
+
+                Point center = new Point(image.RenderSize.Width / 2.0, image.RenderSize.Height / 2.0);
+
+                //rotation
+                image.rotate.CenterX = center.X;
+                image.rotate.CenterY = center.Y;
+                image.rotate.Angle += e.DeltaManipulation.Rotation;
+
+                //scale
+                image.scale.CenterX = center.X;
+                image.scale.CenterY = center.Y;
+                image.scale.ScaleX *= e.DeltaManipulation.Scale.X;
+                image.scale.ScaleY *= e.DeltaManipulation.Scale.Y;
+
+                //trans
+                image.traslation.X += e.DeltaManipulation.Translation.X;
+                image.traslation.Y += e.DeltaManipulation.Translation.Y;  
+            }
+            
+        }
+
+        private void DrawingCanvas_ManipulationStarting(object sender, ManipulationStartingEventArgs e)
+        {
+            e.ManipulationContainer = this;  
+        }
 
     }
 }

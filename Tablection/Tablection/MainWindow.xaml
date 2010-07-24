@@ -153,6 +153,10 @@
         <Grid Margin="85" Grid.RowSpan="2">
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
+                                         ManipulationStarting="DrawingCanvas_ManipulationStarting"
+                                         ManipulationInertiaStarting="DrawingCanvas_ManipulationInertiaStarting"
+                                         ManipulationDelta="DrawingCanvas_ManipulationDelta"
+                                         
                                          AllowDrop="True"
                                          DragOver="DrawingCanvas_DragOver"
                                          Drop="DrawingCanvas_Drop"

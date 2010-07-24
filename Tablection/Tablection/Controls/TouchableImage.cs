@@ -15,131 +15,64 @@ namespace TablectionSketch.Controls
 {
     public class TouchableImage : Image
     {
-        private TransformGroup _transformGroup;
+        public TransformGroup transformGroup = new TransformGroup();
+        public TranslateTransform traslation = new TranslateTransform(0, 0);
+        public ScaleTransform scale = new ScaleTransform(1, 1);
+        public RotateTransform rotate = new RotateTransform(0);
         
         public TouchableImage()
-        {
+        {           
             this.Cursor = Cursors.SizeAll;
             this.ForceCursor = true;
 
             this.Effect = new DropShadowEffect() { ShadowDepth = 0, BlurRadius = 5 };
 
-            this.SetValue(UIElement.IsManipulationEnabledProperty, true);
+            this.IsManipulationEnabled = true;
+
+            this.transformGroup.Children.Add(this.rotate);
+            this.transformGroup.Children.Add(this.scale);
+            this.transformGroup.Children.Add(this.traslation);
+
+            this.RenderTransform = this.transformGroup;
         }
 
 
-        protected override void OnManipulationStarting(System.Windows.Input.ManipulationStartingEventArgs e)
-        {           
-            e.ManipulationContainer = this;
-            e.Handled = true;
+        //Point _oldMousePoint;
 
-            this.SetSelected(true);
-            //base.OnManipulationStarting(e);
-        }
+        //protected override void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e)
+        //{
+        //    _oldMousePoint = e.GetPosition(null);
 
-        protected override void OnManipulationDelta(System.Windows.Input.ManipulationDeltaEventArgs e)
-        {
-            double transX = e.DeltaManipulation.Translation.X;
-            double transY = e.DeltaManipulation.Translation.Y;
+        //    this.SetSelected(true);
 
-            //Rectangle rectToMove = e.OriginalSource as Rectangle;
-            //Matrix rectsMatrix = ((MatrixTransform)rectToMove.RenderTransform).Matrix;
+        //    base.OnMouseDown(e);
 
-            //rectsMatrix.RotateAt(e.DeltaManipulation.Rotation,
-            //                     e.ManipulationOrigin.X,
-            //                     e.ManipulationOrigin.Y);
-
-            //rectsMatrix.ScaleAt(e.DeltaManipulation.Scale.X,
-            //                    e.DeltaManipulation.Scale.X,
-            //                    e.ManipulationOrigin.X,
-            //                    e.ManipulationOrigin.Y);
-
-            //rectsMatrix.Translate(e.DeltaManipulation.Translation.X,
-            //                      e.DeltaManipulation.Translation.Y);
-
-            //rectToMove.RenderTransform = new MatrixTransform(rectsMatrix);
-
-            //Rect containingRect =
-            //    new Rect(((FrameworkElement)e.ManipulationContainer).RenderSize);
-
-            //Rect shapeBounds = this.Tra
-            //    rectToMove.RenderTransform.TransformBounds(
-            //        new Rect(rectToMove.RenderSize));
-
-            //if (e.IsInertial && !containingRect.Contains(shapeBounds))
-            //{
-            //    e.Complete();
-            //}
-
-            Point pt = this.GetPosition();
-            this.SetPosition(new Point(pt.X + transX, pt.Y + transY));
-
-            e.Handled = true;
-            //base.OnManipulationDelta(e);
-        }
-
-        protected override void OnManipulationCompleted(ManipulationCompletedEventArgs e)
-        {
-            base.OnManipulationCompleted(e);
-        }
-
-        protected override void OnManipulationInertiaStarting(System.Windows.Input.ManipulationInertiaStartingEventArgs e)
-        {
-            e.TranslationBehavior.DesiredDeceleration = 10.0 * 96.0 / (1000.0 * 1000.0);
-
-            e.ExpansionBehavior.DesiredDeceleration = 1.0 * 96 / (1000.0 * 1000.0);
-
-            e.RotationBehavior.DesiredDeceleration = 720 / (1000.0 * 1000.0);
-
-            e.Handled = true;
-            //base.OnManipulationInertiaStarting(e);
-        }
+        //    e.Handled = true;
+        //}
 
 
-        Point _oldMousePoint;
+        //protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
+        //{
+        //    Point currentMousePoint = e.GetPosition(null);
 
-        protected override void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e)
-        {
-            _oldMousePoint = e.GetPosition(null);
+        //    if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+        //    {
+        //        Point mouseDelta = new Point(currentMousePoint.X - _oldMousePoint.X, currentMousePoint.Y - _oldMousePoint.Y);
 
-            this.SetSelected(true);
+        //        Point currentPosition = this.GetPosition();
+        //        Point newPosition = new Point(currentPosition.X + mouseDelta.X, currentPosition.Y + mouseDelta.Y);
+        //        this.SetPosition(newPosition);
 
-            base.OnMouseDown(e);
+        //        System.Diagnostics.Debug.WriteLine(string.Format("x;{0} y:{1}", newPosition.X, newPosition.Y));
+        //    }
 
-            e.Handled = true;
-        }
+        //    this._oldMousePoint = currentMousePoint;
 
+        //    base.OnMouseMove(e);
 
-        protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
-        {
-            Point currentMousePoint = e.GetPosition(null);
+        //    e.Handled = true;
+        //}
 
-            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
-            {
-                Point mouseDelta = new Point(currentMousePoint.X - _oldMousePoint.X, currentMousePoint.Y - _oldMousePoint.Y);
-
-                Point currentPosition = this.GetPosition();
-                Point newPosition = new Point(currentPosition.X + mouseDelta.X, currentPosition.Y + mouseDelta.Y);
-                this.SetPosition(newPosition);
-
-                System.Diagnostics.Debug.WriteLine(string.Format("x;{0} y:{1}", newPosition.X, newPosition.Y));
-            }
-
-            this._oldMousePoint = currentMousePoint;
-
-            base.OnMouseMove(e);
-
-            e.Handled = true;
-        }
-
-        private void SetSelected(bool flag)
-        {
-             TouchableItem item = this.DataContext as TouchableItem;
-             if (item != null)
-             {
-                 item.IsSelected = flag;
-             }
-        }
 
         private Point GetPosition()
         {
@@ -155,9 +88,5 @@ namespace TablectionSketch.Controls
             this.SetValue(InkCanvas.TopProperty, pt.Y);
         }
 
-        ~TouchableImage()
-        {
-            System.Diagnostics.Debug.WriteLine("Destruct Touch Object");
-        }
     }
 }
