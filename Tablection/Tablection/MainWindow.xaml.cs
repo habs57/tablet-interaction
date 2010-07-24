@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using System.Windows.Media.Animation;
 
 using TablectionSketch.Tool;
+using TablectionSketch.Controls;
 
 namespace TablectionSketch
 {
@@ -271,8 +272,31 @@ namespace TablectionSketch
 
         private void DrawingCanvas_PreviewTouchDown(object sender, TouchEventArgs e)
         {
+            VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position);
+
             //손가락을 캔버스에 대면 자동적으로 선택모드
             this.llbTools.SelectedIndex = 4;
+        }
+
+        private HitTestFilterBehavior FilterCallBack(DependencyObject e)
+        {
+            if (e is TouchableImage)
+            {
+                return HitTestFilterBehavior.Stop;
+            }
+
+            return HitTestFilterBehavior.Continue;
+        }
+
+        private HitTestResultBehavior ResultCallBack(HitTestResult e)
+        {
+            TouchableImage touchObj = e.VisualHit as TouchableImage;
+            if (touchObj != null)
+            {
+                return HitTestResultBehavior.Stop;
+            }
+
+            return HitTestResultBehavior.Continue;
         }
 
         private void DrawingCanvas_TouchDown(object sender, TouchEventArgs e)
@@ -286,6 +310,11 @@ namespace TablectionSketch
             //attrib.Color.
 
             //e.Stroke.DrawingAttributes = System.Windows.Ink.DrawingAttributes
+        }
+
+        private void DrawingCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+           
         }
 
         //private void DrawingCanvas_PreviewDrop(object sender, DragEventArgs e)
