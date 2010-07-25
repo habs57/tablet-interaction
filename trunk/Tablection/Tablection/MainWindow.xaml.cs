@@ -295,24 +295,24 @@ namespace TablectionSketch
             bool IsMultiTouch = _modeRecognizer.IsMultiTouch;
             if (IsMultiTouch == true)
             {
-                //this.llbTools.SelectedIndex = 0;
+                this.llbTools.SelectedIndex = 0;
                 //VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
             }
             else
             {                
-                //this.llbTools.SelectedIndex = 5;
+                this.llbTools.SelectedIndex = 5;
             }
         }
 
         private void DrawingCanvas_TouchUp(object sender, TouchEventArgs e)
         {
-            //this.llbTools.SelectedIndex = 0;            
+            this.llbTools.SelectedIndex = 0;            
         }
 
         private void DrawingCanvas_StylusDown(object sender, StylusDownEventArgs e)
         {            
             //펜을 캔버스에 대면 자동적으로 쓰기모드
-            //this.llbTools.SelectedIndex = 1;
+            this.llbTools.SelectedIndex = 1;
         }
 
         private void BackupChildObj(SelectionChangedEventArgs e)
@@ -477,6 +477,19 @@ namespace TablectionSketch
         private void DrawingCanvas_ManipulationStarting(object sender, ManipulationStartingEventArgs e)
         {
             e.ManipulationContainer = this;  
+        }
+
+        private void llbTools_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                BasicTool tool = e.AddedItems[0] as BasicTool;
+                if (tool != null)
+                {
+                    this.DrawingCanvas.EditingMode = tool.Mode;
+                }                
+            }
+            
         }
 
     }
