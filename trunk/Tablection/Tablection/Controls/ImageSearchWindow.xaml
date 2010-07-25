@@ -1,0 +1,91 @@
+﻿<Window x:Class="TablectionSketch.Controls.ImageSearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:data="clr-namespace:TablectionSketch.Data"
+        xmlns:l="clr-namespace:TablectionSketch.Controls"
+        Title="ImageSearchWindow"
+        Background="#0E0E0E0E"
+        Height="400" Width="500">
+    <Window.Resources>
+       
+        <DataTemplate x:Key="centralTile">
+            <StackPanel Height="100" Width="90">
+                <Grid Width="70" Height="70" HorizontalAlignment="Center">
+                    <Image Source="{Binding XPath=child::thumbnail}" Margin="6,6,6,9"/>
+                </Grid>
+                <TextBlock Text="{Binding XPath=child::title}" FontSize="13" 
+               HorizontalAlignment="Center" Margin="0,0,0,1" />                
+            </StackPanel>
+        </DataTemplate>
+
+        <Style x:Key="{ComponentResourceKey 
+      TypeInTargetAssembly={x:Type l:PlainView},
+      ResourceId=myPlainViewDSK}" 
+       TargetType="{x:Type ListView}" 
+       BasedOn="{StaticResource {x:Type ListBox}}"
+       >
+            <Setter Property="HorizontalContentAlignment"
+          Value="Center"/>
+            <Setter Property="ItemContainerStyle" 
+          Value="{Binding (ListView.View).ItemContainerStyle,
+          RelativeSource={RelativeSource Self}}"/>
+            <Setter Property="ItemTemplate" 
+          Value="{Binding (ListView.View).ItemTemplate,
+          RelativeSource={RelativeSource Self}}"/>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Width="{Binding (FrameworkElement.ActualWidth),
+                   RelativeSource={RelativeSource 
+                                   AncestorType=ScrollContentPresenter}}"
+                   ItemWidth="{Binding (ListView.View).ItemWidth,
+                   RelativeSource={RelativeSource AncestorType=ListView}}"
+                   MinWidth="{Binding ItemWidth,
+                   RelativeSource={RelativeSource Self}}"
+                   ItemHeight="{Binding (ListView.View).ItemHeight,
+                   RelativeSource={RelativeSource AncestorType=ListView}}"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <l:PlainView x:Key="tileView" 
+                   ItemTemplate="{StaticResource centralTile}" 
+                   ItemWidth="100"/>
+
+        <XmlDataProvider x:Key="myXmlDataBase" XPath="/myXmlData">
+            <x:XData>
+                <myXmlData xmlns="">
+                    <Item Name = "Fish" Type="fish" Image="images\fish.png">
+                        <thumbnail>
+                            images\fish.png
+                        </thumbnail>
+                        <title>
+                            Fish
+                        </title>
+                    </Item>
+                  
+                </myXmlData>
+            </x:XData>
+        </XmlDataProvider>
+
+
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="5" HorizontalAlignment="Center" Text="이미지를 선택한후 캔버스에 끌어다 놓으세요"/>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
+            <TextBox x:Name="txtSearch" BorderThickness="1" Width="200" />
+            <Button Margin="3,0,0,0" Content="검색" Width="50" Click="Button_Click"/>
+        </StackPanel>
+        <ListView x:Name="lstImages" 
+                  ItemsSource="{Binding Source={StaticResource myXmlDataBase},
+                              XPath=Item}" 
+                  Margin="3" Grid.Row="2"/>
+    </Grid>
+</Window>

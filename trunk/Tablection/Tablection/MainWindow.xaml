@@ -308,40 +308,6 @@
                     </control:SlideListBox>
                 </RadioButton>
 
-                <RadioButton x:Name="radioSearch"
-                        Style="{StaticResource DetailToolContainer}">
-                    <!-- 굵기 목록 UI -->
-                    <!-- 이미지 검색창 -->
-                    <Grid x:Name="ctl_imgSearch"
-                          Margin="30"
-                          Width="200"
-                          HorizontalAlignment="Right">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Width="160"/>
-                            <Button Width="40" Content="검색"/>
-                        </StackPanel>
-                        <dw:LoopingListBox x:Name="imgList"                      
-                               Grid.Row="1"                               
-                               Width="200"
-                               SelectedIndex="0"
-                               Background="#FF8F8F8F"
-                               Opacity="0"
-                               Visibility="Collapsed"                 
-                               ScrollViewer.CanContentScroll="False"
-                               ScrollViewer.PanningMode="HorizontalOnly"
-                               ScrollViewer.PanningDeceleration="0.5"                 
-                               SelectedItem="{Binding SelectedSlide}"
-                               ItemsSource="{Binding SlideCollection}"
-                               Style="{StaticResource SlideListBoxStyle}">
-                        </dw:LoopingListBox>
-                    </Grid>
-                </RadioButton>
-
-
             </StackPanel>
         </StackPanel>
     </Grid>
