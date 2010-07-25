@@ -168,8 +168,9 @@
                                          PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
                                          PreviewTouchUp="DrawingCanvas_PreviewTouchUp"                                   
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
-                                         EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"
+                                        
                                          Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}">
+                <!--EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"-->
                 <control:MultiTouchInkCanvas.Background>
                     <ImageBrush                             
                         Opacity="0.8" 
@@ -268,6 +269,7 @@
                     <!-- 툴 목록 UI -->
                     <control:SlideListBox x:Name="llbTools"        
                                 SelectedIndex="0"
+                                SelectionChanged="llbTools_SelectionChanged"
                                 Style="{StaticResource LoopingListStyle}"                                   
                                 ItemTemplate="{StaticResource ToolDataTemplate}"
                                 ItemsSource="{Binding Source={StaticResource Tools}}"
