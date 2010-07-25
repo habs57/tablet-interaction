@@ -11,7 +11,8 @@
     <RootNamespace>TablectionSketch</RootNamespace>
     <AssemblyName>TablectionSketch</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -41,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -59,6 +61,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\HitTestHelper.cs" />
+    <Compile Include="Controls\ImageSearchWindow.xaml.cs">
+      <DependentUpon>ImageSearchWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoopPanel\BeginDragEventArgs.cs" />
     <Compile Include="Controls\LoopPanel\DoubleHelper.cs" />
     <Compile Include="Controls\LoopPanel\HitTestHelper.cs" />
@@ -66,9 +71,11 @@
     <Compile Include="Controls\LoopPanel\LoopPanel.cs" />
     <Compile Include="Controls\LoopPanel\RoutedEventHelper.cs" />
     <Compile Include="Controls\MultiTouchInkCanvas.cs" />
+    <Compile Include="Controls\PlainView.cs" />
     <Compile Include="Controls\TouchableImage.cs" />
     <Compile Include="Converter\ColorToColorToolConverter.cs" />
     <Compile Include="Converter\DoubleToStrokeToolConverter.cs" />
+    <Compile Include="Data\SearchImageItem.cs" />
     <Compile Include="Data\TouchableItem.cs" />
     <Compile Include="MainWindowVM.cs" />
     <Compile Include="Tool\ColorTool.cs" />
@@ -82,6 +89,10 @@
     <Compile Include="Slide\SlideCollcection.cs" />
     <Compile Include="Tool\ToolHeader.cs" />
     <Compile Include="TouchModeRecognizer.cs" />
+    <Page Include="Controls\ImageSearchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

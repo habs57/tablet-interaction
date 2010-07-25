@@ -167,6 +167,19 @@ namespace TablectionSketch
         //    System.Diagnostics.Debug.WriteLine("ToolPanel_TouchLeave");
         //}
 
+        private ImageSearchWindow _searchWindow = null;
+        protected ImageSearchWindow SearchWindow
+        {
+            get
+            {
+                if (_searchWindow == null)
+                {
+                    _searchWindow = new ImageSearchWindow();
+                }
+                return _searchWindow;
+            }
+        }
+
         private void LoopingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("LoopingListBox_SelectionChanged");
@@ -189,14 +202,15 @@ namespace TablectionSketch
                 else if (this.radioStrokes != null && selectedToolName.Equals("ctl_Search") == true)
                 {
                     //검색창 띄움
-                    this.radioSearch.IsChecked = true;
+                    this.SearchWindow.Show();
+                    
                 }
                 else
                 {
                     this.radioTools.IsChecked = false;
                     this.radioColors.IsChecked = false;
                     this.radioStrokes.IsChecked = false;
-                    this.radioSearch.IsChecked = false;
+                    this.SearchWindow.Hide();
                 }
             }
         }
