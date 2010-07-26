@@ -30,8 +30,10 @@ namespace TablectionSketch.Controls
         {
             InitializeComponent();
 
+            //this.lstImages.ItemsSource = this.Results;
+
             //Set the ListView View property to the tileView custom view
-            this.lstImages.View = this.FindResource("tileView") as ViewBase;
+            //this.lstImages.View = this.FindResource("tileView") as ViewBase;
         }
           
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -48,31 +50,15 @@ namespace TablectionSketch.Controls
 
                 XmlDocument xdoc = new XmlDocument();
                 xdoc.LoadXml(data);
-                               
-                XmlNodeList element = xdoc.SelectNodes("rss/channel/item");
-                foreach (XmlNode item in element)
-                {
-                    SearchImageItem si = new SearchImageItem() { Title = item.SelectSingleNode("title").InnerText, Thumbnail = item.SelectSingleNode("thumbnail").InnerText };
-                    this.Results.Add(si);
-                }
+                xdoc.Save("result.xml");
 
-                this.lstImages.ItemsSource = this.Results;               
+                XmlDataProvider provider = this.FindResource("myXmlDataBase") as XmlDataProvider;
+                if (provider != null)
+                {
+                    provider.Document = xdoc;
+                }
             }
         }
 
-        private ObservableCollection<SearchImageItem> _Results = null; 
-        public ObservableCollection <SearchImageItem> Results 
-        {
-            get
-            {
-                if (_Results == null)
-                {
-                    _Results = new ObservableCollection<SearchImageItem>();                    
-                }
-                return _Results;
-            }
-             
-        }
-        
     }
 }
