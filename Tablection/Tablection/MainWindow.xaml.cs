@@ -19,6 +19,8 @@ using System.Windows.Media.Animation;
 using TablectionSketch.Tool;
 using TablectionSketch.Controls;
 
+using System.Xml;
+
 namespace TablectionSketch
 {
     /// <summary>
@@ -410,21 +412,43 @@ namespace TablectionSketch
             });           
         }
 
+        private Point lastPt;
+
         private void DrawingCanvas_Drop(object sender, DragEventArgs e)
         {
             DoWithSupportedImage(e, (path, args) =>
             {
-                BitmapImage image = new BitmapImage(new Uri(path));
-                TouchableImage ti = new TouchableImage();
-                ti.Source = image;
-                ti.Width = (double)(image.PixelWidth >> 1);
-                ti.Height = (double)(image.PixelHeight >> 1);
-                this.DrawingCanvas.Children.Add(ti);
-
-                Point pt = e.GetPosition(this.DrawingCanvas);
-                InkCanvas.SetLeft(ti, pt.X - (image.PixelWidth >> 2));
-                InkCanvas.SetTop(ti, pt.Y - (image.PixelHeight >> 2));
+                lastPt = e.GetPosition(this.DrawingCanvas);
+                Uri uri = new Uri(path);
+                BitmapImage image = new BitmapImage(uri);
+                
+                if (uri.IsFile == true)
+                {
+                    this.AddTouchableImage(lastPt, image); 
+                }
+                else
+                {                    
+                    image.DownloadCompleted += new EventHandler(image_DownloadCompleted);                    
+                }                
             });           
+        }
+
+        void AddTouchableImage(Point pt, BitmapImage image)
+        {
+            TouchableImage ti = new TouchableImage();
+            ti.Source = image;
+            ti.Width = image.PixelWidth > 500 ? (double)(image.PixelWidth >> 1) : image.PixelWidth;
+            ti.Height = image.PixelHeight > 500 ? (double)(image.PixelHeight >> 1) : image.PixelHeight;
+            this.DrawingCanvas.Children.Add(ti);
+
+            InkCanvas.SetLeft(ti, pt.X - ((int)ti.Width >> 2));
+            InkCanvas.SetTop(ti, pt.Y - ((int)ti.Height >> 2));
+        }
+
+        void image_DownloadCompleted(object sender, EventArgs e)
+        {
+            BitmapImage image = sender as BitmapImage;
+            this.AddTouchableImage(lastPt, image);            
         }
 
         private void DoWithSupportedImage(DragEventArgs e, Action<string, DragEventArgs> doAction)
@@ -437,6 +461,19 @@ namespace TablectionSketch
                 {
                     string file = path[0];
                     doAction(file, e);
+                }
+            }
+            else
+            {
+                bool isDataExist = e.Data.GetDataPresent("GongSolutions.Wpf.DragDrop");
+                if (isDataExist == true)
+                {
+                    XmlElement element = e.Data.GetData("GongSolutions.Wpf.DragDrop") as XmlElement;
+                    if (element != null)
+                    {
+                        string file = element.SelectSingleNode("child::thumbnail").InnerText;
+                        doAction(file, e);
+                    }
                 }
             }
 

@@ -64,6 +64,7 @@
     <Compile Include="Controls\ImageSearchWindow.xaml.cs">
       <DependentUpon>ImageSearchWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ImageSearchWindowVM.cs" />
     <Compile Include="Controls\LoopPanel\BeginDragEventArgs.cs" />
     <Compile Include="Controls\LoopPanel\DoubleHelper.cs" />
     <Compile Include="Controls\LoopPanel\HitTestHelper.cs" />
