@@ -199,6 +199,16 @@ namespace TablectionSketch
             foreach (ToolHeader item in e.AddedItems)
             {
                 string selectedToolName = item.RelatedControlName;
+
+
+                if (selectedToolName.Equals("CutMode") == false && this._pathGenerator.IsCollecting == true)
+                {
+                    this.Cursor = Cursors.Arrow;
+                    this.llbTools.SelectedIndex = 1;
+                    this._pathGenerator.EndCollect();
+                }
+
+
                 if (this.radioTools != null && selectedToolName.Equals("llbTools") == true)
                 {
                     this.radioTools.IsChecked = true;
@@ -222,7 +232,9 @@ namespace TablectionSketch
                     if (this._pathGenerator.IsCollecting == false)
                     {
                         this.Cursor = Cursors.Pen; //가위로 바꿔야 함
-                        this._pathGenerator.BeginCollect();                        
+                        this.llbTools.SelectedIndex = 3;
+                         
+                        this._pathGenerator.BeginCollect();
                     }
                 }
                 else
@@ -233,11 +245,7 @@ namespace TablectionSketch
                     this.SearchWindow.Hide();
                 }
 
-                if (this._pathGenerator.IsCollecting == true)
-                {
-                    this.Cursor = Cursors.Arrow;
-                    this._pathGenerator.EndCollect();
-                }
+               
             }
         }
 
@@ -372,7 +380,7 @@ namespace TablectionSketch
                     {
                         oldSlide.Children.Add(cloneElement(item));
                     }
-                    this.DrawingCanvas.Children.Clear();
+        
                 }
             }
         }
@@ -386,8 +394,10 @@ namespace TablectionSketch
                 if (newSlide != null)
                 {
                     foreach (UIElement item in newSlide.Children)
-                    {
+                    {                        
                         this.DrawingCanvas.Children.Add(item);
+                       
+                        item.IsManipulationEnabled = true;
                     }
                 }
             }           
@@ -396,6 +406,7 @@ namespace TablectionSketch
         private void SlideList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.BackupChildObj(e);
+            this.DrawingCanvas.Children.Clear();
             this.RestoreChildObj(e);
         }
 
