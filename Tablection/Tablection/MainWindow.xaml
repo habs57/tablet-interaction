@@ -31,6 +31,7 @@
                 <tool:ToolHeader Name="Colors" RelatedControlName="llbColors"/>
                 <tool:ToolHeader Name="Strokes" RelatedControlName="llbStroke"/>
                 <tool:ToolHeader Name="Rulers" RelatedControlName="Reserved"/>
+                <tool:ToolHeader Name="Cut" RelatedControlName="CutMode"/>
                 <tool:ToolHeader Name="Search" RelatedControlName="ctl_Search"/>
             </tool:ToolCollection>
 
@@ -156,7 +157,8 @@
                                          ManipulationStarting="DrawingCanvas_ManipulationStarting"
                                          ManipulationInertiaStarting="DrawingCanvas_ManipulationInertiaStarting"
                                          ManipulationDelta="DrawingCanvas_ManipulationDelta"
-                                         
+                                                                          
+                                         StrokeCollected="DrawingCanvas_StrokeCollected"
                                          AllowDrop="True"
                                          DragOver="DrawingCanvas_DragOver"
                                          Drop="DrawingCanvas_Drop"
