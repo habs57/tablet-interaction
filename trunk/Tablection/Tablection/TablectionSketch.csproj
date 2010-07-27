@@ -79,6 +79,7 @@
     <Compile Include="Data\SearchImageItem.cs" />
     <Compile Include="Data\TouchableItem.cs" />
     <Compile Include="MainWindowVM.cs" />
+    <Compile Include="PathGenerator.cs" />
     <Compile Include="Tool\ColorTool.cs" />
     <Compile Include="Tool\BasicTool.cs" />
     <Compile Include="Tool\StrokeTool.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Controls\SlideListBox.cs" />
     <Compile Include="Slide\SlideCollcection.cs" />
     <Compile Include="Tool\ToolHeader.cs" />
+    <Compile Include="TouchableImageManager.cs" />
     <Compile Include="TouchModeRecognizer.cs" />
     <Page Include="Controls\ImageSearchWindow.xaml">
       <SubType>Designer</SubType>

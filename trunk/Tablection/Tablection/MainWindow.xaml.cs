@@ -28,16 +28,26 @@ namespace TablectionSketch
     /// </summary>
     public partial class MainWindow : Window
     {
+        PathGenerator _pathGenerator;
 
         public MainWindow()
         {
             InitializeComponent();
 
             this.DrawingCanvas.Gesture += new RecongnitionGestrueHandler(DrawingCanvas_Gesture);
+
+            _pathGenerator = new PathGenerator(this.DrawingCanvas);
+            _pathGenerator.PathGenerated += new Action<PathGeometry>(_pathGenerator_PathGenerated);
+        }
+
+        void _pathGenerator_PathGenerated(PathGeometry obj)
+        {
+            
         }
 
         void DrawingCanvas_Gesture(ApplicationGesture Gestrue)
         {
+            
             System.Diagnostics.Debug.WriteLine(Gestrue.ToString());
         }
         
@@ -207,12 +217,26 @@ namespace TablectionSketch
                     this.SearchWindow.Show();
                     
                 }
+                else if (selectedToolName.Equals("CutMode") == true)
+                {
+                    if (this._pathGenerator.IsCollecting == false)
+                    {
+                        this.Cursor = Cursors.Pen; //가위로 바꿔야 함
+                        this._pathGenerator.BeginCollect();                        
+                    }
+                }
                 else
                 {
                     this.radioTools.IsChecked = false;
                     this.radioColors.IsChecked = false;
                     this.radioStrokes.IsChecked = false;
                     this.SearchWindow.Hide();
+                }
+
+                if (this._pathGenerator.IsCollecting == true)
+                {
+                    this.Cursor = Cursors.Arrow;
+                    this._pathGenerator.EndCollect();
                 }
             }
         }
@@ -546,6 +570,11 @@ namespace TablectionSketch
             }
             
         }
+
+        private void DrawingCanvas_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
+        {
+            
+        }    
 
     }
 }
