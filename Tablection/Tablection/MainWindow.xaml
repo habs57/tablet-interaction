@@ -39,6 +39,7 @@
             <tool:ToolCollection x:Key="Tools">
                 <tool:BasicTool Name="None" Mode="None"/>
                 <tool:BasicTool Name="Ink" Mode="Ink"/>
+                <tool:BasicTool Name="Ink Gesture" Mode="InkAndGesture"/>
                 <tool:BasicTool Name="Gesture" Mode="GestureOnly"/>
                 <tool:BasicTool Name="Select" Mode="Select"/>
                 <tool:BasicTool Name="Eraser - Point" Mode="EraseByPoint"/>
