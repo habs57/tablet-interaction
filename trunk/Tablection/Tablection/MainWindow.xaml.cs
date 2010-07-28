@@ -42,6 +42,7 @@ namespace TablectionSketch
 
         void _pathGenerator_PathGenerated(PathGeometry obj)
         {
+
             
         }
 
