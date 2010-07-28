@@ -29,6 +29,8 @@ namespace TablectionSketch
     public partial class MainWindow : Window
     {
         PathGenerator _pathGenerator;
+        ImageFreeCropHelper _freeCropHelper;
+        
 
         public MainWindow()
         {
@@ -38,12 +40,13 @@ namespace TablectionSketch
 
             _pathGenerator = new PathGenerator(this.DrawingCanvas);
             _pathGenerator.PathGenerated += new Action<PathGeometry>(_pathGenerator_PathGenerated);
+
+            _freeCropHelper = new ImageFreeCropHelper(this.DrawingCanvas);            
         }
 
         void _pathGenerator_PathGenerated(PathGeometry obj)
-        {
-
-            
+        {            
+            this._freeCropHelper.BeginCrop(obj);            
         }
 
         void DrawingCanvas_Gesture(ApplicationGesture Gestrue)
