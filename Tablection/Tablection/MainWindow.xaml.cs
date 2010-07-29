@@ -75,10 +75,7 @@ namespace TablectionSketch
             System.Diagnostics.Debug.WriteLine(Gestrue.ToString());
         }
         
-        private void btnBottom_Click(object sender, RoutedEventArgs e)
-        {        
-            this.SlideList.Visibility = Visibility.Visible;       
-        }
+      
 
         private void RefreshCurrentPreview()
         {
@@ -130,22 +127,6 @@ namespace TablectionSketch
             return r;
 
         }
-
-        private void btnTop_Click(object sender, RoutedEventArgs e)
-        {         
-            //this.ToolPanel.Visibility = Visibility.Visible;
-        }
-        
-        private void SlideListHideAnimation_Completed(object sender, EventArgs e)
-        {
-            this.SlideList.Visibility = Visibility.Collapsed;
-        }
-
-        private void ToolPanelHideAnimaton_Completed(object sender, EventArgs e)
-        {
-            //this.ToolPanel.Visibility = Visibility.Collapsed;
-        }
-        
 
         private void HeaderBasicTool_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -533,8 +514,37 @@ namespace TablectionSketch
         {
             e.ManipulationContainer = this;  
         }
-
+        
         #endregion //Manipulation
 
+        private void btnBottom_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            this.SlideList.Visibility = Visibility.Visible;            
+        }
+
+        private void SlideListHide_Completed(object sender, EventArgs e)
+        {
+            this.SlideList.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnBottom_Click(object sender, RoutedEventArgs e)
+        {
+            this.SlideList.Visibility = Visibility.Visible;
+        }
+
+        private void btnTop_Click(object sender, RoutedEventArgs e)
+        {
+            this.btnTop.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnTop_TouchDown(object sender, TouchEventArgs e)
+        {
+            this.btnTop.Visibility = Visibility.Collapsed;
+        }
+
+        private void toolPanelShowAnimation_Completed(object sender, EventArgs e)
+        {
+            this.btnTop.Visibility = Visibility.Visible;
+        }
     }
 }
