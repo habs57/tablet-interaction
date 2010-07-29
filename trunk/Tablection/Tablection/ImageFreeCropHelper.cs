@@ -7,6 +7,7 @@ using TablectionSketch.Controls;
 
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Windows.Media;
 
 namespace TablectionSketch
@@ -58,26 +59,43 @@ namespace TablectionSketch
 
         public bool BeginCrop(PathGeometry path)
         {
-            //입력받은 패스를 가지고
- 
-            //이미지에 적용 
+            TouchableImage image = this._selectedImage;
+            if (image != null)
+            {
+                 //이 이미지 위치정보 A+ 저장 
+                double outerImage_x = InkCanvas.GetLeft(image);
+                double outerImage_y = InkCanvas.GetTop(image);
+                double outerImage_width = image.Width;
+                double outerImage_height = image.Height;
+                Rect outerImageRect = new Rect(outerImage_x, outerImage_y, outerImage_width, outerImage_height);
 
-            //패스로 크로핑
-            //크로핑된 이미지 A 저장 (선택한 영역이 빈 그림)
-            //이 이미지 위치정보 A+ 저장 
-            
-            //크로핑된 이미지 복제
-            //이 이미지로 클리핑 영역 제작 
-            
-            //원본 이미지에 재적용 
-            //클리핑된 이미지 B 완성 (선택한 영역만 남은 그림)
-            //이 이미지 위치정보 B+ 저장
+                //입력받은 패스를 가지고 이미지의 좌표에 맞게 좌표수정 
+                path.Transform = new TranslateTransform(-outerImage_x, -outerImage_y);
 
-            //원본 이미지의 인덱스 위치에 
-            //이미지 A 를 A+ 위치에 배치 
-            //이미지 B 를 B+ 위치에 배치 
+                //이미지에 적용, 패스로 크로핑
+                image.Clip = path;                
+                
+                //크로핑된 이미지 A 저장 (선택한 영역이 빈 그림)                                
+                //RenderTargetBitmap outerImage = new RenderTargetBitmap((int)outerImage_width, (int)outerImage_height, 96, 96, PixelFormats.Default);
+                               
+                //이미지의 영역과 클리핑 데이터로 새로운 클리핑 영역을 만듦
+                //GeometryGroup clippingGroup = new GeometryGroup();
+                //RectangleGeometry imageRect = new RectangleGeometry(outerImageRect);
+                //clippingGroup.Children.Add(imageRect);
+                //clippingGroup.Children.Add(path.Clone());
+                //이 이미지로 클리핑 영역 제작 
 
-            //원본 이미지 캔버스에서 제거
+
+                //원본 이미지에 재적용 
+                //클리핑된 이미지 B 완성 (선택한 영역만 남은 그림)
+                //이 이미지 위치정보 B+ 저장
+
+                //원본 이미지의 인덱스 위치에 
+                //이미지 A 를 A+ 위치에 배치 
+                //이미지 B 를 B+ 위치에 배치 
+
+                //원본 이미지 캔버스에서 제거                
+            }          
             
             return true;
         }
