@@ -71,9 +71,9 @@
             <conv:DoubleToStrokeToolConverter x:Key="StrokeToolConverter"/>
 
             <!-- 애니메이션 -->
-            <Storyboard x:Key="toolPanelHideAnimation" Completed="ToolPanelHideAnimaton_Completed">
+            <Storyboard x:Key="toolPanelHideAnimation">
             	<DoubleAnimation To="0" BeginTime="0:0:3" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
-            	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="llbToolHeaders">
+            	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
             		<EasingDoubleKeyFrame KeyTime="0:0:2.9" Value="0">
             			<EasingDoubleKeyFrame.EasingFunction>
             				<BounceEase EasingMode="EaseOut"/>
@@ -89,6 +89,14 @@
 
             <Storyboard x:Key="toolPanelShowAnimation">
                 <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                    <EasingDoubleKeyFrame KeyTime="0:0:2.9" Value="-201">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <BounceEase EasingMode="EaseOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
             </Storyboard>
 
             <Storyboard x:Key="slideListShowAnimation">
@@ -98,12 +106,7 @@
         </ResourceDictionary>                
     
     </Window.Resources>
-	<Window.Triggers>
-		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnTop">
-			<BeginStoryboard x:Name="toolPanelShowAnimation_BeginStoryboard" Storyboard="{StaticResource toolPanelShowAnimation}"/>
-		</EventTrigger>
-	</Window.Triggers>
-    
+	
     <!-- MVVM 스타일로 View와 VM을 연결한다. -->
     <Window.DataContext>
         <local:MainWindowVM/>
@@ -127,9 +130,9 @@
             	<EventTrigger RoutedEvent="ButtonBase.Click">
             		<BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
             	</EventTrigger>
-            	<EventTrigger RoutedEvent="UIElement.ManipulationStarted">
-            		<BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
-            	</EventTrigger>
+                <EventTrigger RoutedEvent="TouchDown">
+                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
+                </EventTrigger>               
             </Button.Triggers>
             <Button.Template>
                 <ControlTemplate>
@@ -151,7 +154,7 @@
             	<EventTrigger RoutedEvent="ButtonBase.Click">
             		<BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
             	</EventTrigger>
-            	<EventTrigger RoutedEvent="UIElement.ManipulationStarted">
+            	<EventTrigger RoutedEvent="TouchDown">
             		<BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
             	</EventTrigger>
             </Button.Triggers>
@@ -172,25 +175,33 @@
                                          ManipulationStarting="DrawingCanvas_ManipulationStarting"
                                          ManipulationInertiaStarting="DrawingCanvas_ManipulationInertiaStarting"
                                          ManipulationDelta="DrawingCanvas_ManipulationDelta"
-                                                                          
-                                         StrokeCollected="DrawingCanvas_StrokeCollected"
+                                         ClipToBounds="True"                                 
                                          AllowDrop="True"
                                          DragOver="DrawingCanvas_DragOver"
-                                         Drop="DrawingCanvas_Drop" StylusDown="DrawingCanvas_StylusDown"
+                                         Drop="DrawingCanvas_Drop"
                                          PreviewTouchDown="DrawingCanvas_PreviewTouchDown"
                                          PreviewStylusDown="DrawingCanvas_PreviewStylusDown"
                                          PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
                                          PreviewTouchUp="DrawingCanvas_PreviewTouchUp"                                   
                                          DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"
                                         
-                                         Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}">
+                                         Strokes="{Binding SelectedItem.Strokes, ElementName=SlideList}" Margin="0,15,0,-15">
                 <!--EditingMode="{Binding SelectedItem.Mode, ElementName=llbTools}"-->
                 <control:MultiTouchInkCanvas.Background>
                     <ImageBrush                             
                         Opacity="0.8" 
                         Stretch="Uniform" 
                         ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
-                </control:MultiTouchInkCanvas.Background>               
+                </control:MultiTouchInkCanvas.Background>
+                <control:MultiTouchInkCanvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </control:MultiTouchInkCanvas.RenderTransform>
+
             </control:MultiTouchInkCanvas>
           
         </Grid>

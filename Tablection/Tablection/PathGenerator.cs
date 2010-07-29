@@ -26,6 +26,11 @@ namespace TablectionSketch
             {
                 return _isCollecting;
             }
+
+            set
+            {
+                _isCollecting = value;
+            }
         }
 
         public PathGenerator(FrameworkElement source)
