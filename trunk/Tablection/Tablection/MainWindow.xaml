@@ -11,6 +11,7 @@
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TablectionSketch.MainWindow"
         IsManipulationEnabled="False"
+        WindowStartupLocation="CenterScreen"
         Title="TablectionSketch" Height="768" Width="1024">
     
     <Window.Resources>
@@ -78,7 +79,7 @@
             <conv:DoubleToStrokeToolConverter x:Key="StrokeToolConverter"/>
 
             <!-- 애니메이션 -->
-            <Storyboard x:Key="toolPanelShowAnimation" Completed="toolPanelShowAnimation_Completed">
+            <Storyboard x:Key="toolPanelShowAnimation">
                 <DoubleAnimation From="0" To="1" Duration="0:0:0.4" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
                     <EasingDoubleKeyFrame KeyTime="0" Value="-300">
@@ -135,8 +136,6 @@
 
         <!-- 상단 툴 팝업 버튼 -->
         <Button x:Name="btnTop"
-                Click="btnTop_Click"
-                TouchDown="btnTop_TouchDown"
                 Grid.Row="0">
             <Button.Triggers>                
             	<EventTrigger RoutedEvent="Button.Click">
@@ -240,14 +239,7 @@
         			<TranslateTransform/>
         		</TransformGroup>
         	</dw:LoopingListBox.RenderTransform>        	
-           	 <dw:LoopingListBox.Triggers>                
-            	<EventTrigger RoutedEvent="UIElement.MouseLeave">
-            		<BeginStoryboard Storyboard="{StaticResource slideListHideAnimation}"/>                    
-            	</EventTrigger>            
-            	<EventTrigger RoutedEvent="UIElement.TouchLeave">
-            		<BeginStoryboard Storyboard="{StaticResource slideListHideAnimation}"/>
-            	</EventTrigger>
-            </dw:LoopingListBox.Triggers>
+           	
             <dw:LoopingListBox.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </dw:LoopingListBox.Effect>
@@ -271,14 +263,6 @@
             <StackPanel.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </StackPanel.Effect>
-            <StackPanel.Triggers>            	
-            	<EventTrigger RoutedEvent="UIElement.MouseLeave">
-            		<BeginStoryboard  Storyboard="{StaticResource toolPanelHideAnimation}"/>
-            	</EventTrigger>            	
-            	<EventTrigger RoutedEvent="UIElement.TouchLeave">
-            		<BeginStoryboard Storyboard="{StaticResource toolPanelHideAnimation}"/>
-            	</EventTrigger>
-            </StackPanel.Triggers>
                        
             <control:SlideListBox  x:Name="llbToolHeaders"
                         Height="Auto"
