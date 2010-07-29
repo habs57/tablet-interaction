@@ -35,23 +35,20 @@ namespace TablectionSketch
             {
                 //선택한 위치가 이미지랑 겹치는지 확인             
                 //겹치면 가장 위 이미지에 대해서 정보를 클래스에 저장 
-                VisualTreeHelper.HitTest(visual, 
+                VisualTreeHelper.HitTest(this._inkCanvas.Parent as Visual, 
                     new HitTestFilterCallback(p => 
                     {
                         if (p is TouchableImage)
-                        {                            
+                        {
+                            this._selectedImage = p as TouchableImage;
                             return HitTestFilterBehavior.Stop;
                         }
+
+                        this._selectedImage = null;
                         return HitTestFilterBehavior.Continue;
                     }), 
                     new HitTestResultCallback(q => 
-                    {
-                        TouchableImage image = q.VisualHit as TouchableImage;
-                        if (image != null)
-                        {
-                            this._selectedImage = image;
-                            return HitTestResultBehavior.Stop;
-                        }
+                    {                        
                         return HitTestResultBehavior.Continue;
                     }), 
                     new PointHitTestParameters(e.GetTouchPoint(null).Position));                
@@ -61,7 +58,8 @@ namespace TablectionSketch
 
         public bool BeginCrop(PathGeometry path)
         {
-            //입력받은 패스를 가지고 
+            //입력받은 패스를 가지고
+ 
             //이미지에 적용 
 
             //패스로 크로핑

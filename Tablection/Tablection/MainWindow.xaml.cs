@@ -30,7 +30,7 @@ namespace TablectionSketch
     {
         PathGenerator _pathGenerator;
         ImageFreeCropHelper _freeCropHelper;
-        
+        TouchModeRecognizer _modeRecognizer;        
 
         public MainWindow()
         {
@@ -41,17 +41,36 @@ namespace TablectionSketch
             _pathGenerator = new PathGenerator(this.DrawingCanvas);
             _pathGenerator.PathGenerated += new Action<PathGeometry>(_pathGenerator_PathGenerated);
 
-            _freeCropHelper = new ImageFreeCropHelper(this.DrawingCanvas);            
+            _freeCropHelper = new ImageFreeCropHelper(this.DrawingCanvas);
+
+            _modeRecognizer = new TouchModeRecognizer(this.DrawingCanvas);
+            _modeRecognizer.ModeChanged += new EventHandler<TouchModeChangedEventArgs>(_modeRecognizer_ModeChanged);
+            _modeRecognizer.IsEnableCollect = true;
         }
 
+        //여기에 터치 포인트에 따른 입력 모드 전환을 넣어준다.
+        void _modeRecognizer_ModeChanged(object sender, TouchModeChangedEventArgs e)
+        {           
+            bool IsMultiTouch = e.IsMultitouch;
+            if (IsMultiTouch == true)
+            {
+                //this.llbTools.SelectedIndex = 0;
+                //VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
+            }
+            else
+            {
+                //this.llbTools.SelectedIndex = 5;
+            }
+        }
+
+        //스트로크 인식 
         void _pathGenerator_PathGenerated(PathGeometry obj)
         {            
             this._freeCropHelper.BeginCrop(obj);            
         }
 
         void DrawingCanvas_Gesture(ApplicationGesture Gestrue)
-        {
-            
+        {            
             System.Diagnostics.Debug.WriteLine(Gestrue.ToString());
         }
         
@@ -143,45 +162,6 @@ namespace TablectionSketch
             this.radioStrokes.IsChecked = true;
         }
         
-        //private void SlideList_TouchEnter(object sender, TouchEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("SlideList_TouchEnter");
-        //}
-
-        //private void SlideList_TouchLeave(object sender, TouchEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("SlideList_TouchLeave");
-        //}
-    
-        //private void SlideList_MouseEnter(object sender, MouseEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("SlideList_MouseEnter");
-        //}
-
-        //private void SlideList_MouseLeave(object sender, MouseEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("SlideList_MouseLeave");
-        //}
-
-        //private void ToolPanel_MouseEnter(object sender, MouseEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("ToolPanel_MouseEnter");
-        //}
-
-        //private void ToolPanel_MouseLeave(object sender, MouseEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("ToolPanel_MouseLeave");
-        //}
-
-        //private void ToolPanel_TouchEnter(object sender, TouchEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("ToolPanel_TouchEnter");
-        //}
-
-        //private void ToolPanel_TouchLeave(object sender, TouchEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("ToolPanel_TouchLeave");
-        //}
 
         private ImageSearchWindow _searchWindow = null;
         protected ImageSearchWindow SearchWindow
@@ -340,22 +320,9 @@ namespace TablectionSketch
             return HitTestResultBehavior.Continue;
         }
 
-        private TouchModeRecognizer _modeRecognizer = new TouchModeRecognizer();
         private void DrawingCanvas_TouchDown(object sender, TouchEventArgs e)
         {
-            _modeRecognizer.Recognize(e);
-            bool IsMultiTouch = _modeRecognizer.IsMultiTouch;
-            if (IsMultiTouch == true)
-            {
-                
-                //this.llbTools.SelectedIndex = 0;
-                //VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
-            }
-            else
-            {
-                
-                //this.llbTools.SelectedIndex = 5;
-            }
+        
         }
 
         private void DrawingCanvas_TouchUp(object sender, TouchEventArgs e)
