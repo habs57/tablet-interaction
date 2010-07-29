@@ -531,20 +531,5 @@ namespace TablectionSketch
         {
             this.SlideList.Visibility = Visibility.Visible;
         }
-
-        private void btnTop_Click(object sender, RoutedEventArgs e)
-        {
-            this.btnTop.Visibility = Visibility.Collapsed;
-        }
-
-        private void btnTop_TouchDown(object sender, TouchEventArgs e)
-        {
-            this.btnTop.Visibility = Visibility.Collapsed;
-        }
-
-        private void toolPanelShowAnimation_Completed(object sender, EventArgs e)
-        {
-            this.btnTop.Visibility = Visibility.Visible;
-        }
     }
 }
