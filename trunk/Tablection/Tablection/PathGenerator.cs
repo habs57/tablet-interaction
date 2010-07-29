@@ -48,7 +48,7 @@ namespace TablectionSketch
                 //_source.PreviewTouchMove += new EventHandler<System.Windows.Input.TouchEventArgs>(_source_PreviewTouchMove);
                 //_source.PreviewTouchUp += new EventHandler<System.Windows.Input.TouchEventArgs>(_source_PreviewTouchUp);
 
-                _source.PreviewStylusButtonDown +=new System.Windows.Input.StylusButtonEventHandler(_source_PreviewStylusButtonDown); 
+                _source.PreviewStylusDown +=new System.Windows.Input.StylusDownEventHandler(_source_PreviewStylusDown);
                 _source.PreviewStylusMove +=new System.Windows.Input.StylusEventHandler(_source_PreviewStylusMove); 
                 _source.PreviewStylusUp +=new System.Windows.Input.StylusEventHandler(_source_PreviewStylusUp);  
             }
@@ -87,7 +87,7 @@ namespace TablectionSketch
             _psCollection.Add(seg);
         }
 
-        void _source_PreviewStylusButtonDown(object sender, System.Windows.Input.StylusButtonEventArgs e)
+        void _source_PreviewStylusDown(object sender, System.Windows.Input.StylusEventArgs e)
         {
             e.StylusDevice.Capture(_source);
             this.Clear();
@@ -138,7 +138,7 @@ namespace TablectionSketch
                 //_source.PreviewTouchMove -= new EventHandler<System.Windows.Input.TouchEventArgs>(_source_PreviewTouchMove);
                 //_source.PreviewTouchDown -= new EventHandler<System.Windows.Input.TouchEventArgs>(_source_PreviewTouchDown);
 
-                _source.PreviewStylusButtonDown -= new System.Windows.Input.StylusButtonEventHandler(_source_PreviewStylusButtonDown);
+                _source.PreviewStylusDown -= new System.Windows.Input.StylusDownEventHandler(_source_PreviewStylusDown);
                 _source.PreviewStylusMove -= new System.Windows.Input.StylusEventHandler(_source_PreviewStylusMove);
                 _source.PreviewStylusUp -= new System.Windows.Input.StylusEventHandler(_source_PreviewStylusUp); 
 

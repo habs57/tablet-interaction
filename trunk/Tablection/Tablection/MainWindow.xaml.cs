@@ -43,10 +43,17 @@ namespace TablectionSketch
             _pathGenerator.IsCollecting = false;
 
             _freeCropHelper = new ImageFreeCropHelper(this.DrawingCanvas);
+            _freeCropHelper.ImageCropped += new EventHandler<ImageCropEventArgs>(_freeCropHelper_ImageCropped);
 
             _modeRecognizer = new TouchModeRecognizer(this.DrawingCanvas);
             _modeRecognizer.ModeChanged += new EventHandler<TouchModeChangedEventArgs>(_modeRecognizer_ModeChanged);
             _modeRecognizer.IsEnableCollect = true;
+        }
+
+        //이미지 가위질 되고 직후 동작
+        void _freeCropHelper_ImageCropped(object sender, object e)
+        {
+            //this.llbTools.SelectedIndex = 0;
         }
 
         //여기에 터치 포인트에 따른 입력 모드 전환을 넣어준다.

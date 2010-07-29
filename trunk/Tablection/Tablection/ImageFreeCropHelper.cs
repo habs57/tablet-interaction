@@ -12,6 +12,11 @@ using System.Windows.Media;
 
 namespace TablectionSketch
 {
+    public class ImageCropEventArgs : EventArgs
+    {
+
+    }
+
     /// <summary>
     /// 손으로 선택한 이미지 알아냄 
     /// 펜 정보 입력시 선택한 이미지와 접촉하는지 여부 알아냄
@@ -19,6 +24,8 @@ namespace TablectionSketch
     /// </summary>
     public class ImageFreeCropHelper
     {
+        public event EventHandler<ImageCropEventArgs> ImageCropped;
+
         private TouchableImage _selectedImage = null;
         private InkCanvas _inkCanvas = null;
 
@@ -94,7 +101,12 @@ namespace TablectionSketch
                 //이미지 A 를 A+ 위치에 배치 
                 //이미지 B 를 B+ 위치에 배치 
 
-                //원본 이미지 캔버스에서 제거                
+                //원본 이미지 캔버스에서 제거           
+
+                if (this.ImageCropped != null)
+                {
+                    ImageCropped(this, null);
+                }
             }          
             
             return true;
