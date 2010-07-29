@@ -35,7 +35,7 @@ namespace TablectionSketch
 
         private void LoadSlides(string folderPath)
         {            
-            string[] files = Directory.GetFiles(folderPath, "*.jpg");
+            string[] files = Directory.GetFiles(folderPath, "*.*");
             foreach (var item in files)
             {
                 FileInfo fi = new FileInfo(item);
