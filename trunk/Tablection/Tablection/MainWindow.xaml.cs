@@ -40,6 +40,7 @@ namespace TablectionSketch
 
             _pathGenerator = new PathGenerator(this.DrawingCanvas);
             _pathGenerator.PathGenerated += new Action<PathGeometry>(_pathGenerator_PathGenerated);
+            _pathGenerator.IsCollecting = false;
 
             _freeCropHelper = new ImageFreeCropHelper(this.DrawingCanvas);
 
@@ -65,7 +66,7 @@ namespace TablectionSketch
 
         //스트로크 인식 
         void _pathGenerator_PathGenerated(PathGeometry obj)
-        {            
+        {  
             this._freeCropHelper.BeginCrop(obj);            
         }
 
@@ -132,7 +133,7 @@ namespace TablectionSketch
 
         private void btnTop_Click(object sender, RoutedEventArgs e)
         {         
-            this.ToolPanel.Visibility = Visibility.Visible;
+            //this.ToolPanel.Visibility = Visibility.Visible;
         }
         
         private void SlideListHideAnimation_Completed(object sender, EventArgs e)
@@ -142,7 +143,7 @@ namespace TablectionSketch
 
         private void ToolPanelHideAnimaton_Completed(object sender, EventArgs e)
         {
-            this.ToolPanel.Visibility = Visibility.Collapsed;
+            //this.ToolPanel.Visibility = Visibility.Collapsed;
         }
         
 
