@@ -1,4 +1,4 @@
-﻿<Window x:Class="TablectionSketch.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:TablectionSketch"   
@@ -9,13 +9,9 @@
         xmlns:conv="clr-namespace:TablectionSketch.Converter" 
         xmlns:data="clr-namespace:TablectionSketch.Data"
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TablectionSketch.MainWindow"
         IsManipulationEnabled="False"
         Title="TablectionSketch" Height="768" Width="1024">
-    
-    <!-- MVVM 스타일로 View와 VM을 연결한다. -->
-    <Window.DataContext>
-        <local:MainWindowVM/>
-    </Window.DataContext>
     
     <Window.Resources>
         <ResourceDictionary>
@@ -76,7 +72,15 @@
 
             <!-- 애니메이션 -->
             <Storyboard x:Key="toolPanelHideAnimation" Completed="ToolPanelHideAnimaton_Completed">
-                <DoubleAnimation To="0" BeginTime="0:0:3" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
+            	<DoubleAnimation To="0" BeginTime="0:0:3" Duration="0:0:0.2" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
+            	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="llbToolHeaders">
+            		<EasingDoubleKeyFrame KeyTime="0:0:2.9" Value="0">
+            			<EasingDoubleKeyFrame.EasingFunction>
+            				<BounceEase EasingMode="EaseOut"/>
+            			</EasingDoubleKeyFrame.EasingFunction>
+            		</EasingDoubleKeyFrame>
+            		<EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="-201"/>
+            	</DoubleAnimationUsingKeyFrames>
             </Storyboard>
 
             <Storyboard x:Key="slideListHideAnimation" Completed="SlideListHideAnimation_Completed">
@@ -94,12 +98,22 @@
         </ResourceDictionary>                
     
     </Window.Resources>
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnTop">
+			<BeginStoryboard x:Name="toolPanelShowAnimation_BeginStoryboard" Storyboard="{StaticResource toolPanelShowAnimation}"/>
+		</EventTrigger>
+	</Window.Triggers>
+    
+    <!-- MVVM 스타일로 View와 VM을 연결한다. -->
+    <Window.DataContext>
+        <local:MainWindowVM/>
+    </Window.DataContext>
 
     <Grid x:Name="grdMain"
-          Background="#FF6F6F6F">
+          Background="#FF494949">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="85"/>
+        	<RowDefinition Height="0.884*"/>
+        	<RowDefinition Height="0.116*"/>
         </Grid.RowDefinitions>
 
         <!-- 하단 슬라이드 팝업 버튼 -->
@@ -108,14 +122,14 @@
                 IsManipulationEnabled="True"
                 ManipulationStarted="btnTop_ManipulationStarted"
                 ManipulationDelta="btnTop_ManipulationDelta"
-                Click="btnTop_Click">
+                Click="btnTop_Click" d:IsLocked="True">
             <Button.Triggers>                
-                <EventTrigger RoutedEvent="Button.Click">
-                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="ManipulationStarted">
-                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
-                </EventTrigger>
+            	<EventTrigger RoutedEvent="ButtonBase.Click">
+            		<BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
+            	</EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.ManipulationStarted">
+            		<BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
+            	</EventTrigger>
             </Button.Triggers>
             <Button.Template>
                 <ControlTemplate>
@@ -132,14 +146,14 @@
                 ManipulationStarted="btnBottom_ManipulationStarted"
                 ManipulationDelta="btnBottom_ManipulationDelta"
                 VerticalAlignment="Stretch"
-                Click="btnBottom_Click">
+                Click="btnBottom_Click" Margin="8,31,-8,0" d:IsLocked="True">
             <Button.Triggers>
-                <EventTrigger RoutedEvent="Button.Click">
-                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="ManipulationStarted">
-                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
-                </EventTrigger>
+            	<EventTrigger RoutedEvent="ButtonBase.Click">
+            		<BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
+            	</EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.ManipulationStarted">
+            		<BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
+            	</EventTrigger>
             </Button.Triggers>
             <Button.Template>
                 <ControlTemplate>
@@ -152,7 +166,7 @@
 
 
         <!-- 메인 그림패널 -->
-        <Grid Margin="85" Grid.RowSpan="2">
+        <Grid Margin="50,50,49,-31" d:IsLocked="True">
             <Rectangle Fill="White"/>
             <control:MultiTouchInkCanvas x:Name="DrawingCanvas"
                                          ManipulationStarting="DrawingCanvas_ManipulationStarting"
@@ -203,22 +217,22 @@
                  ItemsSource="{Binding SlideCollection}"
                  ItemContainerStyle="{StaticResource SlideContainerStyle}"
                  ItemTemplate="{StaticResource SlideDataTemplate}"
-                 Style="{StaticResource SlideListBoxStyle}">
+                 Style="{StaticResource SlideListBoxStyle}" d:IsLocked="True">
             <dw:LoopingListBox.Triggers>                
-                <EventTrigger RoutedEvent="MouseEnter">
-                    <StopStoryboard BeginStoryboardName="SlideListHideAnimation"/>
-                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard x:Name="SlideListHideAnimation" Storyboard="{StaticResource slideListHideAnimation}"/>                    
-                </EventTrigger>
-                <EventTrigger RoutedEvent="TouchEnter">
-                    <StopStoryboard BeginStoryboardName="SlideListHideAnimation2"/>
-                    <BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="TouchLeave">
-                    <BeginStoryboard x:Name="SlideListHideAnimation2" Storyboard="{StaticResource slideListHideAnimation}"/>
-                </EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.MouseEnter">
+            		<StopStoryboard BeginStoryboardName="SlideListHideAnimation"/>
+            		<BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
+            	</EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.MouseLeave">
+            		<BeginStoryboard x:Name="SlideListHideAnimation" Storyboard="{StaticResource slideListHideAnimation}"/>                    
+            	</EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.TouchEnter">
+            		<StopStoryboard BeginStoryboardName="SlideListHideAnimation2"/>
+            		<BeginStoryboard Storyboard="{StaticResource slideListShowAnimation}"/>
+            	</EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.TouchLeave">
+            		<BeginStoryboard x:Name="SlideListHideAnimation2" Storyboard="{StaticResource slideListHideAnimation}"/>
+            	</EventTrigger>
             </dw:LoopingListBox.Triggers>
             <dw:LoopingListBox.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
@@ -232,27 +246,25 @@
                     TextBlock.Foreground="Black"                        
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
-                    Opacity="0"                  
-             
-                    Visibility="Collapsed">
+                    Opacity="0" Visibility="Collapsed">
             <StackPanel.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </StackPanel.Effect>
             <StackPanel.Triggers>
-                <EventTrigger RoutedEvent="MouseEnter">
-                    <StopStoryboard BeginStoryboardName="ToolPanelHideAnimation"/>
-                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
-                </EventTrigger>               
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard x:Name="ToolPanelHideAnimation" Storyboard="{StaticResource toolPanelHideAnimation}"/>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="TouchEnter">
-                    <StopStoryboard BeginStoryboardName="ToolPanelHideAnimation2"/>
-                    <BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="TouchLeave">
-                    <BeginStoryboard x:Name="ToolPanelHideAnimation2" Storyboard="{StaticResource toolPanelHideAnimation}"/>
-                </EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.MouseEnter">
+            		<StopStoryboard BeginStoryboardName="ToolPanelHideAnimation"/>
+            		<BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
+            	</EventTrigger>               
+            	<EventTrigger RoutedEvent="UIElement.MouseLeave">
+            		<BeginStoryboard x:Name="ToolPanelHideAnimation" Storyboard="{StaticResource toolPanelHideAnimation}"/>
+            	</EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.TouchEnter">
+            		<StopStoryboard BeginStoryboardName="ToolPanelHideAnimation2"/>
+            		<BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
+            	</EventTrigger>
+            	<EventTrigger RoutedEvent="UIElement.TouchLeave">
+            		<BeginStoryboard x:Name="ToolPanelHideAnimation2" Storyboard="{StaticResource toolPanelHideAnimation}"/>
+            	</EventTrigger>
             </StackPanel.Triggers>
                        
             <control:SlideListBox  x:Name="llbToolHeaders"
@@ -264,7 +276,16 @@
                         ItemsSource="{Binding Source={StaticResource ToolHeaders}}"
                         ItemContainerStyle="{StaticResource ToolHeaderContainerStyle}"
                         ItemTemplate="{StaticResource ToolHeaderDataTemplate}"
-                        BorderThickness="0"/>               
+                        BorderThickness="0" RenderTransformOrigin="0.5,0.5">
+            	<control:SlideListBox.RenderTransform>
+            		<TransformGroup>
+            			<ScaleTransform/>
+            			<SkewTransform/>
+            			<RotateTransform/>
+            			<TranslateTransform/>
+            		</TransformGroup>
+            	</control:SlideListBox.RenderTransform>
+            </control:SlideListBox>               
             <StackPanel
                 VerticalAlignment="Center">
                 <RadioButton x:Name="radioTools"                                 
@@ -286,7 +307,7 @@
                     <control:SlideListBox x:Name="llbColors" 
                              SelectedIndex="0"
                              Style="{StaticResource LoopingListStyle}"
-                             SelectedItem="{Binding Color, Source={StaticResource DrawingSettings}, Mode=OneWayToSource, Converter={StaticResource ColorToolConverter}}"
+                             SelectedItem="{Binding Color, Converter={StaticResource ColorToolConverter}, Mode=OneWayToSource, Source={StaticResource DrawingSettings}}"
                              ItemTemplate="{StaticResource ColorToolDataTemplate}"
                              ItemsSource="{Binding Source={StaticResource Colors}}"
                              ItemContainerStyle="{StaticResource ColorToolContainerStyle}"/>
