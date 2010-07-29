@@ -93,7 +93,6 @@ namespace TablectionSketch
 
         public RenderTargetBitmap SaveControl(FrameworkElement Target)
         {
-
             FrameworkElement Parent = Target.Parent as FrameworkElement;
             double ParentWidth, ParentHeight;
 
@@ -227,9 +226,19 @@ namespace TablectionSketch
                     this.radioColors.IsChecked = false;
                     this.radioStrokes.IsChecked = false;
                     this.SearchWindow.Hide();
+                }               
+            }
+        }
+        
+        private void llbTools_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                BasicTool tool = e.AddedItems[0] as BasicTool;
+                if (tool != null)
+                {
+                    this.DrawingCanvas.EditingMode = tool.Mode;
                 }
-
-               
             }
         }
 
@@ -318,25 +327,7 @@ namespace TablectionSketch
             }
 
             return HitTestResultBehavior.Continue;
-        }
-
-        private void DrawingCanvas_TouchDown(object sender, TouchEventArgs e)
-        {
-        
-        }
-
-        private void DrawingCanvas_TouchUp(object sender, TouchEventArgs e)
-        {
-            
-            //this.llbTools.SelectedIndex = 0;            
-        }
-
-        private void DrawingCanvas_StylusDown(object sender, StylusDownEventArgs e)
-        {            
-            //펜을 캔버스에 대면 자동적으로 쓰기모드
-            
-            //this.llbTools.SelectedIndex = 1;
-        }
+        }     
 
         private void BackupChildObj(SelectionChangedEventArgs e)
         {
@@ -487,6 +478,8 @@ namespace TablectionSketch
 
         #endregion
 
+        #region Manipulation
+
         private void DrawingCanvas_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
             e.TranslationBehavior = new System.Windows.Input.InertiaTranslationBehavior();
@@ -540,23 +533,7 @@ namespace TablectionSketch
             e.ManipulationContainer = this;  
         }
 
-        private void llbTools_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
-            {
-                BasicTool tool = e.AddedItems[0] as BasicTool;
-                if (tool != null)
-                {
-                    this.DrawingCanvas.EditingMode = tool.Mode;
-                }                
-            }
-            
-        }
-
-        private void DrawingCanvas_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
-        {
-            
-        }    
+        #endregion //Manipulation
 
     }
 }

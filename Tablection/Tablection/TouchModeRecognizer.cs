@@ -49,22 +49,18 @@ namespace TablectionSketch
         {
             if (this.IsEnableCollect)
             {
-                int touchPoints = 0;
-
                 //멀티터치
                 if ((_prevDevID > 0) && (_prevDevID != e.TouchDevice.Id))
                 {
                     //펜을 캔버스에 대면 자동적으로 지우기모드
-                    this.IsMultiTouch = true;
-                    touchPoints = 0;
+                    this.IsMultiTouch = true;                    
                     System.Diagnostics.Debug.WriteLine(string.Format("Multitouch"));
                 }
                 //싱글터치
                 else if ((_prevDevID > 0) && (_prevDevID == e.TouchDevice.Id))
                 {
                     //펜을 캔버스에 대면 자동적으로 지우기모드
-                    this.IsMultiTouch = false;
-                    touchPoints = 1;
+                    this.IsMultiTouch = false;                    
                     System.Diagnostics.Debug.WriteLine(string.Format("Singletouch"));
                 }
 
@@ -72,7 +68,7 @@ namespace TablectionSketch
 
                 if (ModeChanged != null)
                 {
-                    ModeChanged(this, new TouchModeChangedEventArgs() { IsMultitouch = this.IsMultiTouch, CurrentTouchPoints = touchPoints });
+                    ModeChanged(this, new TouchModeChangedEventArgs() { IsMultitouch = this.IsMultiTouch });
                 }
                 
             }

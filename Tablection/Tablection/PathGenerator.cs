@@ -77,7 +77,7 @@ namespace TablectionSketch
 
         void _source_PreviewStylusMove(object sender, System.Windows.Input.StylusEventArgs e)
         {
-            Point pt = e.StylusDevice.GetPosition(null);
+            Point pt = e.StylusDevice.GetPosition(_source);
             PathSegment seg = new LineSegment(new Point(pt.X, pt.Y), false);
             _psCollection.Add(seg);
         }
@@ -90,7 +90,7 @@ namespace TablectionSketch
 
         void _source_PreviewTouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            Point pt = e.GetTouchPoint(null).Position;
+            Point pt = e.GetTouchPoint(_source).Position;
             PathSegment seg = new LineSegment(new Point(pt.X, pt.Y), false);
             _psCollection.Add(seg);            
         }
