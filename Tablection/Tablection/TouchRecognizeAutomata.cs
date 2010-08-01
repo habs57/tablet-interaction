@@ -78,7 +78,9 @@ namespace TablectionSketch
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
 
             this._IsOverImage = false;
-            VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
+            VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack), 
+                                              new HitTestResultCallback(ResultCallBack), 
+                                              new PointHitTestParameters(e.GetTouchPoint(_Canvas).Position));                
 
             this.Run(e, TouchStates.TD);
         }
