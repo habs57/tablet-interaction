@@ -64,6 +64,7 @@ namespace TablectionSketch
         void canvas_PreviewTouchUp(object sender, TouchEventArgs e)
         {
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
+            this._IsOverImage = false;
             _modeRecognizer.Recognize(e);
             this.Run(e, TouchStates.TU);
         }
@@ -71,6 +72,10 @@ namespace TablectionSketch
         void canvas_PreviewTouchMove(object sender, TouchEventArgs e)
         {
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
+            this._IsOverImage = false;
+            VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack),
+                                            new HitTestResultCallback(ResultCallBack),
+                                            new PointHitTestParameters(e.GetTouchPoint(_Canvas).Position));
             _modeRecognizer.Recognize(e);
             this.Run(e, TouchStates.TM);    
         }
@@ -78,7 +83,6 @@ namespace TablectionSketch
         void canvas_PreviewTouchDown(object sender, TouchEventArgs e)
         {
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
-
             this._IsOverImage = false;
             VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack), 
                                               new HitTestResultCallback(ResultCallBack), 
