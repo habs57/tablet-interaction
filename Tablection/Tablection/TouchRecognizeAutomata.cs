@@ -116,6 +116,11 @@ namespace TablectionSketch
             switch (_PrevMode)
             {
                 case Mode.None:
+                    if (touchState == TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.None);
+                        return;
+                    }
                     if ((_TouchCount == 1) && (touchState == TouchStates.TD))
                     {                        
                         this.MoveToNext(Mode.Pen);
@@ -148,12 +153,22 @@ namespace TablectionSketch
                     }
                     break;
                 case Mode.Manipulation:
+                    if (touchState == TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.None);
+                        return;
+                    }
                     if (touchState == TouchStates.TM)
                     {
                         this.MoveToNext(Mode.Manipulation);
                     }
                     break;
                 case Mode.Cut:
+                    if (touchState == TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.None);
+                        return;
+                    }
                     if ((touchState == TouchStates.TM) || (touchState == TouchStates.TD))
                     {
                         this.MoveToNext(Mode.Cut);
