@@ -77,6 +77,7 @@ namespace TablectionSketch
         {
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
 
+            this._IsOverImage = false;
             VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
 
             this.Run(e, TouchStates.TD);
@@ -85,8 +86,6 @@ namespace TablectionSketch
 
         private HitTestFilterBehavior FilterCallBack(DependencyObject e)
         {
-            this._IsOverImage = false;
-
             if (e is TouchableImage)
             {
                 //(e as TouchableImage).Focus();
@@ -161,6 +160,7 @@ namespace TablectionSketch
                     if (touchState == TouchStates.TM)
                     {
                         this.MoveToNext(Mode.Manipulation);
+                        return;
                     }
                     break;
                 case Mode.Cut:
@@ -172,6 +172,7 @@ namespace TablectionSketch
                     if ((touchState == TouchStates.TM) || (touchState == TouchStates.TD))
                     {
                         this.MoveToNext(Mode.Cut);
+                        return;
                     }
                     break;
                 default:
