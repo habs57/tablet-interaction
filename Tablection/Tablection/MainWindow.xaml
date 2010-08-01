@@ -12,8 +12,9 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TablectionSketch.MainWindow"
 		IsManipulationEnabled="False"
 		WindowStartupLocation="CenterScreen"
-		Title="TablectionSketch" Height="768" Width="1024" WindowStyle="None">
-        
+		Title="TablectionSketch" Height="768" Width="1024" WindowStyle="None"
+        WindowState="Maximized" >
+		
 	
 	<Window.Resources>
 		<ResourceDictionary>
@@ -371,7 +372,6 @@
 				<Rectangle Fill="White" Height="6.001" Stroke="Black" StrokeThickness="0" Width="57" HorizontalAlignment="Center" Margin="0,24,0,0"/>
 			</Button>
 		</Grid>
-		<Rectangle Fill="White" HorizontalAlignment="Left" Height="100" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="100"/>
-	</Grid>
+    </Grid>
 	
 </Window>
