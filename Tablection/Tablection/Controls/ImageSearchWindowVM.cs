@@ -28,7 +28,7 @@ namespace TablectionSketch.Controls
 
         public void StartDrag(DragInfo dragInfo)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

@@ -27,10 +27,7 @@
     <Window.DataContext>
         <vm:ImageSearchWindowVM/>
     </Window.DataContext>
-    <Grid x:Name="grdBase"
-        PreviewTouchDown="Grid_PreviewTouchDown"
-        PreviewTouchMove="Grid_PreviewTouchMove"
-        >
+    <Grid x:Name="grdBase">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
