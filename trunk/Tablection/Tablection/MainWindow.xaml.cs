@@ -334,8 +334,7 @@ namespace TablectionSketch
                     foreach (UIElement item in this.DrawingCanvas.Children)
                     {
                         oldSlide.Children.Add(cloneElement(item));
-                    }
-        
+                    }        
                 }
             }
         }
@@ -542,10 +541,11 @@ namespace TablectionSketch
         {
             this.SlideList.Visibility = Visibility.Visible;
         }
-
-
-        public void CloseWindows(object sender, MouseButtonEventArgs e) {this.Close();}
-
+        
+        public void CloseWindows(object sender, MouseButtonEventArgs e) 
+        {
+            this.Close();
+        }
 
         private void MinimizeWindows(object sender, MouseButtonEventArgs e)
         {
