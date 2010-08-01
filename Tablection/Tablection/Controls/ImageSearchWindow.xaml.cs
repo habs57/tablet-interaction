@@ -14,6 +14,7 @@ using System.Net;
 using System.IO;
 using System.Web;
 using System.Xml;
+using System.Windows.Interop;
 
 using System.Collections.ObjectModel;
 
@@ -94,5 +95,68 @@ namespace TablectionSketch.Controls
             //e.Handled = true;
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Get the window and add a message hook.
+            IntPtr hwnd = new WindowInteropHelper(this).Handle;
+            HwndSource.FromHwnd(hwnd).AddHook(new HwndSourceHook(WndProc));
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_NCHITTEST)
+            {
+                // get screen coordinates  
+                Point p = new Point();
+                int pInt = lParam.ToInt32();
+                p.X = (pInt << 16) >> 16; // lo order word  
+                p.Y = pInt >> 16; // hi order word  
+                if (IsOnNoncontainerControl(this, p) == false)
+                {
+                    //The point is not in a noncontainer control(like TextBox or Button),
+                    //In other words, it is on a Panel, a Grid or the other container element.
+                    //So we lie the system that the point is on the caption bar.
+                    handled = true;
+                    return new IntPtr(2);
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+
+        //Check if the point is on a noncontainer control.
+        private bool IsOnNoncontainerControl(FrameworkElement parent, Point p)
+        {
+            IInputElement ctrl = parent.InputHitTest(parent.PointFromScreen(p));
+            if (ctrl != null && ctrl != parent && ctrl is FrameworkElement)
+            {
+                if ((ctrl is Panel) || (ctrl is Decorator))
+                {
+                    return IsOnNoncontainerControl(ctrl as FrameworkElement, p);
+                }
+                else
+                {
+                    Rect r = GetBoundingBox(ctrl as FrameworkElement, parent);
+                    r.Location = parent.PointToScreen(r.Location);
+                    if (r.Contains(p))
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            else
+                return false;
+        }
+
+        //Get the bounds of a element.
+        private Rect GetBoundingBox(FrameworkElement element, FrameworkElement containerWindow)
+        {
+            GeneralTransform transform = element.TransformToAncestor(containerWindow);
+            Point topLeft = transform.Transform(new Point(0, 0));
+            Point bottomRight = transform.Transform(new Point(element.ActualWidth, element.ActualHeight));
+            return new Rect(topLeft, bottomRight);
+        }
+
+        private const int WM_NCHITTEST = 0x0084;
     }
 }
