@@ -157,7 +157,7 @@
 
 		<!-- 상단 툴 팝업 버튼 -->
 		<Button x:Name="btnTop"
-				Grid.Row="0">
+				Grid.Row="0" Margin="5.375,-26.125,-5.375,26.125">
 			<Button.Triggers>                
 				<EventTrigger RoutedEvent="Button.Click">
 					<BeginStoryboard Storyboard="{StaticResource toolPanelShowAnimation}"/>
@@ -171,7 +171,6 @@
 					<Rectangle Fill="Transparent"/>
 				</ControlTemplate>
 			</Button.Template>
-			<Button Content="Button" Height="20.666" Width="72"/>
 		</Button>
 
 
@@ -345,8 +344,17 @@
 			</StackPanel>
 		</StackPanel>
 		<Grid HorizontalAlignment="Right" Height="38" Margin="0,8,16.35,0" VerticalAlignment="Top" Width="74.499">
-			<Button Content="Button" Style="{DynamicResource ButtonStyle1}" Mouse.PreviewMouseDown="CloseWindows" Margin="0,0,-0.167,0" />
-			<Rectangle Fill="White" Margin="18.041,15.5,17.458,16.5" Stroke="Black" StrokeThickness="0" RenderTransformOrigin="0.5,0.5">
+			<Button Style="{DynamicResource ButtonStyle1}" Mouse.PreviewMouseDown="CloseWindows" Margin="0,0,-0.167,0" Opacity="0" Panel.ZIndex="1" d:IsHidden="True" >
+				<Button.Background>
+					<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+						<GradientStop Color="#FFF3F3F3" Offset="0"/>
+						<GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+						<GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+						<GradientStop Color="#E6CDCDCD" Offset="1"/>
+					</LinearGradientBrush>
+				</Button.Background>
+			</Button>
+			<Rectangle Fill="White" Margin="18.041,15.5,17.458,16.5" Stroke="Black" RenderTransformOrigin="0.5,0.5" StrokeThickness="0" Width="30">
 				<Rectangle.RenderTransform>
 					<TransformGroup>
 						<ScaleTransform/>
@@ -356,7 +364,7 @@
 					</TransformGroup>
 				</Rectangle.RenderTransform>
 			</Rectangle>
-			<Rectangle Fill="White" Margin="18.041,15.5,17.458,16.5" Stroke="Black" StrokeThickness="0" RenderTransformOrigin="0.5,0.5">
+			<Rectangle Fill="White" Margin="18.041,15.5,17.458,16.5" Stroke="Black" RenderTransformOrigin="0.5,0.5" StrokeThickness="0" Width="30">
 				<Rectangle.RenderTransform>
 					<TransformGroup>
 						<ScaleTransform/>
@@ -366,11 +374,19 @@
 					</TransformGroup>
 				</Rectangle.RenderTransform>
 			</Rectangle>
+			<Rectangle Fill="#00000000" Stroke="White" StrokeThickness="3" RadiusY="5.499" RadiusX="5.499" Margin="0,0,-0.167,0"/>
 		</Grid>
 		<Grid HorizontalAlignment="Right" Height="38" Margin="0,8,115.253,0" VerticalAlignment="Top" Width="74.666">
-			<Button Style="{DynamicResource ButtonStyle1}" Mouse.PreviewMouseDown="MinimizeWindows" >
-				<Rectangle Fill="White" Height="6.001" Stroke="Black" StrokeThickness="0" Width="57" HorizontalAlignment="Center" Margin="0,24,0,0"/>
+			<Button Style="{DynamicResource ButtonStyle1}" Mouse.PreviewMouseDown="MinimizeWindows" BorderBrush="Black" BorderThickness="2" Foreground="Black" Opacity="0" Panel.ZIndex="1" >
+				<Button.Background>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="1"/>
+					</LinearGradientBrush>
+				</Button.Background>
 			</Button>
+			<Rectangle Fill="White" Height="4.126" Stroke="Black" StrokeThickness="0" Width="41.5" HorizontalAlignment="Center" Margin="0,0,0,7.999" VerticalAlignment="Bottom"/>
+			<Rectangle Fill="#00000000" Stroke="White" StrokeThickness="3" Width="74.666" RadiusY="5.499" RadiusX="5.499" d:LayoutOverrides="HorizontalAlignment"/>
 		</Grid>
     </Grid>
 	
