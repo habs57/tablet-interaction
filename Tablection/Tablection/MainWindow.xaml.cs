@@ -55,19 +55,19 @@ namespace TablectionSketch
             switch (obj)
             {
                 case TouchRecognizeAutomata.Mode.None:
-                    this.SelectedIndex(0);
+                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.GestureOnly;
                     break;
                 case TouchRecognizeAutomata.Mode.Pen:
-                    this.SelectedIndex(1);                    
+                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.Ink;
                     break;
                 case TouchRecognizeAutomata.Mode.Erase:
-                    this.SelectedIndex(6);
+                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.EraseByStroke;
                     break;
                 case TouchRecognizeAutomata.Mode.Manipulation:
-                    this.SelectedIndex(0);                    
+                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.None;
                     break;
                 case TouchRecognizeAutomata.Mode.Cut:
-                    this.SelectedIndex(3);                    
+                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.InkAndGesture;
                     break;
                 default:
                     break;
@@ -535,7 +535,7 @@ namespace TablectionSketch
 
         private void DrawingCanvas_ManipulationStarting(object sender, ManipulationStartingEventArgs e)
         {
-            e.ManipulationContainer = this;  
+            e.ManipulationContainer = this.DrawingCanvas;  
         }
         
         #endregion //Manipulation
