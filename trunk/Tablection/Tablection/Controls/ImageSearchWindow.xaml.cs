@@ -102,6 +102,23 @@ namespace TablectionSketch.Controls
             //HwndSource.FromHwnd(hwnd).AddHook(new HwndSourceHook(WndProc));
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = this.IsCancel;
+            if (this.IsCancel == true)
+            {
+                this.Hide();                
+            }            
+        }
+
+        private bool IsCancel = true;
+
+        public void KillMe()
+        {
+            this.IsCancel = false;
+            this.Close();
+        }
+
         //private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         //{
         //    if (msg == WM_NCHITTEST)
