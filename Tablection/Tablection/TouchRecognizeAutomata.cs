@@ -121,11 +121,6 @@ namespace TablectionSketch
                         return;
                     }
                     if ((_TouchCount == 1) && (touchState == TouchStates.TD))
-                    {                        
-                        this.MoveToNext(Mode.Pen);
-                        return;
-                    }
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
                     {
                         if (_IsOverImage == true)
                         {
@@ -134,9 +129,17 @@ namespace TablectionSketch
                         }
                         else
                         {
-                            this.MoveToNext(Mode.Manipulation);
+                            this.MoveToNext(Mode.Pen);
                             return;
                         }                        
+                    }
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }                             
                     }                    
                     break;
                 case Mode.Pen:
@@ -150,10 +153,21 @@ namespace TablectionSketch
                         this.MoveToNext(Mode.Pen);
                         return;
                     }
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TD) && (_IsOverImage == true))
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
                     {
-                        this.MoveToNext(Mode.Pen);
-                        return;
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }                    
+                    }
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Cut);
+                            return;
+                        }                        
                     }
                     break;
                 case Mode.Manipulation:
@@ -167,12 +181,38 @@ namespace TablectionSketch
                         this.MoveToNext(Mode.Manipulation);
                         return;
                     }
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Cut);
+                            return;
+                        }
+                        else
+                        {
+                            this.MoveToNext(Mode.Pen);
+                            return;
+                        }
+                    }
                     break;
                 case Mode.Cut:
                     if (touchState == TouchStates.TU)
                     {
                         this.MoveToNext(Mode.None);
                         return;
+                    }
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    {
+                        this.MoveToNext(Mode.Pen);
+                        return;
+                    }
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Pen);
+                            return;
+                        }
                     }
                     if ((touchState == TouchStates.TM) || (touchState == TouchStates.TD))
                     {
