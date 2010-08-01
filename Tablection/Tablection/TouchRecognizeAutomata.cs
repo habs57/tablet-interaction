@@ -41,8 +41,8 @@ namespace TablectionSketch
 
         private Mode _PrevMode = Mode.None;        
 
-        private int _TouchCount = 0;
-        private bool _IsPressed = false;        //펜 들어오면 이용
+        private int _TouchCount = 0;        
+        public bool IsPen { get; set; }
         private bool _IsOverImage = false;
 
         public event Action<Mode> ModeChanged;
@@ -133,8 +133,16 @@ namespace TablectionSketch
                     }
                     if ((_TouchCount == 1) && (touchState == TouchStates.TM))
                     {
-                         this.MoveToNext(Mode.Pen);
-                         return;
+                        if (this.IsPen == false)
+                        {
+                            this.MoveToNext(Mode.Erase);
+                            return;
+                        }
+                        else
+                        {
+                            this.MoveToNext(Mode.Pen);
+                            return;
+                        }                         
                     }
                     if ((_TouchCount == 1) && (touchState == TouchStates.TD))
                     {
@@ -145,8 +153,16 @@ namespace TablectionSketch
                         }
                         else
                         {
-                            this.MoveToNext(Mode.Pen);
-                            return;
+                            if (this.IsPen == false)
+                            {
+                                this.MoveToNext(Mode.Erase);
+                                return;
+                            }
+                            else
+                            {
+                                this.MoveToNext(Mode.Pen);
+                                return;
+                            }
                         }
                     }
                     if ((_TouchCount > 1) && (touchState == TouchStates.TD))
@@ -234,8 +250,16 @@ namespace TablectionSketch
                         }
                         else
                         {
-                            this.MoveToNext(Mode.Pen);
-                            return;
+                            if (this.IsPen == false)
+                            {
+                                this.MoveToNext(Mode.Erase);
+                                return;
+                            }
+                            else
+                            {
+                                this.MoveToNext(Mode.Pen);
+                                return;
+                            }                         
                         }
                     }
                     if ((_TouchCount == 1) && (touchState == TouchStates.TM))
@@ -247,8 +271,16 @@ namespace TablectionSketch
                         }
                         else
                         {
-                            this.MoveToNext(Mode.Pen);
-                            return;
+                            if (this.IsPen == false)
+                            {
+                                this.MoveToNext(Mode.Erase);
+                                return;
+                            }
+                            else
+                            {
+                                this.MoveToNext(Mode.Pen);
+                                return;
+                            }                           
                         }
                     }
                     if ((_TouchCount > 1) && (touchState == TouchStates.TD))
