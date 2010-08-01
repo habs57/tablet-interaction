@@ -38,29 +38,29 @@ namespace TablectionSketch
 
         void _inkCanvas_PreviewTouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            Visual visual = this._inkCanvas as Visual;
-            if (visual != null)
-            {
-                //선택한 위치가 이미지랑 겹치는지 확인             
-                //겹치면 가장 위 이미지에 대해서 정보를 클래스에 저장 
-                VisualTreeHelper.HitTest(this._inkCanvas.Parent as Visual, 
-                    new HitTestFilterCallback(p => 
-                    {
-                        if (p is TouchableImage)
-                        {
-                            this._selectedImage = p as TouchableImage;
-                            return HitTestFilterBehavior.Stop;
-                        }
+            //Visual visual = this._inkCanvas as Visual;
+            //if (visual != null)
+            //{
+            //    //선택한 위치가 이미지랑 겹치는지 확인             
+            //    //겹치면 가장 위 이미지에 대해서 정보를 클래스에 저장 
+            //    VisualTreeHelper.HitTest(this._inkCanvas.Parent as Visual, 
+            //        new HitTestFilterCallback(p => 
+            //        {
+            //            if (p is TouchableImage)
+            //            {
+            //                this._selectedImage = p as TouchableImage;
+            //                return HitTestFilterBehavior.Stop;
+            //            }
 
-                        this._selectedImage = null;
-                        return HitTestFilterBehavior.Continue;
-                    }), 
-                    new HitTestResultCallback(q => 
-                    {                        
-                        return HitTestResultBehavior.Continue;
-                    }), 
-                    new PointHitTestParameters(e.GetTouchPoint(null).Position));                
-            }           
+            //            this._selectedImage = null;
+            //            return HitTestFilterBehavior.Continue;
+            //        }), 
+            //        new HitTestResultCallback(q => 
+            //        {                        
+            //            return HitTestResultBehavior.Continue;
+            //        }), 
+            //        new PointHitTestParameters(e.GetTouchPoint(null).Position));                
+            //}           
         }
                 
 
