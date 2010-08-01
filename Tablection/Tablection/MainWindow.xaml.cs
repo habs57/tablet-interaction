@@ -60,6 +60,9 @@ namespace TablectionSketch
                 case TouchRecognizeAutomata.Mode.Pen:
                     this.SelectedIndex(1);                    
                     break;
+                case TouchRecognizeAutomata.Mode.Erase:
+                    this.SelectedIndex(6);
+                    break;
                 case TouchRecognizeAutomata.Mode.Manipulation:
                     this.SelectedIndex(0);                    
                     break;
