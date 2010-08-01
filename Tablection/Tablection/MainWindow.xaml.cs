@@ -585,7 +585,7 @@ namespace TablectionSketch
                 _strokes = _slide.Strokes;
                 File.WriteAllText(_slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
             }
-            this.SearchWindow.Close();
+            this.SearchWindow.KillMe();
             this.Close();
         }
 
