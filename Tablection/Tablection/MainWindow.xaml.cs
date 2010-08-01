@@ -12,6 +12,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+
 using System.Windows.Ink;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
@@ -25,9 +29,16 @@ using TablectionSketch.Tool;
 using TablectionSketch.Controls;
 
 using System.Xml;
+using System.Diagnostics;
 
 namespace TablectionSketch
 {
+    public class UdpState
+    {
+        public UdpClient u;
+        public IPEndPoint e;
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -36,11 +47,12 @@ namespace TablectionSketch
         PathGenerator _pathGenerator;
         ImageFreeCropHelper _freeCropHelper;          
         TouchRecognizeAutomata _recognier;
-
+        private int gSensor_val;
 
         public MainWindow()
         {
             InitializeComponent();
+            InitializeUdpSocket();
 
             this.DrawingCanvas.Gesture += new RecongnitionGestrueHandler(DrawingCanvas_Gesture);
 
@@ -53,6 +65,57 @@ namespace TablectionSketch
 
             _recognier = new TouchRecognizeAutomata(this.DrawingCanvas);
             _recognier.ModeChanged += new Action<TouchRecognizeAutomata.Mode>(_recognier_ModeChanged);
+        }
+
+        private void InitializeUdpSocket()
+        {
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 9985);
+            UdpClient newsock = new UdpClient(ipep);
+
+            UdpState s = new UdpState();
+
+            s.e = ipep;
+            s.u = newsock;
+
+            newsock.BeginReceive(new AsyncCallback(OnReceive), s);
+        }
+
+        public void OnReceive(IAsyncResult ar)
+        {
+            UdpState s = new UdpState();
+
+            UdpClient u = (UdpClient)((UdpState)(ar.AsyncState)).u;
+            IPEndPoint e = (IPEndPoint)((UdpState)(ar.AsyncState)).e;
+
+            s.u = u;
+            s.e = e;
+
+            Byte[] receiveBytes = u.EndReceive(ar, ref e);
+            Debug.WriteLine(string.Format("Pen Signal Data : {0}", Encoding.ASCII.GetString(receiveBytes, 0, receiveBytes.Length)));
+
+            if (Encoding.ASCII.GetString(receiveBytes, 0, receiveBytes.Length) == "NONE")
+            {
+                gSensor_val = 0;
+                //this.Dispatcher.Invoke(new myDelegate(DrawingCanvas_PreviewStylusDownBySensor),1);
+                //this.llbTools.SelectedIndex = 1;
+            }
+            else if (Encoding.ASCII.GetString(receiveBytes, 0, receiveBytes.Length) == "WEAK")
+            {
+                gSensor_val = 1;
+                //this.Dispatcher.Invoke(new myDelegate(DrawingCanvas_PreviewStylusDownBySensor), 2);
+            }
+            else if (Encoding.ASCII.GetString(receiveBytes, 0, receiveBytes.Length) == "STNG")
+            {
+                gSensor_val = 2;
+                //this.Dispatcher.Invoke(new myDelegate(DrawingCanvas_PreviewStylusDownBySensor), 3);
+            }
+            else
+            {
+                gSensor_val = 3;
+                //this.Dispatcher.Invoke(new myDelegate(DrawingCanvas_PreviewStylusDownBySensor), 4);
+            }
+
+            u.BeginReceive(new AsyncCallback(OnReceive), s);
         }
 
         void _recognier_ModeChanged(TouchRecognizeAutomata.Mode obj)
