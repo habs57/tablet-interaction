@@ -210,7 +210,7 @@ namespace TablectionSketch
                     {
                         if (_IsOverImage == true)
                         {
-                            this.MoveToNext(Mode.Pen);
+                            this.MoveToNext(Mode.Manipulation);
                             return;
                         }
                     }
