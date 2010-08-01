@@ -339,8 +339,11 @@ namespace TablectionSketch
         {
             System.Diagnostics.Debug.WriteLine(string.Format("현재모드 : {0}", state));
 
-            _PrevMode = state;
-            this.ModeChanged(state);
+            if (_PrevMode != state)
+            {
+                _PrevMode = state;
+                this.ModeChanged(state);                
+            }
         }
 
     }
