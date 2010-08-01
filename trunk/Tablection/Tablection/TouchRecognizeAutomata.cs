@@ -131,6 +131,11 @@ namespace TablectionSketch
                         this.MoveToNext(Mode.None);
                         return;
                     }
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TM))
+                    {
+                         this.MoveToNext(Mode.Pen);
+                         return;
+                    }
                     if ((_TouchCount == 1) && (touchState == TouchStates.TD))
                     {
                         if (_IsOverImage == true)
@@ -142,7 +147,7 @@ namespace TablectionSketch
                         {
                             this.MoveToNext(Mode.Pen);
                             return;
-                        }                        
+                        }
                     }
                     if ((_TouchCount > 1) && (touchState == TouchStates.TD))
                     {
