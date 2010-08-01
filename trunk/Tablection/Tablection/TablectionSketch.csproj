@@ -65,6 +65,9 @@
       <DependentUpon>ImageSearchWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageSearchWindowVM.cs" />
+    <Compile Include="Controls\Liner.xaml.cs">
+      <DependentUpon>Liner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoopPanel\BeginDragEventArgs.cs" />
     <Compile Include="Controls\LoopPanel\DoubleHelper.cs" />
     <Compile Include="Controls\LoopPanel\HitTestHelper.cs" />
@@ -94,6 +97,10 @@
     <Compile Include="TouchModeRecognizer.cs" />
     <Compile Include="TouchRecognizeAutomata.cs" />
     <Page Include="Controls\ImageSearchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Liner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
