@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace TablectionSketch.Controls
 {
-    public class ImageSearchWindowVM : INotifyPropertyChanged
+    public class ImageSearchWindowVM : INotifyPropertyChanged, IDragSource  
     {
 
 
@@ -25,6 +25,11 @@ namespace TablectionSketch.Controls
         #endregion
 
 
+
+        public void StartDrag(DragInfo dragInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
     

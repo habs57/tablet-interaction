@@ -8,6 +8,7 @@
         WindowStyle="None"
         Title="ImageSearchWindow"
         Background="#FEFEFEEE"
+        PreviewTouchDown="Window_PreviewTouchDown"
         Height="400" Width="500">
     <Window.Resources>
        
@@ -26,9 +27,10 @@
     <Window.DataContext>
         <vm:ImageSearchWindowVM/>
     </Window.DataContext>
-    <Grid
-        TouchDown="Grid_TouchDown"
-        TouchMove="Grid_TouchMove">
+    <Grid x:Name="grdBase"
+        PreviewTouchDown="Grid_PreviewTouchDown"
+        PreviewTouchMove="Grid_PreviewTouchMove"
+        >
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
@@ -40,8 +42,11 @@
             <Button Margin="3,0,0,0" Content="검색" Width="50" Click="Button_Click"/>
         </StackPanel>
         <ListBox x:Name="lstImages"       
-                 dd:DragDrop.IsDragSource="True"  
+
+                 dd:DragDrop.IsDragSource="True"   
+                 dd:DragDrop.DragHandler="{Binding}"
                  DragEnter="lstImages_DragEnter"
+
                  ItemTemplate="{StaticResource centralTile}"
                  ItemsSource="{Binding Source={StaticResource myXmlDataBase}, XPath=//item}" 
                  Margin="3" Grid.Row="2">
