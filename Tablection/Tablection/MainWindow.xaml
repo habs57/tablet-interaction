@@ -12,7 +12,8 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TablectionSketch.MainWindow"
 		IsManipulationEnabled="False"
 		WindowStartupLocation="CenterScreen"
-		Title="TablectionSketch" Height="768" Width="1024">
+		Title="TablectionSketch" Height="768" Width="1024" WindowState="Maximized" WindowStyle="None">
+        
 	
 	<Window.Resources>
 		<ResourceDictionary>
@@ -118,6 +119,25 @@
 			<Storyboard x:Key="slideListHideAnimation" Completed="SlideListHide_Completed">
 				<DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>				
 			</Storyboard>
+			<Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type Button}">
+							<Grid>
+								<Rectangle Fill="Black" Stroke="Black" StrokeThickness="0"/>
+								<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+							</Grid>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsFocused" Value="True"/>
+								<Trigger Property="IsDefaulted" Value="True"/>
+								<Trigger Property="IsMouseOver" Value="True"/>
+								<Trigger Property="IsPressed" Value="True"/>
+								<Trigger Property="IsEnabled" Value="False"/>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
 
 		</ResourceDictionary>         
 	</Window.Resources>
@@ -150,6 +170,7 @@
 					<Rectangle Fill="Transparent"/>
 				</ControlTemplate>
 			</Button.Template>
+			<Button Content="Button" Height="20.666" Width="72"/>
 		</Button>
 
 
@@ -322,6 +343,35 @@
 
 			</StackPanel>
 		</StackPanel>
+		<Grid HorizontalAlignment="Right" Height="38" Margin="0,8,16.35,0" VerticalAlignment="Top" Width="74.499">
+			<Button Content="Button" Style="{DynamicResource ButtonStyle1}" Mouse.PreviewMouseDown="CloseWindows" Margin="0,0,-0.167,0" />
+			<Rectangle Fill="White" Margin="18.041,15.5,17.458,16.5" Stroke="Black" StrokeThickness="0" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="45"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="White" Margin="18.041,15.5,17.458,16.5" Stroke="Black" StrokeThickness="0" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="-45"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+		</Grid>
+		<Grid HorizontalAlignment="Right" Height="38" Margin="0,8,115.253,0" VerticalAlignment="Top" Width="74.666">
+			<Button Style="{DynamicResource ButtonStyle1}" Mouse.PreviewMouseDown="MinimizeWindows" >
+				<Rectangle Fill="White" Height="6.001" Stroke="Black" StrokeThickness="0" Width="57" HorizontalAlignment="Center" Margin="0,24,0,0"/>
+			</Button>
+		</Grid>
+		<Rectangle Fill="White" HorizontalAlignment="Left" Height="100" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="100"/>
 	</Grid>
 	
 </Window>
