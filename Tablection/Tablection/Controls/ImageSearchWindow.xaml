@@ -4,8 +4,7 @@
         xmlns:data="clr-namespace:TablectionSketch.Data"   
         xmlns:vm="clr-namespace:TablectionSketch.Controls"
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-        Topmost="True"
-        WindowStyle="None"
+        Topmost="True"        
         Title="ImageSearchWindow"
         Background="#FEFEFEEE"        
         Loaded="Window_Loaded"
@@ -39,11 +38,8 @@
             <Button Margin="3,0,0,0" Content="검색" Width="50" Click="Button_Click"/>
         </StackPanel>
         <ListBox x:Name="lstImages"       
-
-                 dd:DragDrop.IsDragSource="True"   
-                 dd:DragDrop.DragHandler="{Binding}"
+                 dd:DragDrop.IsDragSource="True"                    
                  DragEnter="lstImages_DragEnter"
-
                  ItemTemplate="{StaticResource centralTile}"
                  ItemsSource="{Binding Source={StaticResource myXmlDataBase}, XPath=//item}" 
                  Margin="3" Grid.Row="2">
