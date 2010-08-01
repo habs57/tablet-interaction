@@ -144,6 +144,14 @@ namespace TablectionSketch
                             this.MoveToNext(Mode.Manipulation);
                             return;
                         }                             
+                    }
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TM))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }
                     }                    
                     break;
                 case Mode.Pen:
@@ -172,6 +180,14 @@ namespace TablectionSketch
                             this.MoveToNext(Mode.Cut);
                             return;
                         }                        
+                    }
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TM))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }
                     }
                     break;
                 case Mode.Manipulation:
@@ -218,10 +234,18 @@ namespace TablectionSketch
                             return;
                         }
                     }
-                    if ((touchState == TouchStates.TM))
+                    if ((touchState == TouchStates.TM) || (touchState == TouchStates.TD))
                     {
                         this.MoveToNext(Mode.Cut);
                         return;
+                    }
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TM))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }
                     }
                     break;
                 default:
