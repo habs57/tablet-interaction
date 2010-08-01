@@ -63,31 +63,34 @@ namespace TablectionSketch
 
         void canvas_PreviewTouchUp(object sender, TouchEventArgs e)
         {
+            _modeRecognizer.Recognize(e);
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
             this._IsOverImage = false;
-            _modeRecognizer.Recognize(e);
+            
             this.Run(e, TouchStates.TU);
         }
 
         void canvas_PreviewTouchMove(object sender, TouchEventArgs e)
         {
+            _modeRecognizer.Recognize(e);
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
             this._IsOverImage = false;
             VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack),
                                             new HitTestResultCallback(ResultCallBack),
                                             new PointHitTestParameters(e.GetTouchPoint(_Canvas).Position));
-            _modeRecognizer.Recognize(e);
+           
             this.Run(e, TouchStates.TM);    
         }
 
         void canvas_PreviewTouchDown(object sender, TouchEventArgs e)
         {
+            _modeRecognizer.Recognize(e);
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
             this._IsOverImage = false;
             VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack), 
                                               new HitTestResultCallback(ResultCallBack), 
                                               new PointHitTestParameters(e.GetTouchPoint(_Canvas).Position));
-            _modeRecognizer.Recognize(e);
+           
             this.Run(e, TouchStates.TD);
         }
 
@@ -164,10 +167,18 @@ namespace TablectionSketch
                         this.MoveToNext(Mode.None);
                         return;
                     }
-                    if (touchState == TouchStates.TM)
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TM))
                     {
                         this.MoveToNext(Mode.Pen);
                         return;
+                    }
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Cut);
+                            return;
+                        }
                     }
                     if ((_TouchCount > 1) && (touchState == TouchStates.TD))
                     {
@@ -176,15 +187,7 @@ namespace TablectionSketch
                             this.MoveToNext(Mode.Manipulation);
                             return;
                         }                    
-                    }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
-                    {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Cut);
-                            return;
-                        }                        
-                    }
+                    }                  
                     if ((_TouchCount > 1) && (touchState == TouchStates.TM))
                     {
                         if (_IsOverImage == true)
