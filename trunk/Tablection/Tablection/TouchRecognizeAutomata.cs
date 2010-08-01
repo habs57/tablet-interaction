@@ -22,17 +22,17 @@ namespace TablectionSketch
         // 5) 1번째 또는 두번째 손가락중 하나라도 떼면 입력 취소.
 
         public enum TouchStates
-        {
-            None,
-            TD,
-            TM,
-            TU
+        {            
+            TD,     // Touch Down
+            TM,     // Touch Move
+            TU      // Touch Up
         }
 
         public enum Mode
         {
             None,           // 아무 입력도 없음 
             Pen,            // 펜입력 모드
+            Erase,          // 지우기 모드
             Manipulation,   // 이미지 확대/축소/이동 모드 
             Cut             // 이미지 잘라내기 모드 
         }
@@ -164,8 +164,11 @@ namespace TablectionSketch
                             this.MoveToNext(Mode.Manipulation);
                             return;
                         }
-                    }                    
-                    break;
+                    }
+
+                    //this.MoveToNext(Mode.None);
+                    //return;
+
                 case Mode.Pen:
                     if (touchState == TouchStates.TU)
                     {
@@ -184,14 +187,19 @@ namespace TablectionSketch
                             this.MoveToNext(Mode.Cut);
                             return;
                         }
-                    }
+                    }                 
                     if ((_TouchCount > 1) && (touchState == TouchStates.TD))
                     {
                         if (_IsOverImage == true)
                         {
                             this.MoveToNext(Mode.Manipulation);
                             return;
-                        }                    
+                        }
+                        else
+                        {
+                            this.MoveToNext(Mode.Erase);
+                            return;
+                        }
                     }                  
                     if ((_TouchCount > 1) && (touchState == TouchStates.TM))
                     {
@@ -200,15 +208,75 @@ namespace TablectionSketch
                             this.MoveToNext(Mode.Manipulation);
                             return;
                         }
+                        else
+                        {
+                            this.MoveToNext(Mode.Erase);
+                            return;
+                        }
                     }
-                    break;
+
+                    this.MoveToNext(Mode.Pen);
+                    return;
+
+                case Mode.Erase:
+                    if (touchState == TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.None);
+                        return;
+                    }
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }
+                        else
+                        {
+                            this.MoveToNext(Mode.Pen);
+                            return;
+                        }
+                    }
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TM))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }
+                        else
+                        {
+                            this.MoveToNext(Mode.Pen);
+                            return;
+                        }
+                    }
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }                        
+                    }
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TM))
+                    {
+                        if (_IsOverImage == true)
+                        {
+                            this.MoveToNext(Mode.Manipulation);
+                            return;
+                        }                        
+                    }
+
+                    this.MoveToNext(Mode.Erase);
+                    return;
+
                 case Mode.Manipulation:
                     if (touchState == TouchStates.TU)
                     {
                         this.MoveToNext(Mode.None);
                         return;
                     }
-                    if (touchState == TouchStates.TM)
+                    if ((_TouchCount == 1) && (touchState == TouchStates.TM))
                     {
                         this.MoveToNext(Mode.Manipulation);
                         return;
@@ -226,7 +294,10 @@ namespace TablectionSketch
                             return;
                         }
                     }
-                    break;
+
+                    this.MoveToNext(Mode.Manipulation);
+                    return;
+                    
                 case Mode.Cut:
                     if (touchState == TouchStates.TU)
                     {
@@ -245,12 +316,7 @@ namespace TablectionSketch
                             this.MoveToNext(Mode.Manipulation);
                             return;
                         }
-                    }
-                    if ((touchState == TouchStates.TM) || (touchState == TouchStates.TD))
-                    {
-                        this.MoveToNext(Mode.Cut);
-                        return;
-                    }
+                    }                    
                     if ((_TouchCount > 1) && (touchState == TouchStates.TM))
                     {
                         if (_IsOverImage == true)
@@ -259,7 +325,10 @@ namespace TablectionSketch
                             return;
                         }
                     }
-                    break;
+
+                    this.MoveToNext(Mode.Cut);
+                    return;
+                                        
                 default:
                     break;
             }

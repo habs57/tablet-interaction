@@ -52,11 +52,25 @@ namespace TablectionSketch
 
         void _recognier_ModeChanged(TouchRecognizeAutomata.Mode obj)
         {
-            
+            switch (obj)
+            {
+                case TouchRecognizeAutomata.Mode.None:
+                    llbTools.SelectedItem = 0;
+                    break;
+                case TouchRecognizeAutomata.Mode.Pen:
+                    llbTools.SelectedItem = 1;
+                    break;
+                case TouchRecognizeAutomata.Mode.Manipulation:
+                    llbTools.SelectedItem = 0;
+                    break;
+                case TouchRecognizeAutomata.Mode.Cut:
+                    llbTools.SelectedItem = 3;
+                    break;
+                default:
+                    break;
+            }
         }
-
-        
-
+               
         //이미지 가위질 되고 직후 동작
         void _freeCropHelper_ImageCropped(object sender, object e)
         {
