@@ -29,8 +29,9 @@ namespace TablectionSketch
     public partial class MainWindow : Window
     {
         PathGenerator _pathGenerator;
-        ImageFreeCropHelper _freeCropHelper;
-        TouchModeRecognizer _modeRecognizer;        
+        ImageFreeCropHelper _freeCropHelper;          
+        TouchRecognizeAutomata _recognier;
+
 
         public MainWindow()
         {
@@ -45,9 +46,7 @@ namespace TablectionSketch
             _freeCropHelper = new ImageFreeCropHelper(this.DrawingCanvas);
             _freeCropHelper.ImageCropped += new EventHandler<ImageCropEventArgs>(_freeCropHelper_ImageCropped);
 
-            _modeRecognizer = new TouchModeRecognizer(this.DrawingCanvas);
-            _modeRecognizer.ModeChanged += new EventHandler<TouchModeChangedEventArgs>(_modeRecognizer_ModeChanged);
-            _modeRecognizer.IsEnableCollect = true;
+            _recognier = new TouchRecognizeAutomata(this.DrawingCanvas);
         }
 
         
@@ -56,21 +55,6 @@ namespace TablectionSketch
         void _freeCropHelper_ImageCropped(object sender, object e)
         {
             //this.llbTools.SelectedIndex = 0;
-        }
-
-        //여기에 터치 포인트에 따른 입력 모드 전환을 넣어준다.
-        void _modeRecognizer_ModeChanged(object sender, TouchModeChangedEventArgs e)
-        {           
-            bool IsMultiTouch = e.IsMultitouch;
-            if (IsMultiTouch == true)
-            {
-                //this.llbTools.SelectedIndex = 0;
-                //VisualTreeHelper.HitTest(this, new HitTestFilterCallback(FilterCallBack), new HitTestResultCallback(ResultCallBack), new PointHitTestParameters(e.GetTouchPoint(null).Position));                
-            }
-            else
-            {
-                //this.llbTools.SelectedIndex = 5;
-            }
         }
 
         //스트로크 인식 
@@ -83,8 +67,6 @@ namespace TablectionSketch
         {            
             System.Diagnostics.Debug.WriteLine(Gestrue.ToString());
         }
-        
-      
 
         private void RefreshCurrentPreview()
         {
@@ -98,44 +80,44 @@ namespace TablectionSketch
             }
         }
 
-        public RenderTargetBitmap SaveControl(FrameworkElement Target)
-        {
-            FrameworkElement Parent = Target.Parent as FrameworkElement;
-            double ParentWidth, ParentHeight;
+        //public RenderTargetBitmap SaveControl(FrameworkElement Target)
+        //{
+        //    FrameworkElement Parent = Target.Parent as FrameworkElement;
+        //    double ParentWidth, ParentHeight;
 
-            if (Parent == null)
-            {
-                ParentWidth = 1000;
-                ParentHeight = 1000;
+        //    if (Parent == null)
+        //    {
+        //        ParentWidth = 1000;
+        //        ParentHeight = 1000;
 
-                Canvas ParentCanvas = new Canvas();
-                ParentCanvas.Children.Add(Target);
-                Parent = ParentCanvas;
-            }
-            else
-            {
-                ParentWidth = Parent.ActualWidth;
-                ParentHeight = Parent.ActualHeight;
-            }
-
-
-            Target.Measure(new Size(ParentWidth, ParentHeight));
-            Target.Arrange(new Rect(0, 0, ParentWidth, ParentHeight));
-
-            Target.Measure(new Size(Target.ActualWidth, Target.ActualHeight));
-            Target.Arrange(new Rect(0, 0, Target.ActualWidth, Target.ActualHeight));
-
-            Rect Rect = Target.TransformToVisual(Parent).TransformBounds(new Rect(0, 0, Target.ActualWidth, Target.ActualHeight));
+        //        Canvas ParentCanvas = new Canvas();
+        //        ParentCanvas.Children.Add(Target);
+        //        Parent = ParentCanvas;
+        //    }
+        //    else
+        //    {
+        //        ParentWidth = Parent.ActualWidth;
+        //        ParentHeight = Parent.ActualHeight;
+        //    }
 
 
-            Target.Arrange(new Rect(-Rect.Left, -Rect.Top, Target.ActualWidth, Target.ActualHeight));
+        //    Target.Measure(new Size(ParentWidth, ParentHeight));
+        //    Target.Arrange(new Rect(0, 0, ParentWidth, ParentHeight));
 
-            RenderTargetBitmap r = new RenderTargetBitmap((int)Rect.Width, (int)Rect.Height, 96.0, 96.0, PixelFormats.Pbgra32);
-            r.Render(Target);
+        //    Target.Measure(new Size(Target.ActualWidth, Target.ActualHeight));
+        //    Target.Arrange(new Rect(0, 0, Target.ActualWidth, Target.ActualHeight));
 
-            return r;
+        //    Rect Rect = Target.TransformToVisual(Parent).TransformBounds(new Rect(0, 0, Target.ActualWidth, Target.ActualHeight));
 
-        }
+
+        //    Target.Arrange(new Rect(-Rect.Left, -Rect.Top, Target.ActualWidth, Target.ActualHeight));
+
+        //    RenderTargetBitmap r = new RenderTargetBitmap((int)Rect.Width, (int)Rect.Height, 96.0, 96.0, PixelFormats.Pbgra32);
+        //    r.Render(Target);
+
+        //    return r;
+
+        //}
 
         private void HeaderBasicTool_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

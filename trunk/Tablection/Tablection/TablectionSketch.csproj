@@ -92,6 +92,7 @@
     <Compile Include="Tool\ToolHeader.cs" />
     <Compile Include="ImageFreeCropHelper.cs" />
     <Compile Include="TouchModeRecognizer.cs" />
+    <Compile Include="TouchRecognizeAutomata.cs" />
     <Page Include="Controls\ImageSearchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
