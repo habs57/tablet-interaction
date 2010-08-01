@@ -119,46 +119,7 @@ namespace TablectionSketch
                 currentSlide.Thumbnail = rtb;
             }
         }
-
-        //public RenderTargetBitmap SaveControl(FrameworkElement Target)
-        //{
-        //    FrameworkElement Parent = Target.Parent as FrameworkElement;
-        //    double ParentWidth, ParentHeight;
-
-        //    if (Parent == null)
-        //    {
-        //        ParentWidth = 1000;
-        //        ParentHeight = 1000;
-
-        //        Canvas ParentCanvas = new Canvas();
-        //        ParentCanvas.Children.Add(Target);
-        //        Parent = ParentCanvas;
-        //    }
-        //    else
-        //    {
-        //        ParentWidth = Parent.ActualWidth;
-        //        ParentHeight = Parent.ActualHeight;
-        //    }
-
-
-        //    Target.Measure(new Size(ParentWidth, ParentHeight));
-        //    Target.Arrange(new Rect(0, 0, ParentWidth, ParentHeight));
-
-        //    Target.Measure(new Size(Target.ActualWidth, Target.ActualHeight));
-        //    Target.Arrange(new Rect(0, 0, Target.ActualWidth, Target.ActualHeight));
-
-        //    Rect Rect = Target.TransformToVisual(Parent).TransformBounds(new Rect(0, 0, Target.ActualWidth, Target.ActualHeight));
-
-
-        //    Target.Arrange(new Rect(-Rect.Left, -Rect.Top, Target.ActualWidth, Target.ActualHeight));
-
-        //    RenderTargetBitmap r = new RenderTargetBitmap((int)Rect.Width, (int)Rect.Height, 96.0, 96.0, PixelFormats.Pbgra32);
-        //    r.Render(Target);
-
-        //    return r;
-
-        //}
-
+        
         private void HeaderBasicTool_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.radioTools.IsChecked = true;
