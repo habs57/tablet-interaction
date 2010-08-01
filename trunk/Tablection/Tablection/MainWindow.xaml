@@ -205,7 +205,7 @@
 										 AllowDrop="True"
 										 DragOver="DrawingCanvas_DragOver"
 										 Drop="DrawingCanvas_Drop"
-										 PreviewTouchDown="DrawingCanvas_PreviewTouchDown"
+										 
 										 PreviewStylusDown="DrawingCanvas_PreviewStylusDown"
 										 PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
 										 PreviewTouchUp="DrawingCanvas_PreviewTouchUp"                                   
