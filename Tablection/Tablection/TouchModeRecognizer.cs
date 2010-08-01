@@ -22,6 +22,18 @@ namespace TablectionSketch
         public TouchModeRecognizer(InkCanvas canvas)
         {
             canvas.PreviewTouchDown +=new EventHandler<TouchEventArgs>(canvas_PreviewTouchDown);
+            canvas.PreviewTouchMove += new EventHandler<TouchEventArgs>(canvas_PreviewTouchMove);
+            canvas.PreviewTouchUp += new EventHandler<TouchEventArgs>(canvas_PreviewTouchUp);
+        }
+
+        void canvas_PreviewTouchUp(object sender, TouchEventArgs e)
+        {
+            this.Recognize(e);
+        }
+
+        void canvas_PreviewTouchMove(object sender, TouchEventArgs e)
+        {
+            this.Recognize(e);
         }
 
         void canvas_PreviewTouchDown(object sender, TouchEventArgs e)
