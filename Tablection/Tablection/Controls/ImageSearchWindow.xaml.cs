@@ -60,5 +60,30 @@ namespace TablectionSketch.Controls
             }
         }
 
+        private void lstImages_DragEnter(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private Point _prevPoint;
+
+        private void Grid_TouchMove(object sender, TouchEventArgs e)
+        {
+            Point pt = e.GetTouchPoint(null).Position;
+
+            double deltaX = pt.X - _prevPoint.X;
+            double deltaY = pt.Y - _prevPoint.Y;
+
+            this.Left += deltaX;
+            this.Top += deltaY;
+
+            _prevPoint = e.GetTouchPoint(null).Position;
+        }
+
+        private void Grid_TouchDown(object sender, TouchEventArgs e)
+        {
+            _prevPoint = e.GetTouchPoint(null).Position;
+        }
+
     }
 }
