@@ -163,26 +163,27 @@ namespace TablectionSketch
                     this.Cursor = Cursors.Arrow;
                     this.llbTools.SelectedIndex = 1;
                     this._pathGenerator.EndCollect();
+                    this.SearchWindow.Hide();
                 }
-
-
                 if (this.radioTools != null && selectedToolName.Equals("llbTools") == true)
                 {
                     this.radioTools.IsChecked = true;
+                    this.SearchWindow.Hide();
                 }
                 else if (this.radioColors != null && selectedToolName.Equals("llbColors") == true)
                 {
                     this.radioColors.IsChecked = true;
+                    this.SearchWindow.Hide();
                 }
                 else if (this.radioStrokes != null && selectedToolName.Equals("llbStroke") == true)
                 {
                     this.radioStrokes.IsChecked = true;
+                    this.SearchWindow.Hide();
                 }
                 else if (this.radioStrokes != null && selectedToolName.Equals("ctl_Search") == true)
                 {
                     //검색창 띄움
-                    this.SearchWindow.Show();
-                    
+                    this.SearchWindow.Show();                    
                 }
                 else if (selectedToolName.Equals("CutMode") == true)
                 {
@@ -193,6 +194,7 @@ namespace TablectionSketch
                          
                         this._pathGenerator.BeginCollect();
                     }
+                    this.SearchWindow.Hide();
                 }
                 else
                 {
