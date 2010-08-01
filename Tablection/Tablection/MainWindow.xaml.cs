@@ -16,6 +16,11 @@ using System.Windows.Ink;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 
+using System;
+using System.IO;
+
+using System.Windows.Markup;
+
 using TablectionSketch.Tool;
 using TablectionSketch.Controls;
 
@@ -557,6 +562,17 @@ namespace TablectionSketch
         
         public void CloseWindows(object sender, MouseButtonEventArgs e) 
         {
+            int slide_cnt = this.SlideList.Items.Count;
+            int i;
+
+            for (i = 0; i < slide_cnt; i++)
+            {
+                StrokeCollection _strokes;
+                Slide.Slide _slide;
+                _slide = (this.SlideList.Items[i] as Slide.Slide);
+                _strokes = _slide.Strokes;
+                File.WriteAllText(_slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
+            }
             this.Close();
         }
 
