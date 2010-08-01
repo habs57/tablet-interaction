@@ -4,10 +4,14 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Ink;
 
-using System;
+
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System;
+using System.IO;
+using System.Windows.Markup;
+
 
 using TablectionSketch.Controls;
 using TablectionSketch.Data;
@@ -87,11 +91,20 @@ namespace TablectionSketch.Slide
         private StrokeCollection _strokes = null;
         public StrokeCollection Strokes
         {
+            
+
             get
             {
                 if (this._strokes == null)
                 {
-                    this._strokes = new StrokeCollection();
+                    try
+                    {
+                        this._strokes = (StrokeCollection)XamlReader.Load(File.OpenRead(this.Title + "_Strokes.xaml"));
+                    }
+                    catch
+                    {
+                        this._strokes = new StrokeCollection();
+                    }                    
                 }
                 return this._strokes;
             }
