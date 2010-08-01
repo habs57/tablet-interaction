@@ -55,19 +55,29 @@ namespace TablectionSketch
             switch (obj)
             {
                 case TouchRecognizeAutomata.Mode.None:
-                    llbTools.SelectedItem = 0;
+                    this.SelectedIndex(0);
                     break;
                 case TouchRecognizeAutomata.Mode.Pen:
-                    llbTools.SelectedItem = 1;
+                    this.SelectedIndex(1);                    
                     break;
                 case TouchRecognizeAutomata.Mode.Manipulation:
-                    llbTools.SelectedItem = 0;
+                    this.SelectedIndex(0);                    
                     break;
                 case TouchRecognizeAutomata.Mode.Cut:
-                    llbTools.SelectedItem = 3;
+                    this.SelectedIndex(3);                    
                     break;
                 default:
                     break;
+            }
+                        
+        }
+
+        private void SelectedIndex(int newMode)
+        {
+            int index = llbTools.SelectedIndex;
+            if (index != newMode)
+            {
+                this.llbTools.SelectedIndex = newMode;
             }
         }
                
