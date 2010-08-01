@@ -42,20 +42,20 @@ namespace TablectionSketch.Controls
             }            
         }
 
-        protected override void OnTouchDown(TouchEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //protected override void OnTouchDown(TouchEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        protected override void OnTouchMove(System.Windows.Input.TouchEventArgs e)
-        {            
-            e.Handled = true;
-        }
+        //protected override void OnTouchMove(System.Windows.Input.TouchEventArgs e)
+        //{            
+        //    e.Handled = true;
+        //}
 
-        protected override void OnTouchUp(TouchEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //protected override void OnTouchUp(TouchEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
     }
 }
