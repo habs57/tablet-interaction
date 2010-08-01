@@ -150,6 +150,11 @@ namespace TablectionSketch
                         this.MoveToNext(Mode.Pen);
                         return;
                     }
+                    if ((_TouchCount > 1) && (touchState == TouchStates.TD) && (_IsOverImage == true))
+                    {
+                        this.MoveToNext(Mode.Pen);
+                        return;
+                    }
                     break;
                 case Mode.Manipulation:
                     if (touchState == TouchStates.TU)
