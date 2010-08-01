@@ -50,6 +50,8 @@ namespace TablectionSketch
             _modeRecognizer.IsEnableCollect = true;
         }
 
+        
+
         //이미지 가위질 되고 직후 동작
         void _freeCropHelper_ImageCropped(object sender, object e)
         {
@@ -537,6 +539,15 @@ namespace TablectionSketch
         private void btnBottom_Click(object sender, RoutedEventArgs e)
         {
             this.SlideList.Visibility = Visibility.Visible;
+        }
+
+
+        public void CloseWindows(object sender, MouseButtonEventArgs e) {this.Close();}
+
+
+        private void MinimizeWindows(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }
