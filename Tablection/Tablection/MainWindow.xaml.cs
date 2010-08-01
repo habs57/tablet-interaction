@@ -60,7 +60,7 @@ namespace TablectionSketch
             switch (obj)
             {
                 case TouchRecognizeAutomata.Mode.None:                    
-                    this.SelectedIndex(3);
+                    this.SelectedIndex(0);
                     break;
                 case TouchRecognizeAutomata.Mode.Pen:                    
                     this.SelectedIndex(1);
@@ -77,12 +77,14 @@ namespace TablectionSketch
                 default:
                     break;
             }
+
+            System.Diagnostics.Debug.WriteLine(string.Format("현재 툴 모드: {0}", this.DrawingCanvas.EditingMode));
                         
         }
 
         private void SelectedIndex(int newMode)
         {
-            int index = llbTools.SelectedIndex;
+            int index = this.llbTools.SelectedIndex;
             if (index != newMode)
             {
                 this.llbTools.SelectedIndex = newMode;
@@ -309,7 +311,7 @@ namespace TablectionSketch
         private void DrawingCanvas_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
             //펜을 캔버스에 대면 자동적으로 쓰기모드            
-            this.SelectedIndex(1);
+            //this.SelectedIndex(1);
         }
 
         private void DrawingCanvas_PreviewTouchDown(object sender, TouchEventArgs e)
