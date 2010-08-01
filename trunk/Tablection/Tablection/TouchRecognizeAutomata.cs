@@ -168,6 +168,7 @@ namespace TablectionSketch
 
                     //this.MoveToNext(Mode.None);
                     //return;
+                    break;
 
                 case Mode.Pen:
                     if (touchState == TouchStates.TU)
