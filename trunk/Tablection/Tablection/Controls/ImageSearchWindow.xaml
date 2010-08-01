@@ -5,6 +5,7 @@
         xmlns:vm="clr-namespace:TablectionSketch.Controls"
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         Topmost="True"
+        WindowStyle="None"
         Title="ImageSearchWindow"
         Background="#FEFEFEEE"
         Height="400" Width="500">
@@ -25,7 +26,9 @@
     <Window.DataContext>
         <vm:ImageSearchWindowVM/>
     </Window.DataContext>
-    <Grid>
+    <Grid
+        TouchDown="Grid_TouchDown"
+        TouchMove="Grid_TouchMove">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
@@ -37,7 +40,8 @@
             <Button Margin="3,0,0,0" Content="검색" Width="50" Click="Button_Click"/>
         </StackPanel>
         <ListBox x:Name="lstImages"       
-                 dd:DragDrop.IsDragSource="True"                 
+                 dd:DragDrop.IsDragSource="True"  
+                 DragEnter="lstImages_DragEnter"
                  ItemTemplate="{StaticResource centralTile}"
                  ItemsSource="{Binding Source={StaticResource myXmlDataBase}, XPath=//item}" 
                  Margin="3" Grid.Row="2">
