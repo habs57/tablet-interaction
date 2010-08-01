@@ -47,6 +47,12 @@ namespace TablectionSketch
             _freeCropHelper.ImageCropped += new EventHandler<ImageCropEventArgs>(_freeCropHelper_ImageCropped);
 
             _recognier = new TouchRecognizeAutomata(this.DrawingCanvas);
+            _recognier.ModeChanged += new Action<TouchRecognizeAutomata.Mode>(_recognier_ModeChanged);
+        }
+
+        void _recognier_ModeChanged(TouchRecognizeAutomata.Mode obj)
+        {
+            
         }
 
         
