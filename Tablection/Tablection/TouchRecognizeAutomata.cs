@@ -277,11 +277,11 @@ namespace TablectionSketch
                         this.MoveToNext(Mode.None);
                         return;
                     }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TM))
-                    {
-                        this.MoveToNext(Mode.Manipulation);
-                        return;
-                    }
+                    //if ((_TouchCount == 1) && (touchState == TouchStates.TM))
+                    //{
+                    //    this.MoveToNext(Mode.Manipulation);
+                    //    return;
+                    //}
                     if ((_TouchCount == 1) && (touchState == TouchStates.TD))
                     {
                         if (_IsOverImage == true)
@@ -289,11 +289,11 @@ namespace TablectionSketch
                             this.MoveToNext(Mode.Cut);
                             return;
                         }
-                        else
-                        {
-                            this.MoveToNext(Mode.Pen);
-                            return;
-                        }
+                        //else
+                        //{
+                        //    this.MoveToNext(Mode.Pen);
+                        //    return;
+                        //}
                     }
 
                     this.MoveToNext(Mode.Manipulation);
