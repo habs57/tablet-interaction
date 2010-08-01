@@ -216,7 +216,7 @@ namespace TablectionSketch
                             return;
                         }
                     }
-                    if ((touchState == TouchStates.TM) || (touchState == TouchStates.TD))
+                    if ((touchState == TouchStates.TM))
                     {
                         this.MoveToNext(Mode.Cut);
                         return;
