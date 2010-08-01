@@ -54,20 +54,20 @@ namespace TablectionSketch
         {
             switch (obj)
             {
-                case TouchRecognizeAutomata.Mode.None:
-                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.GestureOnly;
+                case TouchRecognizeAutomata.Mode.None:                    
+                    this.SelectedIndex(3);
                     break;
-                case TouchRecognizeAutomata.Mode.Pen:
-                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.Ink;
+                case TouchRecognizeAutomata.Mode.Pen:                    
+                    this.SelectedIndex(1);
                     break;
-                case TouchRecognizeAutomata.Mode.Erase:
-                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.EraseByStroke;
+                case TouchRecognizeAutomata.Mode.Erase:                    
+                    this.SelectedIndex(6);
                     break;
-                case TouchRecognizeAutomata.Mode.Manipulation:
-                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.None;
+                case TouchRecognizeAutomata.Mode.Manipulation:                    
+                    this.SelectedIndex(0);
                     break;
-                case TouchRecognizeAutomata.Mode.Cut:
-                    this.DrawingCanvas.EditingMode = InkCanvasEditingMode.InkAndGesture;
+                case TouchRecognizeAutomata.Mode.Cut:                    
+                    this.SelectedIndex(2);
                     break;
                 default:
                     break;
