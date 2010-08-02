@@ -39,7 +39,7 @@ namespace TablectionSketch
             foreach (var item in files)
             {
                 FileInfo fi = new FileInfo(item);
-                Slide.Slide slide = new Slide.Slide() { Image = item, Title = fi.Name };
+                Slide.Slide slide = new Slide.Slide() { Title = fi.Name, Image = item };
                 this.SlideCollection.Add(slide);
             }
         }
