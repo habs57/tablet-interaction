@@ -96,7 +96,7 @@ namespace TablectionSketch
         void _source_PreviewTouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
             Point pt = e.GetTouchPoint(_source).Position;
-            PathSegment seg = new LineSegment(new Point(pt.X, pt.Y), false);
+            PathSegment seg = new LineSegment(new Point(pt.X, pt.Y), false);            
             _psCollection.Add(seg);            
         }
 
