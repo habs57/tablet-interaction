@@ -13,7 +13,7 @@
 
 		WindowStartupLocation="CenterScreen"
 		Title="TablectionSketch" Height="768" Width="1024" WindowStyle="None"
-        WindowState="Normal" >
+		WindowState="Normal" >
 		
 	
 	<Window.Resources>
@@ -205,8 +205,6 @@
 										 AllowDrop="True"
 										 DragOver="DrawingCanvas_DragOver"
 										 Drop="DrawingCanvas_Drop"
-										 
-										 PreviewStylusDown="DrawingCanvas_PreviewStylusDown"
 										 PreviewMouseUp="DrawingCanvas_PreviewMouseUp"
 										 PreviewTouchUp="DrawingCanvas_PreviewTouchUp"                                   
 										 DefaultDrawingAttributes="{Binding Source={StaticResource DrawingSettings}}"                                        
@@ -388,6 +386,6 @@
 			<Rectangle Fill="White" Height="4.126" Stroke="Black" StrokeThickness="0" Width="41.5" HorizontalAlignment="Center" Margin="0,0,0,7.999" VerticalAlignment="Bottom"/>
 			<Rectangle Fill="#00000000" Stroke="White" StrokeThickness="3" Width="74.666" RadiusY="5.499" RadiusX="5.499" d:LayoutOverrides="HorizontalAlignment"/>
 		</Grid>
-    </Grid>
+	</Grid>
 	
 </Window>
