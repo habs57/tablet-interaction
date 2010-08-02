@@ -589,7 +589,7 @@ namespace TablectionSketch
                 _strokes = _slide.Strokes;
                 File.WriteAllText(".\\Saved\\" + _slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
             
-
+                
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
