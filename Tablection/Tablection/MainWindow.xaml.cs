@@ -588,7 +588,7 @@ namespace TablectionSketch
             
 
                 IFormatter formatter = new BinaryFormatter();
-                Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
+                //Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
 
                 encoder.QualityLevel = 30;
