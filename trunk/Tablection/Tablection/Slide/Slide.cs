@@ -95,17 +95,19 @@ namespace TablectionSketch.Slide
 
             get
             {
-                if (this._strokes == null)
-                {
+                //if (this._strokes == null)
+                //{
                     try
                     {
-                        this._strokes = (StrokeCollection)XamlReader.Load(File.OpenRead(this.Title + "_Strokes.xaml"));
+                        this._strokes = (StrokeCollection)XamlReader.Load(File.OpenRead(".\\Saved\\"+this.Title + "_Strokes.xaml"));
+                        System.Diagnostics.Debug.WriteLine("Read Xaml file\n");
                     }
                     catch
                     {
-                        this._strokes = new StrokeCollection();
+                        if (this._strokes == null)
+                            this._strokes = new StrokeCollection();
                     }                    
-                }
+                //}
                 return this._strokes;
             }
         }
