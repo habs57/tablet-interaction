@@ -19,6 +19,7 @@ namespace TablectionSketch.Converter
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {            
             string option = parameter as string;
+                        
             if (option != null)
             {
                 double width = (double)values[0];

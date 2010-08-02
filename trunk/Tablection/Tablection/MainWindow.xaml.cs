@@ -13,6 +13,9 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+
 using TablectionSketch.Controls;
 using TablectionSketch.Tool;
 
@@ -551,7 +554,7 @@ namespace TablectionSketch
         }
 
         private void DrawingCanvas_ManipulationStarting(object sender, ManipulationStartingEventArgs e)
-        {
+        {            
             e.ManipulationContainer = this.DrawingCanvas;  
         }
         
@@ -583,7 +586,19 @@ namespace TablectionSketch
                 Slide.Slide _slide;
                 _slide = (this.SlideList.Items[i] as Slide.Slide);
                 _strokes = _slide.Strokes;
-                File.WriteAllText(_slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
+                File.WriteAllText("Saved\\"+_slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
+            
+
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+
+                encoder.QualityLevel = 30;
+                encoder.Frames.Add(BitmapFrame.Create(_slide.Thumbnail as BitmapSource));
+                encoder.Save(stream);
+                stream.Flush();
+                stream.Close();
+
             }
             this.SearchWindow.KillMe();
             this.Close();
