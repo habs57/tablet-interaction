@@ -20,7 +20,7 @@ using TablectionSketch.Data;
 namespace TablectionSketch.Slide
 {
     public class Slide : INotifyPropertyChanged
-    {
+    {           
         /// <summary>
         /// 슬라이드의 이름
         /// </summary>
@@ -49,25 +49,8 @@ namespace TablectionSketch.Slide
                 RaisePropertyChanged("Image");
 
                 if (this.Thumbnail == null)
-                {/*
-                    try
-                    {
-                        BitmapImage bitmapImage = new BitmapImage();
-                        bitmapImage.BeginInit();
-
-                        bitmapImage.UriSource = new Uri(".\\Saved\\" + this.Title + "_th.jpg", UriKind.Relative);
-                        bitmapImage.CacheOption = BitmapCacheOption.OnDemand;
-
-                        bitmapImage.EndInit();
-
-                        bitmapImage.DecodePixelHeight = bitmapImage.PixelHeight >> 2;
-                        bitmapImage.DecodePixelWidth = bitmapImage.PixelWidth >> 2;
-                        this.Thumbnail = bitmapImage;
-                    }
-                    catch
-                    {                        */
-                        this.Thumbnail = this.LoadThumbnail(_image);
-                    //}
+                {
+                    this.Thumbnail = this.LoadThumbnail(_image);
                 }                
             }
         }
@@ -96,8 +79,7 @@ namespace TablectionSketch.Slide
             }
             else
             {
-                //System.Diagnostics.Debug.WriteLine("Before file not exist\n");
-
+ 
                 BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
 
