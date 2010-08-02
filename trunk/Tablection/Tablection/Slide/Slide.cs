@@ -49,26 +49,68 @@ namespace TablectionSketch.Slide
                 RaisePropertyChanged("Image");
 
                 if (this.Thumbnail == null)
-                {
-                    this.Thumbnail = this.LoadThumbnail(_image);                    
+                {/*
+                    try
+                    {
+                        BitmapImage bitmapImage = new BitmapImage();
+                        bitmapImage.BeginInit();
+
+                        bitmapImage.UriSource = new Uri(".\\Saved\\" + this.Title + "_th.jpg", UriKind.Relative);
+                        bitmapImage.CacheOption = BitmapCacheOption.OnDemand;
+
+                        bitmapImage.EndInit();
+
+                        bitmapImage.DecodePixelHeight = bitmapImage.PixelHeight >> 2;
+                        bitmapImage.DecodePixelWidth = bitmapImage.PixelWidth >> 2;
+                        this.Thumbnail = bitmapImage;
+                    }
+                    catch
+                    {                        */
+                        this.Thumbnail = this.LoadThumbnail(_image);
+                    //}
                 }                
             }
         }
 
         private BitmapImage LoadThumbnail(string path)
-        {   
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
+        {
+            string _path = Directory.GetCurrentDirectory();
 
-            bitmapImage.UriSource = new Uri(path, UriKind.Relative);
-            bitmapImage.CacheOption = BitmapCacheOption.OnDemand;
+            if (File.Exists(".\\Saved\\" + this.Title + "_th.jpg") == true)
+            {
+                System.Diagnostics.Debug.WriteLine(this.Title + "Before file exist\n");
 
-            bitmapImage.EndInit();
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
 
-            bitmapImage.DecodePixelHeight = bitmapImage.PixelHeight >> 2;
-            bitmapImage.DecodePixelWidth = bitmapImage.PixelWidth >> 2;            
+                bitmapImage.UriSource = new Uri(".\\Saved\\" + this.Title + "_th.jpg", UriKind.Relative);
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
 
-            return bitmapImage;
+                bitmapImage.EndInit();
+
+                bitmapImage.DecodePixelHeight = bitmapImage.PixelHeight >> 2;
+                bitmapImage.DecodePixelWidth = bitmapImage.PixelWidth >> 2;
+
+                
+                return bitmapImage;
+            }
+            else
+            {
+                //System.Diagnostics.Debug.WriteLine("Before file not exist\n");
+
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+
+                bitmapImage.UriSource = new Uri(path, UriKind.Relative);
+                bitmapImage.CacheOption = BitmapCacheOption.OnDemand;
+
+                bitmapImage.EndInit();
+
+                bitmapImage.DecodePixelHeight = bitmapImage.PixelHeight >> 2;
+                bitmapImage.DecodePixelWidth = bitmapImage.PixelWidth >> 2;
+
+                return bitmapImage;
+            }
         }
         
         /// <summary>
@@ -95,8 +137,8 @@ namespace TablectionSketch.Slide
 
             get
             {
-                //if (this._strokes == null)
-                //{
+                if (this._strokes == null)
+                {
                     try
                     {
                         this._strokes = (StrokeCollection)XamlReader.Load(File.OpenRead(".\\Saved\\"+this.Title + "_Strokes.xaml"));
@@ -107,7 +149,7 @@ namespace TablectionSketch.Slide
                         if (this._strokes == null)
                             this._strokes = new StrokeCollection();
                     }                    
-                //}
+                }
                 return this._strokes;
             }
         }
