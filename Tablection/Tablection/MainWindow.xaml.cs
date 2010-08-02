@@ -53,6 +53,9 @@ namespace TablectionSketch
 
             _recognier = new TouchRecognizeAutomata(this.DrawingCanvas);
             _recognier.ModeChanged += new Action<TouchRecognizeAutomata.Mode>(_recognier_ModeChanged);
+
+            if (Directory.Exists(".\\Saved") == false)
+                Directory.CreateDirectory(".\\Saved");
         }
 
         private void InitializeUdpSocket()
@@ -584,18 +587,18 @@ namespace TablectionSketch
                 Slide.Slide _slide;
                 _slide = (this.SlideList.Items[i] as Slide.Slide);
                 _strokes = _slide.Strokes;
-                //File.WriteAllText("Saved\\"+_slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
+                File.WriteAllText(".\\Saved\\" + _slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
             
 
                 IFormatter formatter = new BinaryFormatter();
-                //Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
-                //JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
 
-                //encoder.QualityLevel = 30;
-                //encoder.Frames.Add(BitmapFrame.Create(_slide.Thumbnail as BitmapSource));
-                //encoder.Save(stream);
-                //stream.Flush();
-                //stream.Close();
+                encoder.QualityLevel = 30;
+                encoder.Frames.Add(BitmapFrame.Create(_slide.Thumbnail as BitmapSource));
+                encoder.Save(stream);
+                stream.Flush();
+                stream.Close();
 
             }
             this.SearchWindow.KillMe();
