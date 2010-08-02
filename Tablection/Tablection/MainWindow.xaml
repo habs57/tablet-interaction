@@ -10,10 +10,10 @@
 		xmlns:data="clr-namespace:TablectionSketch.Data"
 		xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TablectionSketch.MainWindow"
-		IsManipulationEnabled="False"
+
 		WindowStartupLocation="CenterScreen"
 		Title="TablectionSketch" Height="768" Width="1024" WindowStyle="None"
-        WindowState="Maximized" >
+        WindowState="Normal" >
 		
 	
 	<Window.Resources>

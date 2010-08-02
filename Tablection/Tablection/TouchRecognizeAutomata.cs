@@ -9,6 +9,7 @@ using System.Windows.Controls;
 
 using TablectionSketch.Tool;
 using TablectionSketch.Controls;
+using System.Diagnostics;
 
 namespace TablectionSketch
 {
@@ -30,10 +31,11 @@ namespace TablectionSketch
 
         public enum Mode
         {
-            None,           // 아무 입력도 없음 
-            Pen,            // 펜입력 모드
+            None,           // 아무 입력 없음 
+            Pen,            // 펜 입력 모드
             Erase,          // 지우기 모드
-            Manipulation,   // 이미지 확대/축소/이동 모드 
+            SelMovImg,  // 이미지 선택 및 이동
+            TransImg,       // 이미지 확대/축소/회전 
             Cut             // 이미지 잘라내기 모드 
         }
 
@@ -129,238 +131,131 @@ namespace TablectionSketch
                     if (touchState == TouchStates.TU)
                     {
                         this.MoveToNext(Mode.None);
-                        return;
                     }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TM))
+                    else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
                     {
-                        if (this.IsPen == false)
-                        {
-                            this.MoveToNext(Mode.Erase);
-                            return;
-                        }
-                        else
-                        {
-                            this.MoveToNext(Mode.Pen);
-                            return;
-                        }                         
+                        this.MoveToNext(Mode.Pen);
                     }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    else if ((_TouchCount == 1) && !this.IsPen && !_IsOverImage && touchState != TouchStates.TU)
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Cut);
-                            return;
-                        }
-                        else
-                        {
-                            if (this.IsPen == false)
-                            {
-                                this.MoveToNext(Mode.Erase);
-                                return;
-                            }
-                            else
-                            {
-                                this.MoveToNext(Mode.Pen);
-                                return;
-                            }
-                        }
+                        this.MoveToNext(Mode.Erase);
                     }
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
+                    else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }                             
+                        this.MoveToNext(Mode.SelMovImg);
                     }
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TM))
+                    else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }
+                        this.MoveToNext(Mode.TransImg);   
                     }
-
-                    //this.MoveToNext(Mode.None);
-                    //return;
+                    else
+                    {
+                        Debug.WriteLine("Unexpected status change input");
+                    }
                     break;
 
                 case Mode.Pen:
                     if (touchState == TouchStates.TU)
                     {
                         this.MoveToNext(Mode.None);
-                        return;
                     }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TM))
+                    else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
                     {
                         this.MoveToNext(Mode.Pen);
-                        return;
                     }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Cut);
-                            return;
-                        }
-                    }                 
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
-                    {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }
-                        else
-                        {
-                            this.MoveToNext(Mode.Erase);
-                            return;
-                        }
-                    }                  
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TM))
-                    {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }
-                        else
-                        {
-                            this.MoveToNext(Mode.Erase);
-                            return;
-                        }
+                        this.MoveToNext(Mode.SelMovImg);
                     }
-
-                    this.MoveToNext(Mode.Pen);
-                    return;
+                    else
+                    {
+                        Debug.WriteLine("Unexpected status change input");
+                    }
+                    break;
 
                 case Mode.Erase:
                     if (touchState == TouchStates.TU)
                     {
                         this.MoveToNext(Mode.None);
-                        return;
                     }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    else if ((_TouchCount == 1) && !this.IsPen && !_IsOverImage && touchState != TouchStates.TU)
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }
-                        else
-                        {
-                            if (this.IsPen == false)
-                            {
-                                this.MoveToNext(Mode.Erase);
-                                return;
-                            }
-                            else
-                            {
-                                this.MoveToNext(Mode.Pen);
-                                return;
-                            }                         
-                        }
+                        this.MoveToNext(Mode.Erase);
                     }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TM))
+                    else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }
-                        else
-                        {
-                            if (this.IsPen == false)
-                            {
-                                this.MoveToNext(Mode.Erase);
-                                return;
-                            }
-                            else
-                            {
-                                this.MoveToNext(Mode.Pen);
-                                return;
-                            }                           
-                        }
+                        this.MoveToNext(Mode.SelMovImg);
                     }
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
+                    else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }                        
+                        this.MoveToNext(Mode.TransImg);
                     }
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TM))
+                    else
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }                        
+                        Debug.WriteLine("Unexpected status change input");
                     }
+                    break;
 
-                    this.MoveToNext(Mode.Erase);
-                    return;
-
-                case Mode.Manipulation:
+                case Mode.SelMovImg:
                     if (touchState == TouchStates.TU)
                     {
                         this.MoveToNext(Mode.None);
-                        return;
                     }
-                    //if ((_TouchCount == 1) && (touchState == TouchStates.TM))
-                    //{
-                    //    this.MoveToNext(Mode.Manipulation);
-                    //    return;
-                    //}
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Cut);
-                            return;
-                        }
-                        //else
-                        //{
-                        //    this.MoveToNext(Mode.Pen);
-                        //    return;
-                        //}
+                        this.MoveToNext(Mode.Pen);
                     }
+                    else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.SelMovImg);
+                    }
+                    else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.TransImg);   
+                    }
+                    else if ((_TouchCount == 2) && this.IsPen && _IsOverImage && touchState != TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.Cut);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Unexpected status change input");
+                    }
+                    break;
 
-                    this.MoveToNext(Mode.Manipulation);
-                    return;
-                    
+                case Mode.TransImg:
+                    if (touchState == TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.None);
+                    }
+                    else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.SelMovImg);
+                    }
+                    else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
+                    {
+                        this.MoveToNext(Mode.TransImg);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Unexpected status change input");
+                    }
+                    break;
+
                 case Mode.Cut:
                     if (touchState == TouchStates.TU)
                     {
                         this.MoveToNext(Mode.None);
-                        return;
                     }
-                    if ((_TouchCount == 1) && (touchState == TouchStates.TD))
+                    else if ((_TouchCount == 2) && this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.Pen);
-                        return;
+                        this.MoveToNext(Mode.Cut);
                     }
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TD))
+                    else
                     {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }
-                    }                    
-                    if ((_TouchCount > 1) && (touchState == TouchStates.TM))
-                    {
-                        if (_IsOverImage == true)
-                        {
-                            this.MoveToNext(Mode.Manipulation);
-                            return;
-                        }
+                        Debug.WriteLine("Unexpected status change input");
                     }
-
-                    this.MoveToNext(Mode.Cut);
-                    return;
+                    break;
                                         
                 default:
                     break;

@@ -123,11 +123,14 @@ namespace TablectionSketch
                 case TouchRecognizeAutomata.Mode.Erase:                    
                     this.SelectedIndex(6);
                     break;
-                case TouchRecognizeAutomata.Mode.Manipulation:                    
+                case TouchRecognizeAutomata.Mode.SelMovImg:
+                    this.SelectedIndex(0);
+                    break;
+                case TouchRecognizeAutomata.Mode.TransImg:
                     this.SelectedIndex(0);
                     break;
                 case TouchRecognizeAutomata.Mode.Cut:                    
-                    this.SelectedIndex(2);
+                    this.SelectedIndex(3);
                     break;
                 default:
                     break;
@@ -462,9 +465,12 @@ namespace TablectionSketch
             ti.Width = image.PixelWidth > 500 ? (double)(image.PixelWidth >> 1) : image.PixelWidth;
             ti.Height = image.PixelHeight > 500 ? (double)(image.PixelHeight >> 1) : image.PixelHeight;
             this.DrawingCanvas.Children.Add(ti);
+           
 
             InkCanvas.SetLeft(ti, pt.X - ((int)ti.Width >> 2));
             InkCanvas.SetTop(ti, pt.Y - ((int)ti.Height >> 2));
+
+            ti.IsManipulationEnabled = true;
         }
 
         void image_DownloadCompleted(object sender, EventArgs e)
