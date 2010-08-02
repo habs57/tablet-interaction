@@ -583,6 +583,7 @@ namespace TablectionSketch
 
             for (i = 0; i < slide_cnt; i++)
             {
+                int j;
                 StrokeCollection _strokes;
                 Slide.Slide _slide;
                 _slide = (this.SlideList.Items[i] as Slide.Slide);
@@ -593,12 +594,21 @@ namespace TablectionSketch
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-
                 encoder.QualityLevel = 30;
                 encoder.Frames.Add(BitmapFrame.Create(_slide.Thumbnail as BitmapSource));
                 encoder.Save(stream);
                 stream.Flush();
                 stream.Close();
+
+                //string XAML = System.Windows.Markup.XamlWriter.Save(_slide.Children);
+
+                //System.IO.StringReader StringReader = new System.IO.StringReader(XAML);
+                for (j = 0; j < _slide.Children.Count; j++)
+                {
+                    System.Diagnostics.Debug.WriteLine("Output\n");
+                    File.WriteAllText(".\\Saved\\" + _slide.Title + "_images.xaml", XamlWriter.Save(_slide.Children[j] as UIElement));
+                }                
+                //System.Xml.XmlReader xmlReader = System.Xml.XmlTextReader.Create(StringReader); 
 
             }
             this.SearchWindow.KillMe();
