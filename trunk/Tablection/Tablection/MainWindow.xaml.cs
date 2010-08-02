@@ -589,13 +589,13 @@ namespace TablectionSketch
 
                 IFormatter formatter = new BinaryFormatter();
                 //Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                //JpegBitmapEncoder encoder = new JpegBitmapEncoder();
 
-                encoder.QualityLevel = 30;
-                encoder.Frames.Add(BitmapFrame.Create(_slide.Thumbnail as BitmapSource));
-                encoder.Save(stream);
-                stream.Flush();
-                stream.Close();
+                //encoder.QualityLevel = 30;
+                //encoder.Frames.Add(BitmapFrame.Create(_slide.Thumbnail as BitmapSource));
+                //encoder.Save(stream);
+                //stream.Flush();
+                //stream.Close();
 
             }
             this.SearchWindow.KillMe();
