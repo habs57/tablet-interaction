@@ -328,14 +328,6 @@ namespace TablectionSketch
             this.RefreshCurrentPreview();
         }
 
-       
-        private void DrawingCanvas_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            //펜을 캔버스에 대면 자동적으로 쓰기모드            
-            this.SelectedIndex(1);
-            
-        }
-        
         private HitTestFilterBehavior FilterCallBack(DependencyObject e)
         {
             if (e is TouchableImage)
@@ -592,7 +584,7 @@ namespace TablectionSketch
                 Slide.Slide _slide;
                 _slide = (this.SlideList.Items[i] as Slide.Slide);
                 _strokes = _slide.Strokes;
-                File.WriteAllText("Saved\\"+_slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
+                //File.WriteAllText("Saved\\"+_slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
             
 
                 IFormatter formatter = new BinaryFormatter();
