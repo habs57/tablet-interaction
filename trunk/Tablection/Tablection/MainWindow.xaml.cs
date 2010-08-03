@@ -52,7 +52,7 @@ namespace TablectionSketch
             _freeCropHelper.ImageCropped += new EventHandler<ImageCropEventArgs>(_freeCropHelper_ImageCropped);
 
             _recognier = new TouchRecognizeAutomata(this.DrawingCanvas);
-            _recognier.ModeChanged += new Action<TouchRecognizeAutomata.Mode>(_recognier_ModeChanged);
+            _recognier.ModeChanged += new Action<TouchRecognizeAutomata.InputMode>(_recognier_ModeChanged);
 
             if (Directory.Exists(".\\Saved") == false)
                 Directory.CreateDirectory(".\\Saved");
@@ -113,26 +113,26 @@ namespace TablectionSketch
             u.BeginReceive(new AsyncCallback(OnReceive), s);
         }
 
-        void _recognier_ModeChanged(TouchRecognizeAutomata.Mode obj)
+        void _recognier_ModeChanged(TouchRecognizeAutomata.InputMode obj)
         {
             switch (obj)
             {
-                case TouchRecognizeAutomata.Mode.None:                    
+                case TouchRecognizeAutomata.InputMode.None:                    
                     this.SelectedIndex(0);
                     break;
-                case TouchRecognizeAutomata.Mode.Pen:                    
+                case TouchRecognizeAutomata.InputMode.Pen:                    
                     this.SelectedIndex(1);
                     break;
-                case TouchRecognizeAutomata.Mode.Erase:                    
+                case TouchRecognizeAutomata.InputMode.Erase:                    
                     this.SelectedIndex(6);
                     break;
-                case TouchRecognizeAutomata.Mode.SelMovImg:
+                case TouchRecognizeAutomata.InputMode.SelMovImg:
                     this.SelectedIndex(0);
                     break;
-                case TouchRecognizeAutomata.Mode.TransImg:
+                case TouchRecognizeAutomata.InputMode.TransImg:
                     this.SelectedIndex(0);
                     break;
-                case TouchRecognizeAutomata.Mode.Cut:                    
+                case TouchRecognizeAutomata.InputMode.Cut:                    
                     this.SelectedIndex(3);
                     break;
                 default:
