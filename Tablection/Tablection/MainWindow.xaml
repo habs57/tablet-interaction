@@ -213,7 +213,7 @@
 				<control:MultiTouchInkCanvas.Background>
 					<ImageBrush                             
 						Opacity="0.8" 
-						Stretch="UniformToFill" 
+						Stretch="Uniform" 
 						ImageSource="{Binding SelectedItem.Image, ElementName=SlideList}"/>
 				</control:MultiTouchInkCanvas.Background> 
 				<control:MultiTouchInkCanvas.Triggers>
@@ -227,7 +227,7 @@
 					</EventTrigger>
 				</control:MultiTouchInkCanvas.Triggers>
 			</control:MultiTouchInkCanvas>
-		  
+			<control:Liner></control:Liner>
 		</Grid>
 		
 		<!-- 슬라이드 목록 -->

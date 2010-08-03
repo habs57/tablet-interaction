@@ -4,15 +4,102 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="500">
+             d:DesignHeight="100" d:DesignWidth="400">
     <Grid>
-        <Rectangle>
-            <Rectangle.Fill>
+        <StackPanel
+            Orientation="Horizontal"
+            Name="LineRuler"
+            Width="400" Height="100"
+            IsManipulationEnabled="True">
+            <!--<StackPanel.Resources>
+                <Border x:Key="Line" BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" Height="20" VerticalAlignment="Top"></Border>
+            </StackPanel.Resources>-->
+            <StackPanel.Background>
                 <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-                    <GradientStop Color="White" Offset="0.5"/>
-                    <GradientStop Color="Gray" Offset="1.0"/>
+                    <GradientStop Color="#C8FFFFFF" Offset="0.5"/>
+                    <GradientStop Color="#C7808080" Offset="1.0"/>
                 </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
+            </StackPanel.Background>
+            <Rectangle Height="50" Width="{Binding LineRuler.Width}" VerticalAlignment="Top">
+
+                <Rectangle.Fill>
+                <DrawingBrush Viewport="0,0,50,300" ViewportUnits="Absolute" TileMode="Tile">
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <LineGeometry StartPoint="0,0" EndPoint="0,3"></LineGeometry>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="5">
+                                    <Pen.Brush>
+                                        <LinearGradientBrush>
+                                            <GradientStop Offset="0.0" Color="Black" />
+                                            <GradientStop Offset="0.1" Color="Transparent" />
+                                        </LinearGradientBrush>
+                                    </Pen.Brush>
+                                </Pen>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+                <!--<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
+                    <GradientStop Color="#C8FFFFFF" Offset="0.5"/>
+                    <GradientStop Color="#C7808080" Offset="1.0"/>
+                </LinearGradientBrush>-->
+                <!--<DrawingBrush Viewport="0,0,50,50" ViewportUnits="Absolute" TileMode="Tile">
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing Brush="MediumBlue">
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <EllipseGeometry RadiusX="20" RadiusY="45" Center="50,50" />
+                                    <EllipseGeometry RadiusX="45" RadiusY="20" Center="50,50" />
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="10">
+                                    <Pen.Brush>
+                                        <LinearGradientBrush>
+                                            <GradientStop Offset="0.0" Color="Black" />
+                                            <GradientStop Offset="1.0" Color="Gray" />
+                                        </LinearGradientBrush>
+                                    </Pen.Brush>
+                                </Pen>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>-->
+
+                </Rectangle.Fill>
+                <!--<Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>
+            <Border BorderThickness="0,0,1,0" BorderBrush="#FFD95959" Width="20" MaxWidth="20" Height="20" VerticalAlignment="Top"></Border>-->
+                <!--<Rectangle>
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
+                        <GradientStop Color="#C8FFFFFF" Offset="0.5"/>
+                        <GradientStop Color="#C7808080" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>-->
+                </Rectangle>
+        </StackPanel>
     </Grid>
 </UserControl>

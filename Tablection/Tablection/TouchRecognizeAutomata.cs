@@ -13,6 +13,13 @@ using System.Diagnostics;
 
 namespace TablectionSketch
 {
+    public enum TouchStates
+    {
+        TD,     // Touch Down
+        TM,     // Touch Move
+        TU      // Touch Up
+    }
+
     public class TouchRecognizeAutomata
     {
         //Cut 모드 
@@ -22,32 +29,26 @@ namespace TablectionSketch
         // 4) 1번째 손가락의 입력은 무시, 2번째 손가락의 입력을 이벤트로 전달
         // 5) 1번째 또는 두번째 손가락중 하나라도 떼면 입력 취소.
 
-        public enum TouchStates
-        {            
-            TD,     // Touch Down
-            TM,     // Touch Move
-            TU      // Touch Up
-        }
 
-        public enum Mode
+        public enum InputMode
         {
             None,           // 아무 입력 없음 
             Pen,            // 펜 입력 모드
             Erase,          // 지우기 모드
-            SelMovImg,  // 이미지 선택 및 이동
+            SelMovImg,      // 이미지 선택 및 이동
             TransImg,       // 이미지 확대/축소/회전 
             Cut             // 이미지 잘라내기 모드 
         }
 
         private TouchModeRecognizer _modeRecognizer;
 
-        private Mode _PrevMode = Mode.None;        
+        private InputMode _PrevMode = InputMode.None;        
 
         private int _TouchCount = 0;        
         public bool IsPen { get; set; }
         private bool _IsOverImage = false;
 
-        public event Action<Mode> ModeChanged;
+        public event Action<InputMode> ModeChanged;
 
         private InkCanvas _Canvas;
         
@@ -65,7 +66,7 @@ namespace TablectionSketch
 
         void canvas_PreviewTouchUp(object sender, TouchEventArgs e)
         {
-            _modeRecognizer.Recognize(e);
+            _modeRecognizer.Recognize(e, TouchStates.TU, this.IsPen);
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
             this._IsOverImage = false;
             
@@ -74,7 +75,7 @@ namespace TablectionSketch
 
         void canvas_PreviewTouchMove(object sender, TouchEventArgs e)
         {
-            _modeRecognizer.Recognize(e);
+            _modeRecognizer.Recognize(e, TouchStates.TM, this.IsPen);
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
             this._IsOverImage = false;
             VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack),
@@ -86,7 +87,7 @@ namespace TablectionSketch
 
         void canvas_PreviewTouchDown(object sender, TouchEventArgs e)
         {
-            _modeRecognizer.Recognize(e);
+            _modeRecognizer.Recognize(e, TouchStates.TD, this.IsPen);
             _TouchCount = (_modeRecognizer.IsMultiTouch == true ? 2 : 1);
             this._IsOverImage = false;
             VisualTreeHelper.HitTest(_Canvas, new HitTestFilterCallback(FilterCallBack), 
@@ -127,26 +128,26 @@ namespace TablectionSketch
 
             switch (_PrevMode)
             {
-                case Mode.None:
+                case InputMode.None:
                     if (touchState == TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.None);
+                        this.MoveToNext(InputMode.None);
                     }
                     else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.Pen);
+                        this.MoveToNext(InputMode.Pen);
                     }
                     else if ((_TouchCount == 1) && !this.IsPen && !_IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.Erase);
+                        this.MoveToNext(InputMode.Erase);
                     }
                     else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.SelMovImg);
+                        this.MoveToNext(InputMode.SelMovImg);
                     }
                     else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.TransImg);   
+                        this.MoveToNext(InputMode.TransImg);   
                     }
                     else
                     {
@@ -154,18 +155,18 @@ namespace TablectionSketch
                     }
                     break;
 
-                case Mode.Pen:
+                case InputMode.Pen:
                     if (touchState == TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.None);
+                        this.MoveToNext(InputMode.None);
                     }
                     else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.Pen);
+                        this.MoveToNext(InputMode.Pen);
                     }
                     else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.SelMovImg);
+                        this.MoveToNext(InputMode.SelMovImg);
                     }
                     else
                     {
@@ -173,22 +174,22 @@ namespace TablectionSketch
                     }
                     break;
 
-                case Mode.Erase:
+                case InputMode.Erase:
                     if (touchState == TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.None);
+                        this.MoveToNext(InputMode.None);
                     }
                     else if ((_TouchCount == 1) && !this.IsPen && !_IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.Erase);
+                        this.MoveToNext(InputMode.Erase);
                     }
                     else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.SelMovImg);
+                        this.MoveToNext(InputMode.SelMovImg);
                     }
                     else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.TransImg);
+                        this.MoveToNext(InputMode.TransImg);
                     }
                     else
                     {
@@ -196,26 +197,26 @@ namespace TablectionSketch
                     }
                     break;
 
-                case Mode.SelMovImg:
+                case InputMode.SelMovImg:
                     if (touchState == TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.None);
+                        this.MoveToNext(InputMode.None);
                     }
                     else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.Pen);
+                        this.MoveToNext(InputMode.Pen);
                     }
                     else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.SelMovImg);
+                        this.MoveToNext(InputMode.SelMovImg);
                     }
                     else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.TransImg);   
+                        this.MoveToNext(InputMode.TransImg);   
                     }
                     else if ((_TouchCount == 2) && this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.Cut);
+                        this.MoveToNext(InputMode.Cut);
                     }
                     else
                     {
@@ -223,18 +224,18 @@ namespace TablectionSketch
                     }
                     break;
 
-                case Mode.TransImg:
+                case InputMode.TransImg:
                     if (touchState == TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.None);
+                        this.MoveToNext(InputMode.None);
                     }
                     else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.SelMovImg);
+                        this.MoveToNext(InputMode.SelMovImg);
                     }
                     else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.TransImg);
+                        this.MoveToNext(InputMode.TransImg);
                     }
                     else
                     {
@@ -242,14 +243,14 @@ namespace TablectionSketch
                     }
                     break;
 
-                case Mode.Cut:
+                case InputMode.Cut:
                     if (touchState == TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.None);
+                        this.MoveToNext(InputMode.None);
                     }
                     else if ((_TouchCount == 2) && this.IsPen && _IsOverImage && touchState != TouchStates.TU)
                     {
-                        this.MoveToNext(Mode.Cut);
+                        this.MoveToNext(InputMode.Cut);
                     }
                     else
                     {
@@ -262,7 +263,7 @@ namespace TablectionSketch
             }
         }
 
-        private void MoveToNext(Mode state)
+        private void MoveToNext(InputMode state)
         {
             System.Diagnostics.Debug.WriteLine(string.Format("현재모드 : {0}", state));
 
