@@ -72,7 +72,7 @@ namespace TablectionSketch.Controls
                                   e.DeltaManipulation.Translation.Y);
 
             this.LineRuler.Width *= e.DeltaManipulation.Scale.X;
-            this.LineRuler.Height *= e.DeltaManipulation.Scale.Y;
+            //this.LineRuler.Height *= e.DeltaManipulation.Scale.Y;
 
             // the center never changes in this sample, although we always compute it.
             Point center = new Point(this.LineRuler.RenderSize.Width / 2.0, this.LineRuler.RenderSize.Height / 2.0);
