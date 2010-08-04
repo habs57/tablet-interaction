@@ -170,14 +170,14 @@ namespace TablectionSketch
         }
 
         private void RefreshCurrentPreview()
-        {
+        {            
             Slide.Slide currentSlide = this.SlideList.SelectedItem as Slide.Slide;
             if (currentSlide != null)
             {
                 RenderTargetBitmap rtb = new RenderTargetBitmap((int)this.DrawingCanvas.ActualWidth, (int)this.DrawingCanvas.ActualHeight, 100, 100, PixelFormats.Default);                
                 rtb.Render(this.DrawingCanvas);
 
-                currentSlide.Thumbnail = rtb;
+                currentSlide.Thumbnail = rtb;                
             }
         }
         
@@ -435,7 +435,8 @@ namespace TablectionSketch
         private Point lastPt;
 
         private void DrawingCanvas_Drop(object sender, DragEventArgs e)
-        {
+        {            
+
             DoWithSupportedImage(e, (path, args) =>
             {
                 lastPt = e.GetPosition(this.DrawingCanvas);
@@ -450,7 +451,8 @@ namespace TablectionSketch
                 {                    
                     image.DownloadCompleted += new EventHandler(image_DownloadCompleted);                    
                 }                
-            });           
+            });
+            
         }
 
         void AddTouchableImage(Point pt, BitmapImage image)
@@ -575,22 +577,47 @@ namespace TablectionSketch
         {
             this.SlideList.Visibility = Visibility.Visible;
         }
+
+
+        private UIElement CloneDocument(UIElement fdToClone)
+        {
+
+            String savedDoc = XamlWriter.Save(fdToClone);
+
+            StringReader srStringReader = new StringReader(savedDoc);
+
+            XmlReader xrDoc = XmlReader.Create(srStringReader);
+
+            return (UIElement)XamlReader.Load(xrDoc);
+
+        }
+        
         
         public void CloseWindows(object sender, MouseButtonEventArgs e) 
         {
             int slide_cnt = this.SlideList.Items.Count;
             int i;
 
+            //현재 슬라이드의 Child 이미지들의 UIElement를 저장
+            foreach (UIElement item in this.DrawingCanvas.Children)
+            {
+                Slide.Slide s = this.SlideList.SelectedItem as Slide.Slide;
+                s.Children.Add(cloneElement(item));
+            }
+
+            //전체 슬라이드를 순회하면서 Stroke, Child Element, Thumbnail을 저장
             for (i = 0; i < slide_cnt; i++)
             {
                 int j;
+
+                // Strokes를 저장
                 StrokeCollection _strokes;
                 Slide.Slide _slide;
                 _slide = (this.SlideList.Items[i] as Slide.Slide);
                 _strokes = _slide.Strokes;
                 File.WriteAllText(".\\Saved\\" + _slide.Title + "_Strokes.xaml", XamlWriter.Save(_strokes));
             
-                
+                //Thumbnail을 저장
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = File.Create(".\\Saved\\" + _slide.Title + "_th.jpg");
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
@@ -600,16 +627,15 @@ namespace TablectionSketch
                 stream.Flush();
                 stream.Close();
 
-                //string XAML = System.Windows.Markup.XamlWriter.Save(_slide.Children);
-
-                //System.IO.StringReader StringReader = new System.IO.StringReader(XAML);
+                
+                //ChildUIElement를 저장
+                System.Diagnostics.Debug.WriteLine("ChildCout :"+ _slide.Children.Count);
                 for (j = 0; j < _slide.Children.Count; j++)
-                {
-                    System.Diagnostics.Debug.WriteLine("Output\n");
-                    File.WriteAllText(".\\Saved\\" + _slide.Title + "_images.xaml", XamlWriter.Save(_slide.Children[j] as UIElement));
-                }                
-                //System.Xml.XmlReader xmlReader = System.Xml.XmlTextReader.Create(StringReader); 
-
+                {                    
+                    UIElement _saved;
+                    _saved = CloneDocument(_slide.Children[j] as UIElement);                    
+                    File.WriteAllText(".\\Saved\\" + _slide.Title + "_UIElement"+j+".xaml", XamlWriter.Save(_saved));
+                }
             }
             this.SearchWindow.KillMe();
             this.Close();
