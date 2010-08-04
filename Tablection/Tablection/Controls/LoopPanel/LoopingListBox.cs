@@ -587,9 +587,9 @@ namespace DrWPF.Windows.Controls
             _lastDragPosition = currentDragPosition;
 
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine(string.Format("UpdateDragPosition : {0}", currentDragPosition));
+            //System.Diagnostics.Debug.WriteLine(string.Format("UpdateDragPosition : {0}", currentDragPosition));
 
-            System.Diagnostics.Debug.WriteLine(string.Format("Center : x {0}, y {1}", _centerPoint.X, _centerPoint.Y));
+            //System.Diagnostics.Debug.WriteLine(string.Format("Center : x {0}, y {1}", _centerPoint.X, _centerPoint.Y));
 #endif
             this.HitTestHelper.SelectItemAt(this._centerPoint);            
         }

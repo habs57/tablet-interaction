@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System;
 using System.IO;
 using System.Windows.Markup;
-
+using System.Xml;
 
 using TablectionSketch.Controls;
 using TablectionSketch.Data;
@@ -141,14 +141,50 @@ namespace TablectionSketch.Slide
             }
         }
 
+
+        private UIElement CloneDocument(UIElement fdToClone)
+        {
+
+            String savedDoc = XamlWriter.Save(fdToClone);
+
+            StringReader srStringReader = new StringReader(savedDoc);
+
+            XmlReader xrDoc = XmlReader.Create(srStringReader);
+
+            return (UIElement)XamlReader.Load(xrDoc);
+
+        }
+
+
+
         private ObservableCollection<UIElement> _children = null;
         public ObservableCollection<UIElement> Children
         {
             get
             {
                 if (this._children == null)
-                {
+                {                    
                     this._children = new ObservableCollection<UIElement>();
+                 
+                    int j = 0;
+                    bool condition = true;
+                    while (condition)
+                    {
+                        if (File.Exists(".\\Saved\\" + this.Title + "_UIElement" + j + ".xaml"))
+                        {
+                            UIElement _Element, ClonedElement;
+                            System.Diagnostics.Debug.WriteLine(".\\Saved\\" + this.Title + "_UIElement" + j + ".xaml");
+                            _Element = (UIElement)XamlReader.Load(File.OpenRead(".\\Saved\\" + this.Title + "_UIElement" + j + ".xaml"));
+                            ClonedElement = CloneDocument(_Element);
+                            this.Children.Add(ClonedElement);
+                            j++;
+                        }
+                        else
+                        {
+                            condition = false;
+                        }
+                    }
+//                    this._children = new ObservableCollection<UIElement>();
                 }
                 return this._children;
             }

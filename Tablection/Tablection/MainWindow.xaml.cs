@@ -170,7 +170,8 @@ namespace TablectionSketch
         }
 
         private void RefreshCurrentPreview()
-        {            
+        {
+            System.Diagnostics.Debug.WriteLine("RefreshCurrentPreview");
             Slide.Slide currentSlide = this.SlideList.SelectedItem as Slide.Slide;
             if (currentSlide != null)
             {
@@ -212,7 +213,7 @@ namespace TablectionSketch
 
         private void LoopingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("LoopingListBox_SelectionChanged");
+            
 
             foreach (ToolHeader item in e.AddedItems)
             {
@@ -395,11 +396,8 @@ namespace TablectionSketch
             this.RestoreChildObj(e);
         }
 
-        /// <summary>
+
         /// clones a UIElement
-        /// </summary>
-        /// <param name="orig"></param>
-        /// <returns></returns>
         public static UIElement cloneElement(UIElement orig)
         {
             if (orig == null)
@@ -428,14 +426,15 @@ namespace TablectionSketch
                 if (isSupportedFormat == true)
                 {
                     args.Effects = DragDropEffects.Copy | DragDropEffects.Move;
-                }
+                }                
             });           
         }
 
         private Point lastPt;
 
         private void DrawingCanvas_Drop(object sender, DragEventArgs e)
-        {            
+        {
+            System.Diagnostics.Debug.WriteLine("DrawwingCanvas_Drop");
 
             DoWithSupportedImage(e, (path, args) =>
             {
@@ -462,8 +461,8 @@ namespace TablectionSketch
             ti.Width = image.PixelWidth > 500 ? (double)(image.PixelWidth >> 1) : image.PixelWidth;
             ti.Height = image.PixelHeight > 500 ? (double)(image.PixelHeight >> 1) : image.PixelHeight;
             this.DrawingCanvas.Children.Add(ti);
-           
 
+            this.RefreshCurrentPreview();
             InkCanvas.SetLeft(ti, pt.X - ((int)ti.Width >> 2));
             InkCanvas.SetTop(ti, pt.Y - ((int)ti.Height >> 2));
 
@@ -599,9 +598,13 @@ namespace TablectionSketch
             int i;
 
             //현재 슬라이드의 Child 이미지들의 UIElement를 저장
+
+            Slide.Slide s = this.SlideList.SelectedItem as Slide.Slide;
+            s.Children.Clear();
+
             foreach (UIElement item in this.DrawingCanvas.Children)
             {
-                Slide.Slide s = this.SlideList.SelectedItem as Slide.Slide;
+              //  Slide.Slide s = this.SlideList.SelectedItem as Slide.Slide;
                 s.Children.Add(cloneElement(item));
             }
 
@@ -627,9 +630,8 @@ namespace TablectionSketch
                 stream.Flush();
                 stream.Close();
 
-                
-                //ChildUIElement를 저장
-                System.Diagnostics.Debug.WriteLine("ChildCout :"+ _slide.Children.Count);
+                                //ChildUIElement를 저장
+                //System.Diagnostics.Debug.WriteLine("ChildCout :"+ _slide.Children.Count);
                 for (j = 0; j < _slide.Children.Count; j++)
                 {                    
                     UIElement _saved;
