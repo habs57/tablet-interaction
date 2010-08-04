@@ -21,6 +21,7 @@ namespace TablectionSketch.Slide
 {
     public class Slide : INotifyPropertyChanged
     {           
+        //public static bool First_Loading = true;
         /// <summary>
         /// 슬라이드의 이름
         /// </summary>
@@ -59,8 +60,10 @@ namespace TablectionSketch.Slide
         {
             string _path = Directory.GetCurrentDirectory();
 
+                      
             if (File.Exists(".\\Saved\\" + this.Title + "_th.jpg") == true)
             {
+                System.Diagnostics.Debug.WriteLine("Loading From Saved Thumbnail");
                 System.Diagnostics.Debug.WriteLine(this.Title + "Before file exist\n");
 
                 BitmapImage bitmapImage = new BitmapImage();
@@ -74,11 +77,13 @@ namespace TablectionSketch.Slide
                 bitmapImage.DecodePixelHeight = bitmapImage.PixelHeight >> 2;
                 bitmapImage.DecodePixelWidth = bitmapImage.PixelWidth >> 2;
 
-                
+                File.Delete(".\\Saved\\" + this.Title + "_th.jpg");
+                                
                 return bitmapImage;
             }
             else
             {
+                System.Diagnostics.Debug.WriteLine("Loading From Original Slide Image");
  
                 BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
@@ -119,12 +124,12 @@ namespace TablectionSketch.Slide
 
             get
             {
+                
                 if (this._strokes == null)
                 {
                     try
                     {
                         this._strokes = (StrokeCollection)XamlReader.Load(File.OpenRead(".\\Saved\\"+this.Title + "_Strokes.xaml"));
-                        System.Diagnostics.Debug.WriteLine("Read Xaml file\n");
                     }
                     catch
                     {
