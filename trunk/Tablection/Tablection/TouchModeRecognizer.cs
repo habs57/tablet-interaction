@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Diagnostics;
+using System.Windows;
 
 namespace TablectionSketch
 {
@@ -29,12 +30,13 @@ namespace TablectionSketch
     {
         private TouchMode _PrevTouchMode;
         public int PenDevID { get; set; }           // Pen touch device ID
+        public Point PenPoint { private set; get; }
 
         public TouchModeRecognizer(InkCanvas canvas)
         {
             _PrevTouchMode = TouchMode.None;
             PenDevID = -1;
-            //canvas.PreviewTouchDown +=new EventHandler<TouchEventArgs>(canvas_PreviewTouchDown);
+            //canvas.PreviewTouchDown += new EventHandler<TouchEventArgs>(canvas_PreviewTouchDown);
             //canvas.PreviewTouchMove += new EventHandler<TouchEventArgs>(canvas_PreviewTouchMove);
             //canvas.PreviewTouchUp += new EventHandler<TouchEventArgs>(canvas_PreviewTouchUp);
         }
@@ -72,9 +74,11 @@ namespace TablectionSketch
 
         public void Recognize(TouchEventArgs e, TouchStates touchState, bool isPen)
         {
+            Debug.WriteLine("TOUCH mode : " + touchState);
+
             switch (_PrevTouchMode) 
             {
-                case TouchMode.None:
+                case TouchMode.None:                    
                     if (touchState == TouchStates.TD)
                     {
                         MoveToNext(TouchMode.Single);
@@ -86,11 +90,11 @@ namespace TablectionSketch
                     }
                     else
                     {
-                        Debug.WriteLine("Unexpected TOUCH mode change");
+                        Debug.WriteLine("Unexpected TOUCH mode change from None: " + touchState);
                     }
                     break;
 
-                case TouchMode.Single:
+                case TouchMode.Single:                  
                     if (touchState == TouchStates.TU)
                     {
                         MoveToNext(TouchMode.None);
@@ -106,16 +110,16 @@ namespace TablectionSketch
                         // pen started to input
                         if (isPen && PenDevID == -1)
                         {
-                            PenDevID = e.TouchDevice.Id;        
+                            PenDevID = e.TouchDevice.Id;
                         }
                     }
                     else
                     {
-                        Debug.WriteLine("Unexpected TOUCH mode change");
+                        Debug.WriteLine("Unexpected TOUCH mode change from Single: " + touchState);
                     }
                     break;
 
-                case TouchMode.Multi:
+                case TouchMode.Multi:                   
                     if (touchState == TouchStates.TU)
                     {
                         MoveToNext(TouchMode.Single);
@@ -132,7 +136,7 @@ namespace TablectionSketch
                     }
                     else
                     {
-                        Debug.WriteLine("Unexpected TOUCH mode change");
+                        Debug.WriteLine("Unexpected TOUCH mode change from Multi: " + touchState);
                     }
                     break;
 

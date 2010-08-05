@@ -20,9 +20,24 @@ namespace TablectionSketch.Controls
     /// </summary>
     public partial class Liner : UserControl
     {
+        // Declare the delegate (if using non-generic pattern).
+        public delegate void EventHandler(object sender, EventArgs e);
+
+        // Declare the event.
+        public event EventHandler OnRequestClose;
+
+        // Wrap the event in a protected virtual method
+        // to enable derived classes to raise the event.
+        protected virtual void RaiseOnRequestClose()
+        {
+            // Raise the event by using the () operator.
+            if (OnRequestClose != null)
+                OnRequestClose(this, new EventArgs());
+        }
+
         private TransformGroup transformGroup;
         TranslateTransform translation;
-        RotateTransform rotation;
+        public RotateTransform rotation;
 
         public Liner()
         {
@@ -85,32 +100,12 @@ namespace TablectionSketch.Controls
             // apply translation 
             this.translation.X += e.DeltaManipulation.Translation.X;
             this.translation.Y += e.DeltaManipulation.Translation.Y;
-
-
+            
             // Apply the changes to the Rectangle.
             rectToMove.RenderTransform = new MatrixTransform(rectsMatrix);
 
             e.Handled = true;
         }
-
-        //void TouchableThing_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
-        //{
-        //    e.TranslationBehavior = new InertiaTranslationBehavior();
-        //    e.TranslationBehavior.InitialVelocity = e.InitialVelocities.LinearVelocity;
-        //    // 10 inches per second squared
-        //    e.TranslationBehavior.DesiredDeceleration = 10 * 96 / (1000 * 1000);
-
-
-        //    e.ExpansionBehavior = new InertiaExpansionBehavior();
-        //    e.ExpansionBehavior.InitialVelocity = e.InitialVelocities.ExpansionVelocity;
-        //    // .1 inches per second squared.
-        //    e.ExpansionBehavior.DesiredDeceleration = 0.1 * 96 / 1000.0 * 1000.0;
-
-        //    e.RotationBehavior = new InertiaRotationBehavior();
-        //    e.RotationBehavior.InitialVelocity = e.InitialVelocities.AngularVelocity;
-        //    // 720 degrees per second squared.
-        //    e.RotationBehavior.DesiredDeceleration = 720 / (1000.0 * 1000.0);
-        //}
 
         private void DrawGradations()
         {
@@ -128,6 +123,11 @@ namespace TablectionSketch.Controls
                 this.AddChild(line);
                 x += 10;
             }
+        }
+
+        private void button1_TouchDown(object sender, TouchEventArgs e)
+        {
+            RaiseOnRequestClose();
         }
     }
 }

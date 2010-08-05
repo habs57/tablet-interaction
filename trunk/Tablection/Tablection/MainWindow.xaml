@@ -12,7 +12,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TablectionSketch.MainWindow"
 
 		WindowStartupLocation="CenterScreen"
-		Title="TablectionSketch" Height="768" Width="1024" WindowStyle="None"
+		Title="TablectionSketch" Height="768" Width="1024" WindowStyle="SingleBorderWindow"
 		WindowState="Normal" >
 		
 	
@@ -36,7 +36,7 @@
 				<tool:ToolHeader Name="Basic Tools" RelatedControlName="llbTools"/>
 				<tool:ToolHeader Name="Colors" RelatedControlName="llbColors"/>
 				<tool:ToolHeader Name="Strokes" RelatedControlName="llbStroke"/>
-				<tool:ToolHeader Name="Rulers" RelatedControlName="Reserved"/>
+				<tool:ToolHeader Name="Rulers" RelatedControlName="LinerMode"/>
 				<tool:ToolHeader Name="Cut" RelatedControlName="CutMode"/>
 				<tool:ToolHeader Name="Search" RelatedControlName="ctl_Search"/>
 			</tool:ToolCollection>
@@ -81,6 +81,10 @@
 			<conv:DoubleToStrokeToolConverter x:Key="StrokeToolConverter"/>
 
 			<!-- 애니메이션 -->
+			<Storyboard x:Key="linerHideAnimation" Completed="LineRulerHide_Completed">
+				<DoubleAnimation To="0.5" Duration="0:0:0.7" Storyboard.TargetName="LineRuler" Storyboard.TargetProperty="Opacity"/>
+			</Storyboard>
+			
 			<Storyboard x:Key="toolPanelShowAnimation">
 				<DoubleAnimation From="0" To="1" Duration="0:0:0.4" Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="Opacity"/>
 				<DoubleAnimationUsingKeyFrames Storyboard.TargetName="ToolPanel" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
@@ -120,6 +124,9 @@
 			<Storyboard x:Key="slideListHideAnimation" Completed="SlideListHide_Completed">
 				<DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="SlideList" Storyboard.TargetProperty="Opacity"/>				
 			</Storyboard>
+
+		
+			
 			<Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
 				<Setter Property="Template">
 					<Setter.Value>
@@ -196,7 +203,7 @@
 		</Button>
 		
 		<!-- 메인 그림패널 --> 
-		<Grid Margin="50,50,49,0">
+		<Grid x:Name="gridMain" Margin="50,50,49,0">
 			<control:MultiTouchInkCanvas x:Name="DrawingCanvas"
 										 ManipulationStarting="DrawingCanvas_ManipulationStarting"
 										 ManipulationInertiaStarting="DrawingCanvas_ManipulationInertiaStarting"
@@ -227,7 +234,7 @@
 					</EventTrigger>
 				</control:MultiTouchInkCanvas.Triggers>
 			</control:MultiTouchInkCanvas>
-			<control:Liner></control:Liner>
+			
 		</Grid>
 		
 		<!-- 슬라이드 목록 -->
