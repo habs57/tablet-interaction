@@ -78,8 +78,24 @@ namespace TablectionSketch
 
 
 		private TouchModeRecognizer _modeRecognizer;
+        public int PenDevID
+        {
+            get
+            {
+                if (_modeRecognizer != null)
+                {
+                    return _modeRecognizer.PenDevID;
+                }
+                else
+                {
+                    return 0;
+                }
+                
+            }
+        }
 
-		private InputMode _PrevMode = InputMode.None;        
+		private InputMode _PrevMode = InputMode.None;
+     
 
 		private int _TouchCount = 0;        
 		public bool IsPen { get; set; }

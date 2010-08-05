@@ -37,6 +37,8 @@ namespace TablectionSketch
         /// </summary>
         private Line _floatingLine { get; set; }
 
+        private TouchRecognizeAutomata.InputMode CurrentMode { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,8 +48,7 @@ namespace TablectionSketch
 
             _pathGenerator = new PathGenerator(this.DrawingCanvas);
             _pathGenerator.PathGenerated += new Action<PathGeometry>(_pathGenerator_PathGenerated);
-            _pathGenerator.IsCollecting = false;
-
+            
             _freeCropHelper = new ImageFreeCropHelper(this.DrawingCanvas);
             _freeCropHelper.ImageCropped += new EventHandler<ImageCropEventArgs>(_freeCropHelper_ImageCropped);
 
@@ -65,6 +66,10 @@ namespace TablectionSketch
             _recognier.OnLineMove += new TouchRecognizeAutomata.EventHandler(_recognier_OnLineMove);
             _recognier.OnLineEnded += new TouchRecognizeAutomata.EventHandler(_recognier_OnLineEnded);
 
+            this.DrawingCanvas.PreviewTouchDown += new EventHandler<TouchEventArgs>(DrawingCanvas_PreviewTouchDown);
+            this.DrawingCanvas.PreviewTouchMove += new EventHandler<TouchEventArgs>(DrawingCanvas_PreviewTouchMove);
+            this.DrawingCanvas.PreviewTouchUp +=new EventHandler<TouchEventArgs>(DrawingCanvas_PreviewTouchUp);
+
             //<control:Liner x:Name="ui_lineRuler" Visibility="Collapsed">
             //    <control:Liner.Triggers>                    
             //        <EventTrigger RoutedEvent="TouchUp">
@@ -72,6 +77,49 @@ namespace TablectionSketch
             //        </EventTrigger>
             //    </control:Liner.Triggers>
             //</control:Liner>
+        }
+
+        void DrawingCanvas_PreviewTouchMove(object sender, TouchEventArgs e)
+        {
+            if (this.CurrentMode == TouchRecognizeAutomata.InputMode.Cut)
+            {
+                if (e.TouchDevice.Id == this._recognier.PenDevID)
+                {
+                    _freeCropHelper.CollectCropArea(e);                     
+                }                                           
+            }
+        }
+
+        void DrawingCanvas_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            if (this.CurrentMode == TouchRecognizeAutomata.InputMode.Cut)
+            {
+                if (e.TouchDevice.Id == this._recognier.PenDevID)
+                {                    
+                    _freeCropHelper.StartCropArea(e);
+                }
+            }
+            else if (this.CurrentMode == TouchRecognizeAutomata.InputMode.SelMovImg)
+            {
+                if (e.TouchDevice.Id != this._recognier.PenDevID)
+                {
+                    _freeCropHelper.SetCropTarget(e);
+                }
+            }
+        }
+        
+        private void DrawingCanvas_PreviewTouchUp(object sender, TouchEventArgs e)
+        {
+            //PreviewRefresh
+            this.RefreshCurrentPreview();
+
+            if (this.CurrentMode == TouchRecognizeAutomata.InputMode.Cut)
+            {
+                if (e.TouchDevice.Id == this._recognier.PenDevID)
+                {
+                    _freeCropHelper.EndCropArea(e);
+                }
+            }
         }
 
         void _recognier_OnLineEnded(object sender, EventArgs e)
@@ -204,6 +252,8 @@ namespace TablectionSketch
 
         void _recognier_ModeChanged(TouchRecognizeAutomata.InputMode obj)
         {
+            this.CurrentMode = obj;
+
             switch (obj)
             {
                 case TouchRecognizeAutomata.InputMode.None:                    
@@ -260,7 +310,7 @@ namespace TablectionSketch
         //스트로크 인식 
         void _pathGenerator_PathGenerated(PathGeometry obj)
         {  
-            this._freeCropHelper.BeginCrop(obj);            
+            //this._freeCropHelper.BeginCrop(obj);            
         }
 
         void DrawingCanvas_Gesture(ApplicationGesture Gestrue)
@@ -318,13 +368,13 @@ namespace TablectionSketch
                 System.Diagnostics.Debug.WriteLine("LoopingListBox_SelectionChanged: " + selectedToolName);
 
 
-                if (selectedToolName.Equals("CutMode") == false && this._pathGenerator.IsCollecting == true)
-                {
-                    this.Cursor = Cursors.Arrow;
-                    this.llbTools.SelectedIndex = 1;
-                    this._pathGenerator.EndCollect();
-                    this.SearchWindow.Hide();
-                }
+                //if (selectedToolName.Equals("CutMode") == false && this._pathGenerator.IsCollecting == true)
+                //{
+                //    this.Cursor = Cursors.Arrow;
+                //    this.llbTools.SelectedIndex = 1;
+                //    this._pathGenerator.EndCollect();
+                //    this.SearchWindow.Hide();
+                //}
                 if (this.radioTools != null && selectedToolName.Equals("llbTools") == true)
                 {
                     this.radioTools.IsChecked = true;
@@ -347,12 +397,12 @@ namespace TablectionSketch
                 }
                 else if (selectedToolName.Equals("CutMode") == true)
                 {
-                    if (this._pathGenerator.IsCollecting == false)
+                    //if (this._pathGenerator.IsCollecting == false)
                     {
                         this.Cursor = Cursors.Pen; //가위로 바꿔야 함
                         this.llbTools.SelectedIndex = 3;
                          
-                        this._pathGenerator.BeginCollect();
+                        //this._pathGenerator.BeginCollect();
                     }
                     this.SearchWindow.Hide();
                 }
@@ -432,11 +482,6 @@ namespace TablectionSketch
             this.RefreshCurrentPreview();
         }
 
-        private void DrawingCanvas_PreviewTouchUp(object sender, TouchEventArgs e)
-        {
-            //PreviewRefresh
-            this.RefreshCurrentPreview();
-        }
 
         private HitTestFilterBehavior FilterCallBack(DependencyObject e)
         {
