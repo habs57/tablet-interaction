@@ -15,18 +15,12 @@ using System.Windows.Media.Imaging;
 using System.Xml;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-
+using System.Windows.Shapes;
 using TablectionSketch.Controls;
 using TablectionSketch.Tool;
 
 namespace TablectionSketch
 {
-    public class UdpState
-    {
-        public UdpClient u;
-        public IPEndPoint e;
-    }
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -36,6 +30,12 @@ namespace TablectionSketch
         ImageFreeCropHelper _freeCropHelper;          
         TouchRecognizeAutomata _recognier;
         private int gSensor_val;
+        private Liner _liner;
+        private Point _penStartPoint;
+        /// <summary>
+        /// Line 모드일 때 가상으로 그려주는 선
+        /// </summary>
+        private Line _floatingLine { get; set; }
 
         public MainWindow()
         {
@@ -56,6 +56,95 @@ namespace TablectionSketch
 
             if (Directory.Exists(".\\Saved") == false)
                 Directory.CreateDirectory(".\\Saved");
+
+            // Liner 등록
+            AddLiner();
+
+            // Line 모드의 이벤트 등록
+            _recognier.OnLineStarted += new TouchRecognizeAutomata.EventHandler(_recognier_OnLineStarted);
+            _recognier.OnLineMove += new TouchRecognizeAutomata.EventHandler(_recognier_OnLineMove);
+            _recognier.OnLineEnded += new TouchRecognizeAutomata.EventHandler(_recognier_OnLineEnded);
+
+            //<control:Liner x:Name="ui_lineRuler" Visibility="Collapsed">
+            //    <control:Liner.Triggers>                    
+            //        <EventTrigger RoutedEvent="TouchUp">
+            //            <BeginStoryboard Storyboard="{StaticResource linerHideAnimation}"/>
+            //        </EventTrigger>
+            //    </control:Liner.Triggers>
+            //</control:Liner>
+        }
+
+        void _recognier_OnLineEnded(object sender, EventArgs e)
+        {
+            // 가상 선 등록
+            //Line straightLine = new Line();
+            //straightLine = new Line();
+            //straightLine.StrokeThickness = this.DrawingCanvas.DefaultDrawingAttributes.Width;
+            //straightLine.Stroke = this.DrawingCanvas.DefaultDrawingAttributes.Color;
+            //straightLine.X1 = _floatingLine.X1;
+            //straightLine.Y1 = _floatingLine.Y1;
+            //straightLine.X2 = _floatingLine.X2;
+            //straightLine.Y2 = _floatingLine.Y2;
+
+            StylusPointCollection stcol = new StylusPointCollection();
+            
+            stcol.Add(new StylusPoint(_floatingLine.X1, _floatingLine.Y1));
+            stcol.Add(new StylusPoint(_floatingLine.X2, _floatingLine.Y2));
+            StrokeCollection col = new StrokeCollection();
+            Stroke st = new Stroke(stcol);
+            col.Add(st);
+
+            this.DrawingCanvas.Strokes.Add(col);
+
+            //gridMain.Children.Add(straightLine);
+            //gridMain.RegisterName("ui_straightLine" + DateTime.Now.ToFileTime().ToString(), straightLine);
+
+            _floatingLine.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        void _recognier_OnLineMove(object sender, EventArgs e)
+        {
+            double angle = this._liner.rotation.Angle;
+            double xLength = _recognier.PenEndPoint.Position.X - _floatingLine.X1;
+
+            _floatingLine.X2 = _recognier.PenEndPoint.Position.X;
+            _floatingLine.Y2 = _floatingLine.Y1 + (xLength * Math.Tan(angle * (Math.PI / 180)));
+        }
+
+        void _recognier_OnLineStarted(object sender, EventArgs e)
+        {
+            _floatingLine.Visibility = System.Windows.Visibility.Visible;
+            _floatingLine.Opacity = 0.7;
+            _floatingLine.X1 = _recognier.PenStartPoint.Position.X;
+            _floatingLine.Y1 = _recognier.PenStartPoint.Position.Y;
+            _floatingLine.X2 = _recognier.PenEndPoint.Position.X;
+            _floatingLine.Y2 = _recognier.PenEndPoint.Position.Y;
+        }
+
+        private void AddLiner()
+        {
+            // Line(자) 등록
+            _liner = new Liner();
+            _liner.Name = "ui_lineRuler";
+            _liner.Visibility = System.Windows.Visibility.Collapsed;
+            _liner.OnRequestClose += new Liner.EventHandler(_liner_OnRequestClose);
+            gridMain.Children.Add(_liner);
+            gridMain.RegisterName("ui_lineRuler", _liner);
+
+            // 가상 선 등록
+            _floatingLine = new Line();
+            _floatingLine.StrokeThickness = 2.0d;
+            _floatingLine.Stroke = Brushes.Red;
+            _floatingLine.Visibility = System.Windows.Visibility.Collapsed;
+
+            gridMain.Children.Add(_floatingLine);
+            gridMain.RegisterName("ui_floadingLine", _floatingLine);
+        }
+
+        void _liner_OnRequestClose(object sender, EventArgs e)
+        {
+            this._recognier.IsRuler = false;
+            _liner.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void InitializeUdpSocket()
@@ -135,6 +224,16 @@ namespace TablectionSketch
                 case TouchRecognizeAutomata.InputMode.Cut:                    
                     this.SelectedIndex(3);
                     break;
+                case TouchRecognizeAutomata.InputMode.Ruler:
+                    Debug.WriteLine("Ruler selected");
+                    this.llbToolHeaders.SelectedIndex = 3;      // line ruler
+                    break;
+                case TouchRecognizeAutomata.InputMode.Line:
+                    Polyline line = new Polyline();
+                    // TODO
+                    double angle = _liner.rotation.Angle + 90;
+                    //Point linerFirstPoint = TouchDevice;
+                    break;
                 default:
                     break;
             }
@@ -213,11 +312,10 @@ namespace TablectionSketch
 
         private void LoopingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-
             foreach (ToolHeader item in e.AddedItems)
             {
                 string selectedToolName = item.RelatedControlName;
+                System.Diagnostics.Debug.WriteLine("LoopingListBox_SelectionChanged: " + selectedToolName);
 
 
                 if (selectedToolName.Equals("CutMode") == false && this._pathGenerator.IsCollecting == true)
@@ -257,6 +355,14 @@ namespace TablectionSketch
                         this._pathGenerator.BeginCollect();
                     }
                     this.SearchWindow.Hide();
+                }
+                else if (selectedToolName.Equals("LinerMode") == true)
+                {
+                    this._recognier.IsRuler = true;
+                    _liner.Visibility = Visibility.Visible;
+                    _liner.Opacity = 1;
+                    this.llbToolHeaders.SelectedIndex = 0;      // line ruler
+                    this.SelectedIndex(0);                    
                 }
                 else
                 {
@@ -572,6 +678,13 @@ namespace TablectionSketch
             this.SlideList.Visibility = Visibility.Collapsed;
         }
 
+        private void LineRulerHide_Completed(object sender, EventArgs e)
+        {
+            //this.ui_lineRuler.Opacity = 1;
+            //this.ui_lineRuler.Visibility = Visibility.Collapsed;
+            //this.llbToolHeaders.SelectedIndex = -1;      // line ruler
+        }
+
         private void btnBottom_Click(object sender, RoutedEventArgs e)
         {
             this.SlideList.Visibility = Visibility.Visible;
@@ -648,4 +761,11 @@ namespace TablectionSketch
             this.WindowState = WindowState.Minimized;
         }
     }
+
+    public class UdpState
+    {
+        public UdpClient u;
+        public IPEndPoint e;
+    }
+
 }
