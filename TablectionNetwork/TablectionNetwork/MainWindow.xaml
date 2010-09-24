@@ -1,7 +1,11 @@
 ﻿<Window x:Class="TablectionServer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TablectionServer"
         Title="Tablection Server" Height="350" Width="525">
+    <Window.DataContext>
+        <local:MainWindowVM/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,16 +24,16 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5" VerticalAlignment="Center" Text="Server IP"/>
-                        <TextBlock Margin="5" Background="#AAAAAA" Foreground="White" Width="100"/>
+                        <TextBlock Margin="5" Background="#AAAAAA" Foreground="White" Width="100" Text="{Binding ServerIP}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5" VerticalAlignment="Center" Text="Clients"/>
-                        <TextBlock Margin="5" Background="#AAAAAA" Foreground="White" Width="100"/>
+                        <TextBlock Margin="5" Background="#AAAAAA" Foreground="White" Width="100" Text="{Binding ClientsCount}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
             <GridSplitter Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="5"/>
-            <TextBox Background="Black" Foreground="LimeGreen" Text="Log show here" Grid.Row="2"/>
+            <TextBox Background="Black" Foreground="LimeGreen" Grid.Row="2" Text="{Binding Logs}"/>
 
         </Grid>
         <Grid Background="#EFEFEF"  Grid.Column="1">
@@ -38,17 +42,17 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical">
-                <Button Margin="5" Content="Start" Height="30"/>
-                <Button Margin="5" Content="Stop" Height="30"/>
-                <Button Margin="5" Content="Reset" Height="30"/>
+                <Button Margin="5" Content="Start" Height="30" Command="{Binding StartServerCommand}"/>
+                <Button Margin="5" Content="Stop" Height="30" Command="{Binding StopServerCommand}"/>
+                <Button Margin="5" Content="Reset" Height="30" Command="{Binding ResetServerCommand}"/>
             </StackPanel>
             <StackPanel Grid.Row="1">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="5" VerticalAlignment="Center" Text="Port"/>
-                    <TextBox Margin="5" Width="100"/>
+                    <TextBox Margin="5" Width="100" Text="{Binding Port}"/>
                 </StackPanel>
             </StackPanel>
-
+         
         </Grid>
     </Grid>
 </Window>
