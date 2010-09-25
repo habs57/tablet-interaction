@@ -4,33 +4,29 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace TablectionServer
+
+namespace TablectionServer.Network
 {
-    // State object for reading client data asynchronously
-    internal class StateObject
+    public enum ErrorType
     {
-        // Client  socket.
-        public Socket workSocket = null;
-        // Size of receive buffer.
-        public const int BufferSize = 1024;
-        // Receive buffer.
-        public byte[] buffer = new byte[BufferSize];
-        // Received data string.
-        public StringBuilder sb = new StringBuilder();
+        Warning, //로그엔 나오고 무시해도 됨 
+        Error    //로그에 당연히 나오고 서버도 재 시작 해야 됨 
     }
 
+    /// <summary>
+    /// 비동기 소켓 서버 예제 from MSDN
+    /// modified by yoonjs2@naver.com
+    /// </summary>
     internal class AsynchronousSocketListener
     {
         // Thread signal.
         private ManualResetEvent allDone = new ManualResetEvent(false);
 
-        public bool IsListening { get; private set;}
-
         public AsynchronousSocketListener()
         {
         }
 
-        public void StartListening()
+        protected void StartListening(ServerStateObject context)
         {
             // Data buffer for incoming data.
             byte[] bytes = new Byte[1024];
@@ -40,7 +36,7 @@ namespace TablectionServer
             // running the listener is "host.contoso.com".
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, context.Port);
 
             // Create a TCP/IP socket.
             Socket listener = new Socket(AddressFamily.InterNetwork,
@@ -52,12 +48,13 @@ namespace TablectionServer
                 listener.Bind(localEndPoint);
                 listener.Listen(100);
 
-                this.IsListening = true;
-                while (IsListening)
+                this.OnStartListening(listener);
+
+                while (context.IsListening)
                 {
                     // Set the event to nonsignaled state.
                     allDone.Reset();
-                    
+
                     // Start an asynchronous socket to listen for connections.
                     Console.WriteLine("Waiting for a connection...");
                     listener.BeginAccept(
@@ -68,23 +65,19 @@ namespace TablectionServer
                     allDone.WaitOne();
                 }
 
-            }
+                this.OnStopListening(listener);
+
+            }           
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
 
-                this.OnError(e);
+                this.OnError(ErrorType.Error, e);
             }
 
             Console.WriteLine("\nPress ENTER to continue...");
             Console.Read();
 
-        }
-
-        public void EndListening()
-        {
-            this.IsListening = false;
-            this.allDone.Close();
         }
 
         private void AcceptCallback(IAsyncResult ar)
@@ -104,7 +97,7 @@ namespace TablectionServer
 
             this.OnAcceptClient(handler);
         }
-        
+
         private void ReadCallback(IAsyncResult ar)
         {
             String content = String.Empty;
@@ -134,7 +127,7 @@ namespace TablectionServer
                         content.Length, content);
 
                     this.OnReceiveData(handler, content);
-                    
+
                 }
                 else
                 {
@@ -175,13 +168,23 @@ namespace TablectionServer
             {
                 Console.WriteLine(e.ToString());
 
-                this.OnError(e);
+                this.OnError(ErrorType.Warning, e);
             }
         }
 
         #region Overrides
 
-        protected virtual void OnError(Exception exc)
+        protected virtual void OnStartListening(Socket listener)
+        {
+
+        }
+
+        protected virtual void OnStopListening(Socket listener)
+        {
+
+        }
+
+        protected virtual void OnError(ErrorType type, Exception exc)
         {
 
         }
@@ -205,49 +208,4 @@ namespace TablectionServer
         #endregion
     }
 
-
-    internal class TablectionServer : AsynchronousSocketListener
-    {
-        public Action<string> LogDelegate;
-
-        public TablectionServer()
-            : base()
-        {
-
-        }
-
-        private void CreateLog(string handler, string data)
-        {
-            if (this.LogDelegate != null)
-            {
-                StringBuilder logBuilder = new StringBuilder();
-                logBuilder.AppendFormat("[{0}]", handler);
-                logBuilder.AppendFormat("- {0}", data);
-                this.CreateLog(logBuilder.ToString());
-            }
-        }
-        
-        private void CreateLog(string data)
-        {
-            if (this.LogDelegate != null)
-            {
-                StringBuilder logBuilder = new StringBuilder();
-                logBuilder.AppendFormat("[{0}]", DateTime.Now);
-                logBuilder.AppendFormat("{0}", data);
-                this.LogDelegate(logBuilder.ToString());
-            }
-        }
-
-        protected override void OnError(Exception exc)
-        {
-            this.CreateLog(exc.ToString());
-        }
-
-        protected override void OnReceiveData(Socket handler, string content)
-        {
-            
-        }
-
-
-    }
 }
