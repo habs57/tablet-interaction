@@ -33,7 +33,7 @@
                 </StackPanel>
             </Grid>
             <GridSplitter Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="5"/>
-            <TextBox Background="Black" Foreground="LimeGreen" Grid.Row="2" Text="{Binding Logs}"/>
+            <TextBox Background="Black" Foreground="LimeGreen" IsReadOnlyCaretVisible="True"  Grid.Row="2" Text="{Binding Logs}" TextWrapping="WrapWithOverflow" />
 
         </Grid>
         <Grid Background="#EFEFEF"  Grid.Column="1">
@@ -44,9 +44,9 @@
             <StackPanel Orientation="Vertical">
                 <Button Margin="5" Content="Start" Height="30" Command="{Binding StartServerCommand}"/>
                 <Button Margin="5" Content="Stop" Height="30" Command="{Binding StopServerCommand}"/>
-                <Button Margin="5" Content="Reset" Height="30" Command="{Binding ResetServerCommand}"/>
+                
             </StackPanel>
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" IsEnabled="{Binding IsServerCanConfig}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="5" VerticalAlignment="Center" Text="Port"/>
                     <TextBox Margin="5" Width="100" Text="{Binding Port}"/>

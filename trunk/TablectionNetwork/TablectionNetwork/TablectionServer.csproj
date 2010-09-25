@@ -59,7 +59,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="TablectionServer.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="NetworkModules\AsynchronousSocketListener.cs" />
+    <Compile Include="NetworkModules\ClientStateObject.cs" />
+    <Compile Include="NetworkModules\ServerStateObject.cs" />
+    <Compile Include="NetworkModules\TablectionAsyncServer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
