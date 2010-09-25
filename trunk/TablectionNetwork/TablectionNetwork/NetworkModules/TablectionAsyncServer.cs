@@ -91,6 +91,16 @@ namespace TablectionServer.Network
             }
         }
 
+        protected override void OnStartListening(Socket listener)
+        {
+            _logger.CreateLog(LogType.Normal, "서버 시작됨... 클라이언트를 기다립니다.");
+        }
+
+        protected override void OnStopListening(Socket listener)
+        {
+            _logger.CreateLog(LogType.Normal, "서버를 종료합니다...");
+        }
+
         protected override void OnReceiveData(Socket handler, string content)
         {
             _logger.CreateLog(LogType.Normal, handler.GetRemoteInfo(), string.Format("Received : {0}", content));            
