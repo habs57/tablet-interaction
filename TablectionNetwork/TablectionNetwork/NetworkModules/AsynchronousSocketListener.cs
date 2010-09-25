@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading;
 
 namespace TablectionServer.Network
 {
+
     public enum ErrorType
     {
         Warning, //로그엔 나오고 무시해도 됨 
@@ -26,8 +28,15 @@ namespace TablectionServer.Network
         {
         }
 
+        //private void StateChangedCallback(ServerStateObject param)
+        //{
+           
+        //}
+
         protected void StartListening(ServerStateObject context)
         {
+            //context.StateChangedHandler = new Action<ServerStateObject>(StateChangedCallback);
+
             // Data buffer for incoming data.
             byte[] bytes = new Byte[1024];
 
@@ -35,7 +44,13 @@ namespace TablectionServer.Network
             // The DNS name of the computer
             // running the listener is "host.contoso.com".
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
+            IPAddress ipAddress = ipHostInfo.AddressList.FirstOrDefault(ip => { return ip.AddressFamily == AddressFamily.InterNetwork; });
+            if (ipAddress == null)
+            {
+                this.OnError(ErrorType.Error, new NotSupportedException("IPv4 주소만 지원합니다. 컴퓨터에 IPv4 주소로 인터넷이 연결되어 있는지 확인하세요"));
+                return;
+            }
+
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, context.Port);
 
             // Create a TCP/IP socket.
@@ -62,7 +77,7 @@ namespace TablectionServer.Network
                         listener);
 
                     // Wait until a connection is made before continuing.
-                    allDone.WaitOne();
+                    allDone.WaitOne(TimeSpan.FromMilliseconds(1000));
                 }
 
                 this.OnStopListening(listener);

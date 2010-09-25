@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace TablectionServer.Network
 {
     /// <summary>
@@ -6,6 +7,8 @@ namespace TablectionServer.Network
     /// </summary>
     internal sealed class ServerStateObject
     {
+        internal Action<ServerStateObject> StateChangedHandler; 
+
         public int Port { get; private set; }
         public bool IsListening { get; private set; }
 
@@ -13,11 +16,23 @@ namespace TablectionServer.Network
         {
             this.Port = port;
             this.IsListening = true;
+
+            this.NotifyStateChanged();
         }
 
         public void Stop()
         {
             this.IsListening = false;
+
+            this.NotifyStateChanged();
+        }
+
+        private void NotifyStateChanged()
+        {
+            if (this.StateChangedHandler != null)
+            {
+                this.StateChangedHandler(this);
+            }
         }
     }
 }
