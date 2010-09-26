@@ -1,0 +1,34 @@
+﻿<Window x:Class="TablectionClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Test Client" Height="350" Width="525">
+    <Window.Resources>
+        <Style x:Key="stl_Common" TargetType="{x:Type FrameworkElement}">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>            
+        </Grid.ColumnDefinitions>
+        <StackPanel Background="#EFEFEF" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Style="{StaticResource stl_Common}" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource stl_Common}" Text="IP"/>
+                    <TextBox x:Name="txtIP" Style="{StaticResource stl_Common}" Width="150"/>
+                </StackPanel>
+                <StackPanel Style="{StaticResource stl_Common}" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource stl_Common}" Text="Port"/>
+                    <TextBox x:Name="txtPort" Style="{StaticResource stl_Common}" Width="100"/>
+                </StackPanel>
+            </StackPanel>
+            <TextBox x:Name="txtSendText" Style="{StaticResource stl_Common}" BorderThickness="1" Height="30"/>
+            <TextBox x:Name="txtRcvText" Style="{StaticResource stl_Common}" IsReadOnly="True" IsReadOnlyCaretVisible="True" BorderThickness="1" Height="200"/>
+        </StackPanel>
+        <StackPanel Background="#AAAAAA" Grid.Column="1">
+            <Button x:Name="btnConnect" Style="{StaticResource stl_Common}" Height="30" Content="Connect" Click="btnConnect_Click"/>
+            <Button x:Name="btnSend" Style="{StaticResource stl_Common}" Height="30" Content="Send" Click="btnSend_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
