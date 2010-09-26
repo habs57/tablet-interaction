@@ -7,7 +7,7 @@ namespace TablectionServer.Network
     /// </summary>
     internal sealed class ServerStateObject
     {
-        internal Action<ServerStateObject> StateChangedHandler; 
+        internal Action<ServerStateObject> StateChangedHandler = null;
 
         public int Port { get; private set; }
         public bool IsListening { get; private set; }

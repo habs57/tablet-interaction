@@ -18,10 +18,17 @@ namespace TablectionServer
                 if (_server == null)
                 {
                     _server = new TablectionAsyncServer(this.Logger);
+                    _server.StateChanged += new EventHandler<TablectionServerStateChangedEventArgs>(_server_StateChanged);
                     _server.Error += new EventHandler<TablectionServerErrorEventArgs>(_server_Error);
                 }
                 return _server;
             }
+        }
+
+        void _server_StateChanged(object sender, TablectionServerStateChangedEventArgs e)
+        {
+            this.ServerIP = e.HostAddress.ToString();
+            this.Port = e.Port;
         }
 
         void _server_Error(object sender, TablectionServerErrorEventArgs e)
@@ -75,7 +82,7 @@ namespace TablectionServer
         
         #region ServerIP
 
-        private string _ServerIP = "127.0.0.0";
+        private string _ServerIP = "0.0.0.0";
         public string ServerIP
         {
             get { return _ServerIP; }
