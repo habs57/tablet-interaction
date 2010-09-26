@@ -26,18 +26,17 @@ namespace TablectionClient
         {
             InitializeComponent();
 
-            _client = new TablectionClientLib();
-            
+            _client = new TablectionClientLib();            
         }
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
-            bool result = _client.Connect("111.111.111.111", "00");
+            bool result = _client.BeginConnect("111.111.111.111", "00");
         }
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
-        {
-            bool result = _client.Send("aaaaaaaaaaaaaa");
+        {            
+            bool result = _client.BeginSend("aaaaaaaaaaaaaa");
         }
     }
 }
