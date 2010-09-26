@@ -23,6 +23,13 @@ namespace TablectionServer.Network
         }
     }
 
+    public class TablectionServerStateChangedEventArgs : EventArgs
+    {
+        public bool IsRunning { get; internal set; }
+        public int Port { get; internal set; }
+        public IPAddress HostAddress { get; internal set; }
+    }
+
     public class TablectionServerErrorEventArgs : EventArgs
     {
         public ErrorType Type { get; internal set; }
@@ -33,6 +40,7 @@ namespace TablectionServer.Network
     {
         private Logger _logger = null;
 
+        public event EventHandler<TablectionServerStateChangedEventArgs> StateChanged;
         public event EventHandler<TablectionServerErrorEventArgs> Error;
 
         public TablectionAsyncServer(Logger logger)
@@ -74,6 +82,7 @@ namespace TablectionServer.Network
         private void BeginListeningWaitCallback(object param)
         {
             this.StartListening(param as ServerStateObject);
+
         }
         
         protected override void OnError(ErrorType type, Exception exc)
@@ -91,9 +100,20 @@ namespace TablectionServer.Network
             }
         }
 
+        protected override void OnAcceptClient(Socket handler)
+        {
+            string remoteInfo = handler.GetRemoteInfo();
+            _logger.CreateLog(LogType.Normal, remoteInfo, string.Format("클라이언트가 {0} 에서 접속했습니다.", remoteInfo));
+        }
+
         protected override void OnStartListening(Socket listener)
         {
             _logger.CreateLog(LogType.Normal, "서버 시작됨... 클라이언트를 기다립니다.");
+
+            if (this.StateChanged != null)
+            {
+                this.StateChanged(this, new TablectionServerStateChangedEventArgs() { IsRunning = this.IsRunning, HostAddress = ((IPEndPoint)listener.LocalEndPoint).Address, Port = ((IPEndPoint)listener.LocalEndPoint).Port });
+            }
         }
 
         protected override void OnStopListening(Socket listener)

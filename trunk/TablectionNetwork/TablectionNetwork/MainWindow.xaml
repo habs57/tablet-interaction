@@ -24,11 +24,15 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5" VerticalAlignment="Center" Text="Server IP"/>
-                        <TextBlock Margin="5" Background="#AAAAAA" Foreground="White" Width="100" Text="{Binding ServerIP}"/>
+                        <TextBlock TextAlignment="Center" Margin="5" Background="#AAAAAA" Foreground="White" Width="100" Text="{Binding ServerIP}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" IsEnabled="{Binding IsServerCanConfig}">
+                        <TextBlock Margin="5" VerticalAlignment="Center" Text="Port"/>
+                        <TextBox Margin="5" Width="50" Text="{Binding Port}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5" VerticalAlignment="Center" Text="Clients"/>
-                        <TextBlock Margin="5" Background="#AAAAAA" Foreground="White" Width="100" Text="{Binding ClientsCount}"/>
+                        <TextBlock TextAlignment="Center" Margin="5" Background="#AAAAAA" Foreground="White" Width="100" Text="{Binding ClientsCount}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -47,10 +51,7 @@
                 
             </StackPanel>
             <StackPanel Grid.Row="1" IsEnabled="{Binding IsServerCanConfig}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Margin="5" VerticalAlignment="Center" Text="Port"/>
-                    <TextBox Margin="5" Width="100" Text="{Binding Port}"/>
-                </StackPanel>
+                
             </StackPanel>
          
         </Grid>

@@ -28,6 +28,12 @@ namespace TablectionServer.Network
         {
         }
 
+        public IPAddress HostAddress
+        {
+            get;
+            private set;
+        }
+
         //private void StateChangedCallback(ServerStateObject param)
         //{
            
@@ -43,13 +49,15 @@ namespace TablectionServer.Network
             // Establish the local endpoint for the socket.
             // The DNS name of the computer
             // running the listener is "host.contoso.com".
-            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());            
             IPAddress ipAddress = ipHostInfo.AddressList.FirstOrDefault(ip => { return ip.AddressFamily == AddressFamily.InterNetwork; });
             if (ipAddress == null)
             {
                 this.OnError(ErrorType.Error, new NotSupportedException("IPv4 주소만 지원합니다. 컴퓨터에 IPv4 주소로 인터넷이 연결되어 있는지 확인하세요"));
                 return;
             }
+
+            this.HostAddress = ipAddress;
 
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, context.Port);
 
