@@ -27,7 +27,8 @@ namespace TablectionSketch
     public partial class MainWindow : Window
     {
         PathGenerator _pathGenerator;
-        ImageFreeCropHelper _freeCropHelper;          
+        ImageFreeCropHelper _freeCropHelper;
+        private bool _isCutStarted;
         TouchRecognizeAutomata _recognier;
         private int gSensor_val;
         private Liner _liner;
@@ -70,6 +71,8 @@ namespace TablectionSketch
             this.DrawingCanvas.PreviewTouchMove += new EventHandler<TouchEventArgs>(DrawingCanvas_PreviewTouchMove);
             this.DrawingCanvas.PreviewTouchUp +=new EventHandler<TouchEventArgs>(DrawingCanvas_PreviewTouchUp);
 
+            _isCutStarted = false;
+
             //<control:Liner x:Name="ui_lineRuler" Visibility="Collapsed">
             //    <control:Liner.Triggers>                    
             //        <EventTrigger RoutedEvent="TouchUp">
@@ -83,10 +86,15 @@ namespace TablectionSketch
         {
             if (this.CurrentMode == TouchRecognizeAutomata.InputMode.Cut)
             {
-                if (e.TouchDevice.Id == this._recognier.PenDevID)
+                if (e.TouchDevice.Id == this._recognier.PenDevID && _isCutStarted)
                 {
-                    _freeCropHelper.CollectCropArea(e);                     
-                }                                           
+                    _freeCropHelper.CollectCropArea(e);
+                } 
+                else if (e.TouchDevice.Id == this._recognier.PenDevID)
+                {
+                    _isCutStarted = true;
+                    _freeCropHelper.StartCropArea(e);
+                }                                  
             }
         }
 
@@ -117,6 +125,7 @@ namespace TablectionSketch
             {
                 if (e.TouchDevice.Id == this._recognier.PenDevID)
                 {
+                    _isCutStarted = false;
                     _freeCropHelper.EndCropArea(e);
                 }
             }
@@ -273,6 +282,7 @@ namespace TablectionSketch
                     break;
                 case TouchRecognizeAutomata.InputMode.Cut:                    
                     this.SelectedIndex(3);
+
                     break;
                 case TouchRecognizeAutomata.InputMode.Ruler:
                     Debug.WriteLine("Ruler selected");

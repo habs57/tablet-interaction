@@ -201,6 +201,14 @@ namespace TablectionSketch
 					{
 						this.MoveToNext(InputMode.None);
 					}
+                    else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
+                    {
+                        this.MoveToNext(InputMode.SelMovImg);
+                    }
+                    else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
+                    {
+                        this.MoveToNext(InputMode.TransImg);
+                    }
 					else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
 					{
 						this.MoveToNext(InputMode.Pen);
@@ -208,14 +216,6 @@ namespace TablectionSketch
 					else if ((_TouchCount == 1) && !this.IsPen && !_IsOverImage && touchState != TouchStates.TU)
 					{
 						this.MoveToNext(InputMode.Erase);
-					}
-					else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
-					{
-						this.MoveToNext(InputMode.SelMovImg);
-					}
-					else if ((_TouchCount == 2) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
-					{
-						this.MoveToNext(InputMode.TransImg);   
 					}
 					else if ((_TouchCount == 2) && !this.IsPen && (!_IsOverImage || _IsOverLiner) && touchState != TouchStates.TU)
 					{
@@ -286,10 +286,10 @@ namespace TablectionSketch
 					{
 						this.MoveToNext(InputMode.None);
 					}
-					else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
-					{
-						this.MoveToNext(InputMode.Pen);
-					}
+                    //else if ((_TouchCount == 1) && this.IsPen && touchState != TouchStates.TU)
+                    //{
+                    //    this.MoveToNext(InputMode.Pen);
+                    //}
 					else if ((_TouchCount == 1) && !this.IsPen && _IsOverImage && touchState != TouchStates.TU)
 					{
 						this.MoveToNext(InputMode.SelMovImg);

@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace TablectionSketch.Controls
 {
-    public class ImageSearchWindowVM : INotifyPropertyChanged, IDragSource  
+    public class ImageSearchWindowVM : INotifyPropertyChanged, IDragSource
     {
 
 
