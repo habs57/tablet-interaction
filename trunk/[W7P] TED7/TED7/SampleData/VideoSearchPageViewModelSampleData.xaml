@@ -1,0 +1,8 @@
+﻿<local:VideoSearchPageViewModel 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:TED7" 
+    ApplicationTitle="TED 7"
+    Title="Search">
+    
+</local:VideoSearchPageViewModel>

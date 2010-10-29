@@ -1,0 +1,228 @@
+﻿<Application 
+    x:Class="TED7.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"   
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--Application Resources-->
+    <Application.Resources>        
+        
+        <Style x:Key="stl_SearchTextBox" TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border x:Name="Root" Width="{TemplateBinding Width}" Height="80">
+                                                               
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition GeneratedDuration="0:0:.2"/>
+                                        </VisualStateGroup.Transitions>
+
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetName="Root"
+                                                    Storyboard.TargetProperty="Height"
+                                                    Duration="0"
+                                                    To="80"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetName="Root"
+                                                    Storyboard.TargetProperty="Height"
+                                                    Duration="0"
+                                                    To="0"/>   
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="ReadOnly"/>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused"/>
+                                        <VisualState x:Name="Unfocused"/>                                        
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="ValidationStates">
+                                        <VisualState x:Name="InvalidFocused"/>
+                                        <VisualState x:Name="InvalidUnfocused"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                
+                                <TextBox BorderThickness="0" Text="{TemplateBinding Text}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>                
+            </Style.Setters>
+        </Style>
+        
+        <Style x:Key="stl_TransparentTextButton" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Root">
+
+                                <VisualStateManager.VisualStateGroups>
+
+                                    <VisualStateGroup x:Name="CommonStates">
+
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <ColorAnimation 
+                                                        Storyboard.TargetName="scbContentColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        Duration="0"
+                                                        To="DarkGray"/>
+                                            </Storyboard>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ColorAnimation 
+                                                        Storyboard.TargetName="scbContentColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        Duration="0"
+                                                        To="White"/>
+                                            </Storyboard>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Disabled"/>
+
+                                    </VisualStateGroup>
+
+                                    <VisualStateGroup x:Name="FocusStates">
+
+                                        <VisualState x:Name="Focused"/>
+
+                                        <VisualState x:Name="Unfocused"/>
+
+                                    </VisualStateGroup>
+
+                                    <VisualStateGroup x:Name="ValidationStates">
+
+                                        <VisualState x:Name="Valid"/>
+
+                                        <VisualState x:Name="InvalidFocused"/>
+
+                                        <VisualState x:Name="InvalidUnfocused"/>
+
+                                    </VisualStateGroup>
+
+                                </VisualStateManager.VisualStateGroups>
+
+                                <TextBlock x:Name="txtContent" Text="{TemplateBinding Content}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush x:Name="scbContentColor" Color="DarkGray"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+
+                            </Border>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            
+        </Style>
+        
+        <Style x:Key="stl_TransparentRadioButton" TargetType="RadioButton">
+            <Style.Setters>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Border x:Name="Root">
+                                
+                                <VisualStateManager.VisualStateGroups>
+
+                                    <VisualStateGroup x:Name="CommonStates">
+
+                                        <VisualState x:Name="Normal"/>
+
+                                        <VisualState x:Name="Pressed"/>
+
+                                        <VisualState x:Name="Disabled"/>
+
+                                    </VisualStateGroup>
+
+                                    <VisualStateGroup x:Name="CheckedStates">
+
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition GeneratedDuration="0:0:.2"/>
+                                        </VisualStateGroup.Transitions>
+
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ColorAnimation 
+                                                        Storyboard.TargetName="scbContentColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        Duration="0"
+                                                        To="White"/>
+                                            </Storyboard>
+                                        </VisualState>                                      
+                                          
+                                        <VisualState x:Name="Unchecked">
+                                            <Storyboard>
+                                                    <ColorAnimation 
+                                                        Storyboard.TargetName="scbContentColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        Duration="0"
+                                                        To="DarkGray"/>
+                                            </Storyboard>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                    
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        
+                                        <VisualState x:Name="Focused"/>
+                                        
+                                        <VisualState x:Name="Unfocused"/>
+                                        
+                                    </VisualStateGroup>
+
+                                    <VisualStateGroup x:Name="ValidationStates">
+                                        
+                                        <VisualState x:Name="Valid"/>
+                                        
+                                        <VisualState x:Name="InvalidFocused"/>
+                                        
+                                        <VisualState x:Name="InvalidUnfocused"/>
+                                        
+                                    </VisualStateGroup>
+                                    
+                                </VisualStateManager.VisualStateGroups>
+                                
+                                <TextBlock x:Name="txtContent" Text="{TemplateBinding Content}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush x:Name="scbContentColor" Color="DarkGray"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                
+                            </Border>
+                                         
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            
+        </Style>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService 
+            Launching="Application_Launching" Closing="Application_Closing" 
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>
