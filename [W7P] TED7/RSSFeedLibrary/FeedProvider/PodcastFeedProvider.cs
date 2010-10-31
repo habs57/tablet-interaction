@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using RSSFeedLibrary;
 
-namespace FeedParser.FeedProvider
+namespace RSSFeedLibrary
 {
     public class PodcastFeedProvider : FeedProviderBase
     {
