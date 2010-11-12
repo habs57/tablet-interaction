@@ -9,10 +9,20 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Provider_ConstructorTest()
         {
-            var provider = new Provider();
+            var provider = new Provider(new Uri("rss://"));            
             Assert.IsNotNull(provider);
-        }
+            Assert.AreEqual<string>(new Uri("rss://").AbsoluteUri, provider.Uri.AbsolutePath); 
+        }        
 
+        [TestMethod]
+        public void Provider_RequestTest()
+        {
+            var provider = new Provider(new Uri("rss://"));            
+            Assert.IsTrue(provider.Request());
+
+            var false_provider = new Provider(null);
+            Assert.IsFalse(false_provider.Request());
+        }
 
         
     }
