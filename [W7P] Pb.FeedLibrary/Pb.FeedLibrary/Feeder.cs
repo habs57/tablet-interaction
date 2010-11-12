@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Pb.FeedLibrary
 {
+    /// <summary>
+    /// Manage async feeds 
+    /// </summary>
     public sealed class Feeder : IDisposable
     {
         private Dictionary<Provider, Worker> _Providers = null;
@@ -20,6 +23,11 @@ namespace Pb.FeedLibrary
             }
         }
 
+        /// <summary>
+        /// Register provider for feed 
+        /// </summary>
+        /// <param name="provider">provider</param>
+        /// <returns>true : sucess, false : error</returns>
         public bool Register(Provider provider)
         {
             if (provider == null)
@@ -38,6 +46,11 @@ namespace Pb.FeedLibrary
             return true;
         }
 
+        /// <summary>
+        /// Deregister provider in regsitered feeds 
+        /// </summary>
+        /// <param name="provider">provider</param>
+        /// <returns>true : sucess, false : error</returns>
         public bool DeRegister(Provider provider)
         {
             if (provider == null)
@@ -56,6 +69,9 @@ namespace Pb.FeedLibrary
             return true;
         }
         
+        /// <summary>
+        /// Dispose all providers and stop feeding
+        /// </summary>
         void IDisposable.Dispose()
         {
             foreach (var item in this.Providers)
@@ -66,6 +82,11 @@ namespace Pb.FeedLibrary
             this.Providers.Clear();
         }
 
+        /// <summary>
+        /// Checks provider is already registered 
+        /// </summary>
+        /// <param name="provider">provider</param>
+        /// <returns>true : registered, false : not registered</returns>
         public bool Contains(Provider provider)
         {
             return this.Providers.ContainsKey(provider);
