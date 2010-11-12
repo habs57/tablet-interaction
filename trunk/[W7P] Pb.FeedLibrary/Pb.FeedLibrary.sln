@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pb.FeedLibrary", "Pb.FeedLibrary\Pb.FeedLibrary.csproj", "{1AC98420-F810-4E1A-A73D-5BEF24F4575A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pb.FeedLibrary.Tests", "Pb.FeedLibrary.Tests\Pb.FeedLibrary.Tests.csproj", "{79DE2AEB-C098-4C77-9A15-292C07F80AC5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79DE2AEB-C098-4C77-9A15-292C07F80AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79DE2AEB-C098-4C77-9A15-292C07F80AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79DE2AEB-C098-4C77-9A15-292C07F80AC5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{79DE2AEB-C098-4C77-9A15-292C07F80AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79DE2AEB-C098-4C77-9A15-292C07F80AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79DE2AEB-C098-4C77-9A15-292C07F80AC5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
