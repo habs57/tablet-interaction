@@ -70,7 +70,6 @@
     <Compile Include="UnitTests\FeederTest.cs" />
     <Compile Include="UnitTests\FeedManagerTest.cs" />
     <Compile Include="UnitTests\ProviderTest.cs" />
-    <Compile Include="UnitTests\WorkerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
