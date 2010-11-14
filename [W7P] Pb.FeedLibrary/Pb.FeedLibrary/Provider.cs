@@ -10,6 +10,9 @@ namespace Pb.FeedLibrary
     /// </summary>
     public class Provider
     {
+        /// <summary>
+        /// delegate for recieve request call and pass to Feeder
+        /// </summary>
         public Action<Provider> RequestDelegate { get; set; }
 
         /// <summary>
