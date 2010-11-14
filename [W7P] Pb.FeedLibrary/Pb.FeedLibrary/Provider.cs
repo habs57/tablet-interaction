@@ -10,6 +10,8 @@ namespace Pb.FeedLibrary
     /// </summary>
     public class Provider
     {
+        public Action<Provider> RequestDelegate { get; set; }
+
         /// <summary>
         /// Provider Contstrutor
         /// </summary>
@@ -20,11 +22,30 @@ namespace Pb.FeedLibrary
             this.Uri = uri;
         }
 
+        /// <summary>
+        /// Uri of feed
+        /// </summary>
         public Uri Uri { get; private set; }
 
+        /// <summary>
+        /// Request to get new feeds 
+        /// </summary>
+        /// <returns>true : can request, false : cannot request</returns>
         public bool Request()
         {
-            throw new NotImplementedException();
+            if (this.Uri == null)
+            {
+                return false;
+            }
+
+            if (this.RequestDelegate != null)
+            {
+                this.RequestDelegate(this);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

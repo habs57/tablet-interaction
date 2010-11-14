@@ -17,7 +17,8 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Provider_RequestMethodTest()
         {
-            var provider = new Provider(new Uri("rss://"));            
+            var provider = new Provider(new Uri("rss://"));
+            provider.RequestDelegate = new Action<Provider>(p => { Assert.AreEqual<Provider>(provider, p); });
             Assert.IsTrue(provider.Request());
 
             var false_provider = new Provider(null);
