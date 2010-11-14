@@ -10,16 +10,16 @@ namespace Pb.FeedLibrary
     /// </summary>
     public sealed class FeedManager : IDisposable
     {
-        private Dictionary<Provider, Worker> _Providers = null;
-        private Dictionary<Provider, Worker> Providers
+        private Dictionary<Provider, Feeder> _Items = null;
+        private Dictionary<Provider, Feeder> Items
         {
             get
             {
-                if (_Providers == null)
+                if (_Items == null)
                 {
-                    _Providers = new Dictionary<Provider, Worker>();
+                    _Items = new Dictionary<Provider, Feeder>();
                 }
-                return _Providers;
+                return _Items;
             }
         }
 
@@ -35,13 +35,13 @@ namespace Pb.FeedLibrary
                 throw new ArgumentException("provider");
             }
 
-            bool isExist = this.Providers.ContainsKey(provider);
+            bool isExist = this.Items.ContainsKey(provider);
             if (isExist == true)
             {
                 return false;
             }
 
-            this.Providers.Add(provider, new Worker());
+            this.Items.Add(provider, new Feeder());
 
             return true;
         }
@@ -58,13 +58,13 @@ namespace Pb.FeedLibrary
                 return false;
             }
 
-            bool isExist = this.Providers.ContainsKey(provider);
+            bool isExist = this.Items.ContainsKey(provider);
             if (isExist == false)
             {
                 return false;
             }
 
-            this.Providers.Remove(provider);
+            this.Items.Remove(provider);
 
             return true;
         }
@@ -74,12 +74,12 @@ namespace Pb.FeedLibrary
         /// </summary>
         void IDisposable.Dispose()
         {
-            foreach (var item in this.Providers)
+            foreach (var item in this.Items)
             {
                 (item.Value as IDisposable).Dispose();
             }
 
-            this.Providers.Clear();
+            this.Items.Clear();
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Pb.FeedLibrary
         /// <returns>true : registered, false : not registered</returns>
         public bool Contains(Provider provider)
         {
-            return this.Providers.ContainsKey(provider);
+            return this.Items.ContainsKey(provider);
         }
     }
 }
