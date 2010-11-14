@@ -19,7 +19,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         public void Feeder_RegisterMethodTest()
         {
             var feeder = new FeedManager();
-            var provider = new Provider(new Uri("rss://"));
+            var provider = new Provider(new Uri("http://feeds.feedburner.com/TEDTalks_video"));
 
             bool canRegister = feeder.Register(provider);
             Assert.IsTrue(canRegister);
@@ -35,7 +35,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         public void Feeder_DeRegisterMethodTest()
         {
             var feeder = new FeedManager();
-            var provider = new Provider(new Uri("rss://"));
+            var provider = new Provider(new Uri("http://feeds.feedburner.com/TEDTalks_video"));
 
             feeder.Register(provider);
             bool canDeRegister = feeder.DeRegister(provider);
@@ -49,7 +49,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         public void Feeder_ContainsMethodTest()
         {
             var feeder = new FeedManager();
-            var provider = new Provider(new Uri("rss://"));
+            var provider = new Provider(new Uri("http://feeds.feedburner.com/TEDTalks_video"));
 
             feeder.Register(provider);
             bool isContains = feeder.Contains(provider);
@@ -60,7 +60,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         public void Feeder_DisposeMethodTest()
         {
             var feeder = new FeedManager();
-            var provider = new Provider(new Uri("rss://"));
+            var provider = new Provider(new Uri("http://feeds.feedburner.com/TEDTalks_video"));
 
             feeder.Register(provider);
             (feeder as IDisposable).Dispose();

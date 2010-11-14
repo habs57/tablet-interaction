@@ -11,10 +11,28 @@ namespace Pb.FeedLibrary
     /// </summary>
     public sealed class Feeder : IDisposable
     {
-        public HttpWebRequest RequestObject { get; set; }
+        private HttpWebRequest _RequestObject = null;
+        public HttpWebRequest RequestObject 
+        {
+            get
+            {
+                if (_RequestObject == null)
+                {
+                    _RequestObject = HttpWebRequest.CreateHttp(this.Uri);
+                }
+                return _RequestObject;
+            }
+        }
 
         public bool Request(Uri uri)
         {
+            if (uri == null)
+            {
+                return false;
+            }
+
+            this.Uri = uri;
+
             return true;
         }
 
@@ -22,5 +40,7 @@ namespace Pb.FeedLibrary
         {
             
         }
+
+        public Uri Uri { get; set; }
     }
 }
