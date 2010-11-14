@@ -11,11 +11,11 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         {
             var provider = new Provider(new Uri("rss://"));            
             Assert.IsNotNull(provider);
-            Assert.AreEqual<string>(new Uri("rss://").AbsoluteUri, provider.Uri.AbsolutePath); 
+            Assert.AreEqual<string>(new Uri("rss://").AbsolutePath, provider.Uri.AbsolutePath); 
         }        
 
         [TestMethod]
-        public void Provider_RequestTest()
+        public void Provider_RequestMethodTest()
         {
             var provider = new Provider(new Uri("rss://"));            
             Assert.IsTrue(provider.Request());
