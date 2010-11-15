@@ -8,7 +8,7 @@ namespace Pb.FeedLibrary
     /// <summary>
     /// Provider that comm
     /// </summary>
-    public class Provider
+    public abstract class Provider
     {
         /// <summary>
         /// delegate for recieve request call and pass to Feeder
