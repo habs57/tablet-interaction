@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Microsoft.Silverlight.Testing.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pb.FeedLibrary;
 using Pb.FeedLibrary.Tests.Mocks;

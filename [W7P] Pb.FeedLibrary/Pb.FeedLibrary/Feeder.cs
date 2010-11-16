@@ -10,7 +10,7 @@ namespace Pb.FeedLibrary
     /// <summary>
     /// Manage async feeds 
     /// </summary>
-#if TEST
+#if UNIT_TESTS
     public class Feeder : IDisposable
 #else
     internal class Feeder : IDisposable
@@ -19,7 +19,7 @@ namespace Pb.FeedLibrary
         /// <summary>
         /// Save request state for asynchronous operation
         /// </summary>
-#if TEST
+#if UNIT_TESTS
         public sealed class RequestState
 #else
         internal sealed class RequestState
@@ -42,11 +42,17 @@ namespace Pb.FeedLibrary
             }
         }
 
-#if TEST
-        public RequestState TestRequestState { get; set; }
+#if UNIT_TESTS
+        public RequestState Test_RequestState { get; set; }
+
+        public Action<IAsyncResult> Test_RespCallback { get; set; }
+
+        public Action<IAsyncResult> Test_ReadCallBack { get; set; }
+
+        public string Test_FeedRawStringContent { get; set; }
 #endif
 
-        private static void RespCallback(IAsyncResult asynchronousResult)
+        private void RespCallback(IAsyncResult asynchronousResult)
         {
             try
             {
@@ -66,8 +72,13 @@ namespace Pb.FeedLibrary
             {
                 // Need to handle the exception
             }
+
+#if UNIT_TESTS
+
+            Test_RespCallback(asynchronousResult);
+#endif
         }
-        private static void ReadCallBack(IAsyncResult asyncResult)
+        private void ReadCallBack(IAsyncResult asyncResult)
         {
             try
             {
@@ -88,6 +99,10 @@ namespace Pb.FeedLibrary
                         string stringContent;
                         stringContent = myRequestState.requestData.ToString();
                         // do something with the response stream here
+
+#if UNIT_TESTS
+                        this.Test_FeedRawStringContent = stringContent;
+#endif
                     }
 
                     responseStream.Close();
@@ -98,6 +113,11 @@ namespace Pb.FeedLibrary
             {
                 // Need to handle the exception
             }
+
+#if UNIT_TESTS
+
+            Test_ReadCallBack(asyncResult);
+#endif
         }
 
         public IAsyncResult Request(Uri uri)
@@ -122,11 +142,14 @@ namespace Pb.FeedLibrary
                 // Start the asynchronous request.
                 IAsyncResult result = (IAsyncResult)myHttpWebRequest.BeginGetResponse(new AsyncCallback(RespCallback), myRequestState);
 
+#if UNIT_TESTS
+                this.Test_RequestState = myRequestState;
+#endif
+
                 return result;
             }
             catch (WebException e)
             {
-
                 return null;
             }            
         }
