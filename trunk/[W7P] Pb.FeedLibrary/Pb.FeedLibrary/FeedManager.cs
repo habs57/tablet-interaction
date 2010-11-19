@@ -41,7 +41,7 @@ namespace Pb.FeedLibrary
                 return false;
             }
 
-            this.Items.Add(provider, new Feeder());
+            this.Items.Add(provider, new Feeder(provider.Uri));
 
             return true;
         }
@@ -74,11 +74,6 @@ namespace Pb.FeedLibrary
         /// </summary>
         void IDisposable.Dispose()
         {
-            foreach (var item in this.Items)
-            {
-                (item.Value as IDisposable).Dispose();
-            }
-
             this.Items.Clear();
         }
 

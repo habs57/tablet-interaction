@@ -7,23 +7,35 @@ using System.IO;
 
 namespace Pb.FeedLibrary
 {
+
     /// <summary>
     /// Manage async feeds 
     /// </summary>
 #if UNIT_TESTS
-    public class Feeder : IDisposable
+    public
 #else
-    internal class Feeder : IDisposable
+    internal 
 #endif
+    sealed class Feeder
     {
+        /// <summary>
+        /// Init feeder
+        /// </summary>
+        /// <param name="uri">uri</param>
+        public Feeder(System.Uri uri)
+        {
+            if (uri == null)
+            {
+                throw new ArgumentNullException("uri");
+            }
+
+            this.Uri = uri;
+        }
+        
         /// <summary>
         /// Save request state for asynchronous operation
         /// </summary>
-#if UNIT_TESTS
-        public sealed class RequestState
-#else
         internal sealed class RequestState
-#endif 
         {
             // This class stores the State of the request.
             public const int BUFFER_SIZE = 1024;
@@ -41,16 +53,6 @@ namespace Pb.FeedLibrary
                 streamResponse = null;
             }
         }
-
-#if UNIT_TESTS
-        public RequestState Test_RequestState { get; set; }
-
-        public Action<IAsyncResult> Test_RespCallback { get; set; }
-
-        public Action<IAsyncResult> Test_ReadCallBack { get; set; }
-
-        public string Test_FeedRawStringContent { get; set; }
-#endif
 
         private void RespCallback(IAsyncResult asynchronousResult)
         {
@@ -71,18 +73,14 @@ namespace Pb.FeedLibrary
             catch (WebException e)
             {
                 // Need to handle the exception
+                Logger.Log(e);
             }
-
-#if UNIT_TESTS
-
-            Test_RespCallback(asynchronousResult);
-#endif
         }
+
         private void ReadCallBack(IAsyncResult asyncResult)
         {
             try
             {
-
                 RequestState myRequestState = (RequestState)asyncResult.AsyncState;
                 Stream responseStream = myRequestState.streamResponse;
                 int read = responseStream.EndRead(asyncResult);
@@ -99,66 +97,55 @@ namespace Pb.FeedLibrary
                         string stringContent;
                         stringContent = myRequestState.requestData.ToString();
                         // do something with the response stream here
-
-#if UNIT_TESTS
-                        this.Test_FeedRawStringContent = stringContent;
-#endif
+                        if (this.OnRead != null)
+                        {
+                            this.OnRead(stringContent);
+                        }
                     }
 
                     responseStream.Close();
                 }
-
             }
             catch (WebException e)
             {
                 // Need to handle the exception
+                Logger.Log(e);
             }
-
-#if UNIT_TESTS
-
-            Test_ReadCallBack(asyncResult);
-#endif
         }
 
-        public IAsyncResult Request(Uri uri)
+        /// <summary>
+        /// Begin request
+        /// </summary>        
+        /// <returns>null : exception</returns>
+        public IAsyncResult Request()
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException("uri");
-            }
-            else
-            {
-                this.Uri = uri;
-            }            
-
             try
             {
                 // Create a HttpWebrequest object to the desired URL.
-                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-
+                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(this.Uri);
+                
                 RequestState myRequestState = new RequestState();
                 myRequestState.request = myHttpWebRequest;
 
                 // Start the asynchronous request.
                 IAsyncResult result = (IAsyncResult)myHttpWebRequest.BeginGetResponse(new AsyncCallback(RespCallback), myRequestState);
 
-#if UNIT_TESTS
-                this.Test_RequestState = myRequestState;
-#endif
-
                 return result;
             }
             catch (WebException e)
             {
-                return null;
-            }            
+                Logger.Log(e);
+            }
+
+            return null;
         }
 
-        void IDisposable.Dispose()
-        {
-            
-        }
-
+        /// <summary>
+        /// Feed Uri
+        /// </summary>
         public Uri Uri { get; set; }
+
+        public Action<string> OnRead { get; set; }
+        
     }
 }

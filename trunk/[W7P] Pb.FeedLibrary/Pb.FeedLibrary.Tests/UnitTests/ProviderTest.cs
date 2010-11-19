@@ -1,12 +1,12 @@
 ﻿using System;
-using Microsoft.Silverlight.Testing.UnitTesting;
+using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pb.FeedLibrary.Tests.Mocks;
 
 namespace Pb.FeedLibrary.Tests.UnitTests
 {
     [TestClass]
-    public class ProviderTest
+    public class ProviderTest : SilverlightTest
     {
         [TestMethod]
         public void Provider_ConstructorTest()
