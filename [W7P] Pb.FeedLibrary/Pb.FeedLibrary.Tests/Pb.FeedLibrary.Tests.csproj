@@ -72,7 +72,9 @@
     <Compile Include="Mocks\ProviderMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\FeederTest.cs" />
+    <Compile Include="UnitTests\FeedHeaderTest.cs" />
     <Compile Include="UnitTests\FeedManagerTest.cs" />
+    <Compile Include="UnitTests\ParserTest.cs" />
     <Compile Include="UnitTests\ProviderTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +95,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SplashScreenImage.jpg" />
+    <Resource Include="UnitTests\feed.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pb.FeedLibrary\Pb.FeedLibrary.csproj">
