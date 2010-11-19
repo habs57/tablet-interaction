@@ -1,14 +1,13 @@
 ﻿using System;
-using Microsoft.Silverlight.Testing.UnitTesting;
+using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pb.FeedLibrary;
 using Pb.FeedLibrary.Tests.Mocks;
 
-
 namespace Pb.FeedLibrary.Tests.UnitTests
 {
     [TestClass]
-    public class FeedManagerTest
+    public class FeedManagerTest : SilverlightTest
     {
         [TestMethod]
         public void Feeder_ContsructorTest()

@@ -13,8 +13,6 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-using Microsoft.Silverlight.Testing;
-
 namespace Pb.FeedLibrary.Tests
 {
     public partial class App : Application
@@ -50,10 +48,8 @@ namespace Pb.FeedLibrary.Tests
             // Standard Silverlight initialization
             InitializeComponent();
 
-            this.RootVisual = UnitTestSystem.CreateTestPage();
-
             // Phone-specific initialization
-            //InitializePhoneApplication();
+            InitializePhoneApplication();
         }
 
         // Code to execute when the application is launching (eg, from Start)
