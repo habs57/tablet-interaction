@@ -4,8 +4,11 @@ using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pb.FeedLibrary;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Resources;
 
 namespace Pb.FeedLibrary.Tests.UnitTests
 {
@@ -21,22 +24,23 @@ namespace Pb.FeedLibrary.Tests.UnitTests
 
         [TestMethod]
         public void Parser_ParseTest()
-        {            
-            using(Stream stream = File.OpenRead("feed.xml"))
+        {
+            StreamResourceInfo info = Application.GetResourceStream(new Uri("UnitTests/feed.xml"));            
+            using (var stream = info.Stream)
             {
                 StreamReader reader = new StreamReader(stream);
                 var parser = new Parser();
                 parser.Parse(reader.ReadToEnd());
-                                
-                parser.OnParseHeader = new Action<FeedHeader>(p => 
+
+                parser.OnParseHeader = new Action<FeedHeader>(p =>
                 {
                     //Assert.AreEqual<string>("TEDTalks(video)", p.GetEntity("title").Value);
                 });
-                parser.OnParseItem = new Action<int, FeedItem>((i, p) => 
-                { 
+                parser.OnParseItem = new Action<int, FeedItem>((i, p) =>
+                {
 
-                });
-            }
+                });             
+            }            
         }
     }
 }
