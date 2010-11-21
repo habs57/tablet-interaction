@@ -3,6 +3,7 @@ using System.Net;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pb.FeedLibrary;
+using System.IO;
 
 namespace Pb.FeedLibrary.Tests.UnitTests
 {
@@ -32,9 +33,9 @@ namespace Pb.FeedLibrary.Tests.UnitTests
             IAsyncResult result = feeder.Request();
             Assert.AreNotEqual<IAsyncResult>(null, result);
             
-            feeder.OnRead = new Action<string>(str => 
-            { 
-                Assert.IsTrue(str.Length > 0);
+            feeder.OnRead = new Action<TextReader>(reader => 
+            {
+                Assert.IsTrue(reader.ReadToEnd().Length > 0);
                 this.EnqueueTestComplete();
             });          
         }
