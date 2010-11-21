@@ -99,7 +99,8 @@ namespace Pb.FeedLibrary
                         // do something with the response stream here
                         if (this.OnRead != null)
                         {
-                            this.OnRead(stringContent);
+                            StringReader reader = new StringReader(stringContent);
+                            this.OnRead(reader);
                         }
                     }
 
@@ -145,7 +146,7 @@ namespace Pb.FeedLibrary
         /// </summary>
         public Uri Uri { get; set; }
 
-        public Action<string> OnRead { get; set; }
+        public Action<TextReader> OnRead { get; set; }
         
     }
 }

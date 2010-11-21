@@ -85,6 +85,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity.cs" />
     <Compile Include="Feeder.cs" />
     <Compile Include="FeedHeader.cs" />
     <Compile Include="FeedItem.cs" />

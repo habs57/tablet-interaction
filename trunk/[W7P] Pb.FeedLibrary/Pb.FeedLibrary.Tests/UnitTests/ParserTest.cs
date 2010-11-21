@@ -18,19 +18,24 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Parser_ConstructorTest()
         {
-            var parser = new Parser();
+            var parser = new Parser(new FeedHeader(), new FeedItem());
             Assert.IsNotNull(parser);
         }
 
         [TestMethod]
         public void Parser_ParseTest()
         {
-            StreamResourceInfo info = Application.GetResourceStream(new Uri("UnitTests/feed.xml"));            
+            StreamResourceInfo info = Application.GetResourceStream(new Uri("UnitTests/feed.xml", UriKind.Relative));            
             using (var stream = info.Stream)
             {
                 StreamReader reader = new StreamReader(stream);
-                var parser = new Parser();
-                parser.Parse(reader.ReadToEnd());
+
+                FeedHeader header = new FeedHeader();
+                header.SetEntity("title");
+                FeedItem item = new FeedItem();                
+
+                var parser = new Parser(header, item);                                
+                parser.Parse(reader);
 
                 parser.OnParseHeader = new Action<FeedHeader>(p =>
                 {
