@@ -7,14 +7,14 @@ namespace Pb.FeedLibrary
 {
     public class FeedHeader
     {
-        private IDictionary<string, Entity> _Entities = null;
-        internal IDictionary<string, Entity> Entities
+        private IDictionary<string, Tag> _Entities = null;
+        internal IDictionary<string, Tag> Entities
         {
             get
             {
                 if (_Entities == null)
                 {
-                    _Entities = new Dictionary<string, Entity>();
+                    _Entities = new Dictionary<string, Tag>();
                 }
                 return _Entities;
             }
@@ -25,7 +25,7 @@ namespace Pb.FeedLibrary
             bool canAdd = this.Entities.ContainsKey(p);
             if (canAdd == false)
             {
-                Entity entity = new Entity(p);
+                Tag entity = new Tag(p);
                 this.Entities.Add(p, entity);
                 return true;
             }

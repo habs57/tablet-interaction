@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Pb.FeedLibrary
 {
-    public class Entity
+    public class Tag
     {
         private string p;
 
-        public Entity(string p)
+        public Tag(string p)
         {
             // TODO: Complete member initialization
             this.p = p;
