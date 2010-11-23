@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Net;
-using Microsoft.Silverlight.Testing;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pb.FeedLibrary;
 using System.IO;
-using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Resources;
+using Microsoft.Silverlight.Testing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Pb.FeedLibrary.Tests.UnitTests
 {

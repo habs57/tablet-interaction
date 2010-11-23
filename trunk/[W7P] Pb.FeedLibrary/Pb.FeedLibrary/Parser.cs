@@ -36,7 +36,20 @@ namespace Pb.FeedLibrary
             XmlReader reader = XmlReader.Create(xmlText);
             while (reader.EOF == false)
             {
-                throw new NotImplementedException();   
+                bool canRead = reader.Read();
+                if (canRead == true)
+                {
+                    string nodeName = reader.Name;
+                    if (nodeName.Equals("item") == false)
+                    {
+                        //reads header
+                        
+                    }
+                    else
+                    {
+                        //reads item
+                    }
+                }
             }
         }
 
