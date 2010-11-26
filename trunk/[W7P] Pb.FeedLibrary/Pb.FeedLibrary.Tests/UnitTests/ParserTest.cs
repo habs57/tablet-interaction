@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Resources;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace Pb.FeedLibrary.Tests.UnitTests
 {
@@ -13,7 +15,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Parser_ConstructorTest()
         {
-            var parser = new Parser(new FeedHeader(), new FeedItem());
+            var parser = new RSSParser();
             Assert.IsNotNull(parser);
         }
 
@@ -23,23 +25,20 @@ namespace Pb.FeedLibrary.Tests.UnitTests
             StreamResourceInfo info = Application.GetResourceStream(new Uri("UnitTests/feed.xml", UriKind.Relative));            
             using (var stream = info.Stream)
             {
-                StreamReader reader = new StreamReader(stream);
+                TextReader reader = new StreamReader(stream);
+                var parser = new RSSParser(); 
 
-                FeedHeader header = new FeedHeader();
-                header.SetEntity("title");
-                FeedItem item = new FeedItem();                
+                //넘어온 데이터로 XDocument를 만드는지 확인
+                bool canLoad = parser.Load(reader);
+                Assert.IsTrue(canLoad);
 
-                var parser = new Parser(header, item);                                
-                parser.Parse(reader);
-
-                parser.OnParseHeader = new Action<FeedHeader>(p =>
-                {
-                    //Assert.AreEqual<string>("TEDTalks(video)", p.GetEntity("title").Value);
-                });
-                parser.OnParseItem = new Action<int, FeedItem>((i, p) =>
-                {
-
-                });             
+                //Header 정보를 정상적으로 가져오는지 확인 
+                var title = parser.Element("title");
+                Assert.AreEqual<string>("TEDTalks (video)", title.First().Value);
+               
+                //Items 정보를 정상적으로 가TEDTalks져오는지 확인 
+                var item = parser.Items.First();
+                Assert.AreEqual<string>("TEDTalks : John Hardy: My green school dream - John Hardy (2010)", item.Descendants(XName.Get("title")).First().Value);                                
             }            
         }
     }
