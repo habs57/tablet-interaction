@@ -70,6 +70,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mocks\FillerMock.cs" />
+    <Compile Include="Mocks\ParserMock.cs" />
     <Compile Include="Mocks\ProviderMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\ProviderTest.cs" />
