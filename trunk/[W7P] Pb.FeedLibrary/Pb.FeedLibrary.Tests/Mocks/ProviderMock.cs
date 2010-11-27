@@ -8,5 +8,21 @@ namespace Pb.FeedLibrary.Tests.Mocks
             : base(uri)
         {
         }
+
+        public override Parser Parser 
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public override Filler Filler
+        {
+            get
+            {
+                return null;
+            }
+        }
     }
 }

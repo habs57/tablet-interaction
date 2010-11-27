@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Resources;
+using System.Xml.Linq;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml.Linq;
-using System.Linq;
 
 namespace Pb.FeedLibrary.Tests.UnitTests
 {

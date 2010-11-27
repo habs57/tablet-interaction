@@ -8,10 +8,20 @@ using System.IO;
 namespace Pb.FeedLibrary
 {
     /// <summary>
-    /// Parser for RSS
+    /// Base Parser
     /// </summary>
-    public class RSSParser
-    {        
+    public abstract class Parser
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="rootName"></param>
+        protected Parser(XName rootName)
+        {
+            _RootName = rootName;
+        }
+
+        private XName _RootName = null;        
         private XDocument _Document = null;
 
         /// <summary>
@@ -31,6 +41,10 @@ namespace Pb.FeedLibrary
             return _Document != null;
         }
 
+        /// <summary>
+        /// Get root element where start search
+        /// </summary>
+        /// <returns>root element</returns>
         private IEnumerable<XElement> GetRoot()
         {
             if (_Document == null)
@@ -38,12 +52,17 @@ namespace Pb.FeedLibrary
                 return null;
             }
 
-            var value = from item in _Document.Descendants(XName.Get("rss"))
+            var value = from item in _Document.Descendants(this._RootName)
                         select item;
 
             return value;
         }
 
+        /// <summary>
+        /// Get element has specified name
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <returns>XmlElement has "name"</returns>
         public IEnumerable<XElement> Element(string name)
         {
             var root = this.GetRoot();
@@ -57,14 +76,6 @@ namespace Pb.FeedLibrary
                         select item;
 
             return value;
-        }
-
-        public IEnumerable<XElement> Items
-        {
-            get
-            {
-                return this.Element("item");
-            }
         }
     }
 }
