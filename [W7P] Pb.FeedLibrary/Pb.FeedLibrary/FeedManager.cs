@@ -41,7 +41,11 @@ namespace Pb.FeedLibrary
                 return false;
             }
 
-            this.Items.Add(provider, new Feeder(provider.Uri));
+            Feeder feeder = new Feeder(provider.Uri);            
+
+            this.Items.Add(provider, feeder);
+
+            provider.RequestDelegate = new Action<Provider>(p => { feeder.Request(); });
 
             return true;
         }

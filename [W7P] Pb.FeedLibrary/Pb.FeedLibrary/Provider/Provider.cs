@@ -50,5 +50,15 @@ namespace Pb.FeedLibrary
 
             return false;
         }
+
+        /// <summary>
+        /// Parser that parse feed data
+        /// </summary>
+        public abstract Parser Parser { get; }
+
+        /// <summary>
+        /// Filler that filles collection
+        /// </summary>
+        public abstract Filler Filler { get; }
     }
 }
