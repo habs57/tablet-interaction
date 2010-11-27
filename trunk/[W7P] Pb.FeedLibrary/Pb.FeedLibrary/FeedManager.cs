@@ -41,8 +41,14 @@ namespace Pb.FeedLibrary
                 return false;
             }
 
-            Feeder feeder = new Feeder(provider.Uri);            
+            Feeder feeder = new Feeder(provider.Uri);
 
+            feeder.OnRead = new Action<System.IO.TextReader>(r => 
+            { 
+                provider.Parser.Load(r);
+                provider.Filler.Fill(provider.Parser);
+            });
+           
             this.Items.Add(provider, feeder);
 
             provider.RequestDelegate = new Action<Provider>(p => { feeder.Request(); });

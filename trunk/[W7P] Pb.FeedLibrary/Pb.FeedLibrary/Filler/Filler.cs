@@ -5,7 +5,18 @@ using System.Text;
 
 namespace Pb.FeedLibrary
 {
-    public class Filler
+    /// <summary>
+    /// Filler fills data
+    /// </summary>
+    public abstract class Filler
     {
+        /// <summary>
+        /// Fill
+        /// </summary>
+        /// <param name="parser">parser</param>
+        public void Fill(Parser parser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -52,7 +52,18 @@ namespace Pb.FeedLibrary
                 return null;
             }
 
-            var value = from item in _Document.Descendants(this._RootName)
+            IEnumerable<XElement> top = null;
+
+            if (this._RootName == null)
+            {
+                top = _Document.Descendants();
+            }
+            else
+            {
+                top = _Document.Descendants(this._RootName);
+            }
+
+            var value = from item in top
                         select item;
 
             return value;

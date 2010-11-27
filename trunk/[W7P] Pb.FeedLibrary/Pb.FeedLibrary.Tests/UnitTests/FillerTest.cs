@@ -8,6 +8,8 @@ using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pb.FeedLibrary;
 
+using Pb.FeedLibrary.Tests.Mocks;
+
 namespace Pb.FeedLibrary.Tests.UnitTests
 {
     [TestClass]
@@ -16,15 +18,15 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Filler_ConstructorTest()
         {
-            var filler = new Filler();
+            Filler filler = new FillerMock();
             Assert.IsNotNull(filler);
         }
 
         [TestMethod]
         public void Filler_Fill()
         {
-            var filler = new Filler();
-             
+            Filler filler = new FillerMock();
+            filler.Fill(new ParserMock());
         }
     }
 }

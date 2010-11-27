@@ -13,7 +13,7 @@ namespace Pb.FeedLibrary.Tests.Mocks
         {
             get
             {
-                return null;
+                return new ParserMock();
             }
         }
 
@@ -21,7 +21,7 @@ namespace Pb.FeedLibrary.Tests.Mocks
         {
             get
             {
-                return null;
+                return new FillerMock();
             }
         }
     }
