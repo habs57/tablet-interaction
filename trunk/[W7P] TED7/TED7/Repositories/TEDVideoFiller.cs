@@ -45,6 +45,20 @@ namespace TED7
             return null;
         }
 
+        //private string GetDescription(XElement element)
+        //{
+        //    if (element == null)
+        //    {
+        //        return null;
+        //    }
+
+        //    string title = element.Value;
+        //    if (title == null)
+        //    {
+        //        return null;
+        //    }
+        //}
+
         protected override void OnFill(Parser parser, ICollection<ItemViewModel> collection)
         {
             RSSParser rssParser = parser as RSSParser;
@@ -69,14 +83,14 @@ namespace TED7
                     foreach (var item in items)
                     {                        
                         string thumbnail = item.Element(XName.Get("thumbnail", "http://search.yahoo.com/mrss/")).FirstAttribute.Value;
-                        string title = this.GetTitle(item.Element(XName.Get("title")));
-                        string description = item.Element(XName.Get("description")).Value;
+                        string title = this.GetTitle(item.Element(XName.Get("subtitle", "http://www.itunes.com/dtds/podcast-1.0.dtd")));
+                        string description = item.Element(XName.Get("author", "http://www.itunes.com/dtds/podcast-1.0.dtd")).Value;
 
                         var itemVM = new ItemViewModel()
                         {
                             Thumbnail = thumbnail,
                             LineOne = title,
-                            LineTwo = description
+                            LineTwo = string.Format("by {0}",description)
                         };
 
                         collection.Add(itemVM);
