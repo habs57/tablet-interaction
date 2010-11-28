@@ -16,6 +16,27 @@ namespace TED7
 {
     public class ItemViewModel : ViewModelBase
     {
+        private string _thumbnail;
+        /// <summary>
+        /// Thumbnail
+        /// </summary>
+        /// <returns></returns>
+        public string Thumbnail
+        {
+            get
+            {
+                return _thumbnail;
+            }
+            set
+            {
+                if (value != _thumbnail)
+                {
+                    _thumbnail = value;
+                    NotifyPropertyChanged("Thumbnail");
+                }
+            }
+        }
+
         private string _lineOne;
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
