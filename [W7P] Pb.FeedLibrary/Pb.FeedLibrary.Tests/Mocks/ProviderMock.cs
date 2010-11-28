@@ -4,25 +4,14 @@ namespace Pb.FeedLibrary.Tests.Mocks
 {
     public class ProviderMock : Provider
     {
-        public ProviderMock(Uri uri)
-            : base(uri)
+        public ProviderMock(Uri uri, Filler<int> filler)
+            : base(uri, filler)
         {
         }
-
-        public override Parser Parser 
+        
+        protected override Parser OnCreateParser()
         {
-            get
-            {
-                return new ParserMock();
-            }
-        }
-
-        public override Filler Filler
-        {
-            get
-            {
-                return new FillerMock();
-            }
+            return new ParserMock();
         }
     }
 }

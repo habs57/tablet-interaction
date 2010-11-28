@@ -20,7 +20,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         public void Feeder_RegisterMethodTest()
         {
             var feeder = new FeedManager();
-            var provider = new ProviderMock(new Uri("http://feeds.feedburner.com/TEDTalks_video"));
+            var provider = new ProviderMock(new Uri("http://feeds.feedburner.com/TEDTalks_video"), new FillerMock(null));
 
             bool canRegister = feeder.Register(provider);
             Assert.IsTrue(canRegister);
@@ -36,7 +36,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         public void Feeder_DeRegisterMethodTest()
         {
             var feeder = new FeedManager();
-            var provider = new ProviderMock(new Uri("http://feeds.feedburner.com/TEDTalks_video"));
+            var provider = new ProviderMock(new Uri("http://feeds.feedburner.com/TEDTalks_video"), new FillerMock(null));
 
             feeder.Register(provider);
             bool canDeRegister = feeder.DeRegister(provider);
@@ -50,7 +50,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         public void Feeder_ContainsMethodTest()
         {
             var feeder = new FeedManager();
-            var provider = new ProviderMock(new Uri("http://feeds.feedburner.com/TEDTalks_video"));
+            var provider = new ProviderMock(new Uri("http://feeds.feedburner.com/TEDTalks_video"), new FillerMock(null));
 
             feeder.Register(provider);
             bool isContains = feeder.Contains(provider);
@@ -61,7 +61,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         public void Feeder_DisposeMethodTest()
         {
             var feeder = new FeedManager();
-            var provider = new ProviderMock(new Uri("http://feeds.feedburner.com/TEDTalks_video"));
+            var provider = new ProviderMock(new Uri("http://feeds.feedburner.com/TEDTalks_video"), new FillerMock(null));
 
             feeder.Register(provider);
             (feeder as IDisposable).Dispose();
