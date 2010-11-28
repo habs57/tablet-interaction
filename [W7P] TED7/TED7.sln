@@ -5,14 +5,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TED7", "TED7\TED7.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMVVM", "..\[W7P] SimpleMVVM\SimpleMVVM\SimpleMVVM.csproj", "{014E9365-B4C7-4158-9D87-9A585505F82C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSSFeedLibrary", "RSSFeedLibrary\RSSFeedLibrary.csproj", "{CFE0A030-BBA9-4F4B-9EDF-A3BB4960EC3F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{53D04597-3F43-431F-AD6F-F99ECCFBD5A5}"
 	ProjectSection(SolutionItems) = preProject
 		TED7.vsd = TED7.vsd
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests.Unit", "Tests.Unit", "{3CD1C546-48DB-48A2-9488-02E213D5D328}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pb.FeedLibrary", "..\[W7P] Pb.FeedLibrary\Pb.FeedLibrary\Pb.FeedLibrary.csproj", "{1AC98420-F810-4E1A-A73D-5BEF24F4575A}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -22,6 +22,8 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		UnitTest_Debug|Any CPU = UnitTest_Debug|Any CPU
+		UnitTest|Any CPU = UnitTest|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,14 +32,28 @@ Global
 		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.UnitTest_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.UnitTest_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.UnitTest_Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.UnitTest|Any CPU.ActiveCfg = Release|Any CPU
+		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.UnitTest|Any CPU.Build.0 = Release|Any CPU
+		{244C2178-D1AB-4935-B8DF-DEDC0CBA96EB}.UnitTest|Any CPU.Deploy.0 = Release|Any CPU
 		{014E9365-B4C7-4158-9D87-9A585505F82C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{014E9365-B4C7-4158-9D87-9A585505F82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{014E9365-B4C7-4158-9D87-9A585505F82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{014E9365-B4C7-4158-9D87-9A585505F82C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFE0A030-BBA9-4F4B-9EDF-A3BB4960EC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFE0A030-BBA9-4F4B-9EDF-A3BB4960EC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFE0A030-BBA9-4F4B-9EDF-A3BB4960EC3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFE0A030-BBA9-4F4B-9EDF-A3BB4960EC3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{014E9365-B4C7-4158-9D87-9A585505F82C}.UnitTest_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{014E9365-B4C7-4158-9D87-9A585505F82C}.UnitTest_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{014E9365-B4C7-4158-9D87-9A585505F82C}.UnitTest|Any CPU.ActiveCfg = Release|Any CPU
+		{014E9365-B4C7-4158-9D87-9A585505F82C}.UnitTest|Any CPU.Build.0 = Release|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.UnitTest_Debug|Any CPU.ActiveCfg = UnitTest_Debug|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.UnitTest_Debug|Any CPU.Build.0 = UnitTest_Debug|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.UnitTest|Any CPU.ActiveCfg = UnitTest|Any CPU
+		{1AC98420-F810-4E1A-A73D-5BEF24F4575A}.UnitTest|Any CPU.Build.0 = UnitTest|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
