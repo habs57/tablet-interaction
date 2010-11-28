@@ -8,15 +8,24 @@ namespace Pb.FeedLibrary
     /// <summary>
     /// Filler fills data
     /// </summary>
-    public abstract class Filler
+    public abstract class Filler<T> : IFiller
     {
+        protected Filler(ICollection<T> collection)
+        {
+            this.Collection = collection;
+        }
+
+        protected ICollection<T> Collection { get; private set; }
+
         /// <summary>
-        /// Fill
+        /// Fill data
         /// </summary>
         /// <param name="parser">parser</param>
         public void Fill(Parser parser)
         {
-            throw new NotImplementedException();
-        }
+            
+        }        
+
+        public abstract void OnFill(Parser parser, ICollection<T> collection);            
     }
 }

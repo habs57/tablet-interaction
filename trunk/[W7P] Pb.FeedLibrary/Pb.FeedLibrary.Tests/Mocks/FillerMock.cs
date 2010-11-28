@@ -9,10 +9,21 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
+using System.Collections.Generic;
+
 namespace Pb.FeedLibrary.Tests.Mocks
 {
-    public class FillerMock : Filler
+    public class FillerMock : Filler<int>
     {
+        public FillerMock(ICollection<int> t1)
+            : base(t1)
+        {
+            // TODO: Complete member initialization            
+        }
 
+        public override void OnFill(Parser parser, ICollection<int> collection)
+        {
+            
+        }
     }
 }

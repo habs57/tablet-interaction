@@ -11,7 +11,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Provider_ConstructorTest()
         {
-            var provider = new ProviderMock(new Uri("rss://"));            
+            var provider = new ProviderMock(new Uri("rss://"), new FillerMock(null));            
             Assert.IsNotNull(provider);
             Assert.AreEqual<string>(new Uri("rss://").AbsolutePath, provider.Uri.AbsolutePath); 
         }        
@@ -19,11 +19,12 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Provider_RequestMethodTest()
         {
-            var provider = new ProviderMock(new Uri("rss://"));
+            var filler = new FillerMock(null);
+            var provider = new ProviderMock(new Uri("rss://"), filler);
             provider.RequestDelegate = new Action<Provider>(p => { Assert.AreEqual<Provider>(provider, p); });
             Assert.IsTrue(provider.Request());
 
-            var false_provider = new ProviderMock(null);
+            var false_provider = new ProviderMock(null, new FillerMock(null));
             Assert.IsFalse(false_provider.Request());
         }        
     }

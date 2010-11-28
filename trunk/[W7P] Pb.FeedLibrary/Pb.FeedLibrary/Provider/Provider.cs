@@ -19,10 +19,17 @@ namespace Pb.FeedLibrary
         /// Provider Contstrutor
         /// </summary>
         /// <param name="uri">Uri to get Feeds</param>
-        public Provider(Uri uri)
+        /// <param name="filler">filler that fill feed data to other object</param>
+        protected Provider(Uri uri, IFiller filler)
         {
+            if (filler == null)
+            {
+                throw new ArgumentNullException("filler");
+            }
+
             // TODO: Complete member initialization
             this.Uri = uri;
+            this.Filler = filler;
         }
 
         /// <summary>
@@ -52,13 +59,34 @@ namespace Pb.FeedLibrary
         }
 
         /// <summary>
+        /// Called when parser has to be created         
+        /// </summary>
+        /// <returns>Parser object</returns>
+        protected abstract Parser OnCreateParser();
+
+        private Parser _Parser = null;
+        /// <summary>
         /// Parser that parse feed data
         /// </summary>
-        public abstract Parser Parser { get; }
-
+        public Parser Parser 
+        {
+            get
+            {
+                if (_Parser == null)
+                {
+                    _Parser = this.OnCreateParser();
+                }
+                return _Parser;
+            }
+        }
+        
         /// <summary>
         /// Filler that filles collection
         /// </summary>
-        public abstract Filler Filler { get; }
+        public IFiller Filler
+        {
+            get;
+            private set;
+        }
     }
 }
