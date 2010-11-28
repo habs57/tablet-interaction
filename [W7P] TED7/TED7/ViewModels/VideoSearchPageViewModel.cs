@@ -23,5 +23,10 @@ namespace TED7
         {
             this.Title = "Search";
         }
+
+        /// <summary>
+        /// A collection for ItemViewModel objects.
+        /// </summary>
+        public ObservableCollection<ItemViewModel> Items { get; private set; }
     }
 }
