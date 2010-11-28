@@ -17,7 +17,7 @@ using SimpleMVVM;
 
 namespace TED7
 {
-    public class VideoSearchPageViewModel : WindowsPhoneViewModelBase
+    public class VideoSearchPageViewModel : TED7ViewModelBase
     {
         public VideoSearchPageViewModel()
         {

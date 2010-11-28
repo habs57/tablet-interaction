@@ -11,6 +11,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 
+using System.Windows.Threading;
+
 namespace TED7
 {
     public partial class MainPage : PhoneApplicationPage
@@ -30,6 +32,12 @@ namespace TED7
         {
             if (!App.ViewModel.IsDataLoaded)
             {
+                FrameworkElement view = sender as FrameworkElement;
+                if (view != null)
+	            {
+                    App.ViewModel.Dispatcher = view.Dispatcher;		 
+	            }
+                
                 App.ViewModel.LoadData();
             }
         }
