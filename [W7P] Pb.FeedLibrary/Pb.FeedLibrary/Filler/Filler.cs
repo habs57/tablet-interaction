@@ -10,11 +10,18 @@ namespace Pb.FeedLibrary
     /// </summary>
     public abstract class Filler<T> : IFiller
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="collection">Collection to fill</param>
         protected Filler(ICollection<T> collection)
         {
             this.Collection = collection;
         }
 
+        /// <summary>
+        /// Collection that control
+        /// </summary>
         protected ICollection<T> Collection { get; private set; }
 
         /// <summary>
@@ -23,9 +30,22 @@ namespace Pb.FeedLibrary
         /// <param name="parser">parser</param>
         public void Fill(Parser parser)
         {
-            
+            if (this.Collection != null)
+            {
+                this.OnFill(parser, this.Collection);
+            }
         }        
-
-        public abstract void OnFill(Parser parser, ICollection<T> collection);            
+                
+        /// <summary>
+        /// Called when fills 
+        /// </summary>
+        /// <param name="parser">Parser to parse</param>
+        /// <param name="collection">Collection to fillups</param>
+        #if UNIT_TESTS
+        public
+        #else
+        protected 
+        #endif
+        abstract void OnFill(Parser parser, ICollection<T> collection);            
     }
 }

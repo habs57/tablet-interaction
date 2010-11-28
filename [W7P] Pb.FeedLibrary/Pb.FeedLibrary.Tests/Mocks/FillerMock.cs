@@ -21,7 +21,12 @@ namespace Pb.FeedLibrary.Tests.Mocks
             // TODO: Complete member initialization            
         }
 
-        public override void OnFill(Parser parser, ICollection<int> collection)
+        #if UNIT_TESTS
+        public
+        #else
+        protected 
+        #endif
+        override void OnFill(Parser parser, ICollection<int> collection)
         {
             
         }

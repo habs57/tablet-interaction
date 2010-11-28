@@ -29,15 +29,18 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Filler_Fill()
         {
-            ICollection<int> t1 = new ObservableCollection<int>();
+            ICollection<int> t1 = new ObservableCollection<int>() { 1, 2, 3, 4, 5 };
             Filler<int> filler = new FillerMock(t1);
 
             Parser parser = new ParserMock();
             filler.Fill(parser);
             
             //템플릿 
-            ICollection<int> t2 = new ObservableCollection<int>();
+            ICollection<int> t2 = new ObservableCollection<int>() { 1, 2, 3, 4, 5 };
             filler.OnFill(parser, t2);                       
+            
+            //Check t1 equals to t2 
+            Assert.IsTrue(t1.SequenceEqual(t2) == true);
         }
     }
 }
