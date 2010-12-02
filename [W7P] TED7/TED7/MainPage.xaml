@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:cc="clr-namespace:TED7.Controls"
     xmlns:mvvm="clr-namespace:SimpleMVVM;assembly=SimpleMVVM"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -28,30 +29,39 @@
             </controls:Panorama.Background>
  
             <!--Panorama item one-->
-            <controls:PanoramaItem Header="Video" Orientation="Horizontal">
-               <StackPanel Orientation="Horizontal">                    
-                    <StackPanel Margin="0,0,15,0">
-                        <Button x:Name="rbSearch" Content="search video" Style="{StaticResource stl_TransparentTextButton}" Click="rbSearch_Click" mvvm:CommandService.Command="{Binding NavigateToSearchPageCommand}"/>
-                        <RadioButton Content="newest release" IsChecked="true" GroupName="grpVideoCategory" Style="{StaticResource stl_TransparentRadioButton}"/>                      
+            <controls:PanoramaItem Header="Video" Orientation="Horizontal">                                                 
+                <!--Double line list with text wrapping-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                        <RadioButton Content="newest release" IsChecked="true" GroupName="grpVideoCategory" Style="{StaticResource stl_TransparentRadioButton}"/>
+                        <Button x:Name="rbSearch" Content="search video" Style="{StaticResource stl_TransparentTextButton}" Click="rbSearch_Click" mvvm:CommandService.Command="{Binding NavigateToSearchPageCommand}"/>                            
                     </StackPanel>
-                    <!--Double line list with text wrapping-->
-                    <Grid>                      
-                        <ListBox Grid.Row="1" Margin="0,0,0,0" ItemsSource="{Binding Items}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,17">
-                                        <!--Replace rectangle with image-->
-                                        <Image Source="{Binding Thumbnail}" Height="100" Width="100" Margin="12,0,9,0"/>
-                                        <StackPanel Width="311">
-                                            <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                                            <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
-                                        </StackPanel>
-                                    </StackPanel>                                    
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Grid>                    
-                </StackPanel>
+                    <ItemsControl Grid.Row="1" Width="850" Margin="0,0,0,0" ItemsSource="{Binding Items}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,0,0">
+                                    <!--Replace rectangle with image-->
+                                    <Image VerticalAlignment="Center" Source="{Binding Thumbnail}" Height="200" Width="200" Margin="5"/>
+                                    <StackPanel VerticalAlignment="Bottom" Width="200">
+                                        <Border Background="#22000000">
+                                            <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>                                            
+                                        </Border>                                        
+                                        <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>                                   
             </controls:PanoramaItem>
  
             <!--Panorama item two-->

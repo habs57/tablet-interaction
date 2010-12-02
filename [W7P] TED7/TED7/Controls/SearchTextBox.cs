@@ -12,21 +12,22 @@ using System.Windows.Shapes;
 namespace TED7.Controls
 {
     public sealed class SearchTextBox : TextBox
-    {
+    {  
+ 
         public static readonly DependencyProperty IsUpdateSourceProperty =
             DependencyProperty.Register(
             "IsUpdateSource", 
             typeof(Boolean),
-            typeof(SearchTextBox), 
-            new PropertyMetadata(false, OnPropertyChanged));
+            typeof(SearchTextBox),
+            new PropertyMetadata(false, OnIsUpdateSourcePropertyChanged));
 
-        private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        private static void OnIsUpdateSourcePropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var txt = obj as TextBox;
             if (txt == null)
                 return;
             if ((bool)e.NewValue)
-            {
+            {                
                 txt.TextChanged += SearchTextBox_TextChanged;
             }
             else
@@ -39,7 +40,9 @@ namespace TED7.Controls
         {
             get { return (bool)GetValue(IsUpdateSourceProperty); }
             set { SetValue(IsUpdateSourceProperty, value); }
-        }          
+        }
+
+        private string _InputText = null;
 
         static void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {            
@@ -47,8 +50,10 @@ namespace TED7.Controls
             var expression = txt.GetBindingExpression(TextBox.TextProperty);
             if (expression != null)
             {
-                expression.UpdateSource();
-            }                        
+                expression.UpdateSource();                
+            }
+
+            txt._InputText = txt.Text;
         }
     }
 }
