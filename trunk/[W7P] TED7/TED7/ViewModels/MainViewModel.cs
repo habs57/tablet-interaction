@@ -27,7 +27,7 @@ namespace TED7
             {
                 if (_VideoFiller == null)
                 {
-                    _VideoFiller = new TEDVideoFiller(this.Items, this.Dispatcher);
+                    _VideoFiller = new TEDVideoFiller(this.Items, this.Dispatcher, 8);
                 }
                 return _VideoFiller;
             }
@@ -98,12 +98,7 @@ namespace TED7
             }
         }
 
-        public bool IsDataLoaded
-        {
-            get;
-            private set;
-        }
-
+      
         #region Commands 
 
         #region NavigateToSearchPageCommand

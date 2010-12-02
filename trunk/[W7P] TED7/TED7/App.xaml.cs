@@ -35,6 +35,24 @@ namespace TED7
             }
         }
 
+        private static VideoSearchPageViewModel videoSearchViewModel = null;
+
+        /// <summary>
+        /// A static ViewModel used by the views to bind against.
+        /// </summary>
+        /// <returns>The VideoSearchViewModel object.</returns>
+        public static VideoSearchPageViewModel VideoSearchViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (videoSearchViewModel == null)
+                    videoSearchViewModel = new VideoSearchPageViewModel();
+
+                return videoSearchViewModel;
+            }
+        }
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>

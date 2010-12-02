@@ -83,5 +83,16 @@ namespace TED7
 	            }
             }
         }
+
+        /// <summary>
+        /// Used when data loaded
+        /// </summary>
+        public bool IsDataLoaded
+        {
+            get;
+            protected set;
+        }
+
+
     }
 }
