@@ -25,7 +25,7 @@
         <!--Panorama control-->
         <controls:Panorama Title="{Binding Title}">            
             <controls:Panorama.Background>
-                <ImageBrush ImageSource="PanoramaBackground.jpg"/>
+                <ImageBrush ImageSource="Image/PanoramaBackground.jpg"/>
             </controls:Panorama.Background>
  
             <!--Panorama item one-->
@@ -40,7 +40,7 @@
                         <RadioButton Content="newest release" IsChecked="true" GroupName="grpVideoCategory" Style="{StaticResource stl_TransparentRadioButton}"/>
                         <Button x:Name="rbSearch" Content="search video" Style="{StaticResource stl_TransparentTextButton}" Click="rbSearch_Click" mvvm:CommandService.Command="{Binding NavigateToSearchPageCommand}"/>                            
                     </StackPanel>
-                    <ItemsControl Grid.Row="1" Width="850" Margin="0,0,0,0" ItemsSource="{Binding Items}">
+                    <ItemsControl Grid.Row="1" Width="850" Margin="0" ItemsSource="{Binding VideoItems}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <toolkit:WrapPanel/>
@@ -48,15 +48,13 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="0,0,0,0">
+                                <Grid Margin="10,-10,0,0">
                                     <!--Replace rectangle with image-->
-                                    <Image VerticalAlignment="Center" Source="{Binding Thumbnail}" Height="200" Width="200" Margin="5"/>
-                                    <StackPanel VerticalAlignment="Bottom" Width="200">
-                                        <Border Background="#22000000">
-                                            <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>                                            
-                                        </Border>                                        
+                                    <Image VerticalAlignment="Center" Source="{Binding Thumbnail}" Height="200" Width="200"/>                                    
+                                    <StackPanel VerticalAlignment="Bottom" MaxWidth="200" MaxHeight="200" Background="#55000000">                                            
+                                        <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>
                                         <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}"/>
-                                    </StackPanel>
+                                    </StackPanel>                                                                            
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -68,7 +66,7 @@
             <!--Use 'Orientation="Horizontal"' to enable a panel that lays out horizontally-->
             <controls:PanoramaItem Header="Blog">
                 <!--Double line list with image placeholder and text wrapping-->
-                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Items}">
+                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding BlogItems}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,17">

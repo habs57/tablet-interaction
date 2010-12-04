@@ -13,92 +13,132 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using SimpleMVVM;
+using System.Windows.Threading;
 
 using Pb.FeedLibrary;
 
 namespace TED7
 {
+    public sealed class Lazy<T>
+    {
+        public Lazy(Func<T> initFunction)
+        {
+            this._InitFunction = initFunction;
+        }
+
+        Func<T> _InitFunction = null;
+
+        private T _Value = default(T);
+        public T Value
+        {
+            get
+            {
+                if (_Value == null)
+                {
+                    _Value = _InitFunction();
+                }
+                return _Value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Video related functions
+    /// </summary>
+    public sealed class VideoPageImplmentation
+    {
+        private Dispatcher _Dispatcher = null;
+
+        internal VideoPageImplmentation(Dispatcher dispatcher)
+        {
+            this._Dispatcher = dispatcher;
+
+            this.Items = new ObservableCollection<ItemViewModel>();
+            this.Filler = new Lazy<IFiller>(() => { return new TEDVideoFiller(this.Items, this._Dispatcher); });
+            this.Provider = new Lazy<Provider>(() => { return new TEDVideoProvider(this.Filler.Value); });
+        }
+
+        public Lazy<IFiller> Filler { get; private set; }
+        public Lazy<Provider> Provider { get; private set; }
+
+        /// <summary>
+        /// A collection for ItemViewModel objects.
+        /// </summary>            
+        public ObservableCollection<ItemViewModel> Items { get; private set; }
+    }
+
+    /// <summary>
+    /// Blog related functions 
+    /// </summary>
+    public sealed class BlogPageImplmentation
+    {
+        private Dispatcher _Dispatcher = null;
+
+        public BlogPageImplmentation(Dispatcher dispatcher)
+        {
+            this._Dispatcher = dispatcher;
+
+            this.Items = new ObservableCollection<ItemViewModel>();
+            this.Filler = new Lazy<IFiller>(() => { return new TEDBlogFiller(this.Items, this._Dispatcher); });
+            this.Provider = new Lazy<Provider>(() => { return new TEDBlogProvider(this.Filler.Value); });
+        }
+
+        public Lazy<IFiller> Filler { get; private set; }
+        public Lazy<Provider> Provider { get; private set; }
+
+        /// <summary>
+        /// A collection for ItemViewModel objects.
+        /// </summary>            
+        public ObservableCollection<ItemViewModel> Items { get; private set; }
+    }
+
     public class MainViewModel : TED7ViewModelBase
-    {       
-        private TEDVideoFiller _VideoFiller = null;
-        public TEDVideoFiller VideoFiller
+    {
+        #region Video View related functions
+
+        public ObservableCollection<ItemViewModel> VideoItems 
         {
             get
             {
-                if (_VideoFiller == null)
-                {
-                    _VideoFiller = new TEDVideoFiller(this.Items, this.Dispatcher, 8);
-                }
-                return _VideoFiller;
+                return this.VideoPageImpl.Value.Items;
             }
         }
-        
-        private TEDVideoProvider _VideoProvider = null;
-        public TEDVideoProvider VideoProvider
+
+        public Lazy<VideoPageImplmentation> VideoPageImpl
+        {
+            get;
+            private set;
+        }
+
+        #endregion Video View related functions
+
+        #region Blog View related functions    
+    
+        public ObservableCollection<ItemViewModel> BlogItems
         {
             get
             {
-                if (_VideoProvider == null)
-                {
-                    _VideoProvider = new TEDVideoProvider(this.VideoFiller);
-                }
-                return _VideoProvider;
+                return this.BlogPageImpl.Value.Items;
             }
         }
+
+        public Lazy<BlogPageImplmentation> BlogPageImpl
+        {
+            get;
+            private set;
+        }
+
+        #endregion Blog View related functions
 
         public MainViewModel()
         {
             this.ApplicationTitle = "TED 7";
             this.Title = "ted seven";
 
-            this.Items = new ObservableCollection<ItemViewModel>();
+            this.VideoPageImpl = new Lazy<VideoPageImplmentation>(() => { return new VideoPageImplmentation(this.Dispatcher); });
+            this.BlogPageImpl = new Lazy<BlogPageImplmentation>(() => { return new BlogPageImplmentation(this.Dispatcher); });
         }
-
-        /// <summary>
-        /// A collection for ItemViewModel objects.
-        /// </summary>
-        public ObservableCollection<ItemViewModel> Items { get; private set; }
-
-        private string _sampleProperty = "Sample Runtime Property Value";
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding
-        /// </summary>
-        /// <returns></returns>
-        public string SampleProperty
-        {
-            get
-            {
-                return _sampleProperty;
-            }
-            set
-            {
-                if (value != _sampleProperty)
-                {
-                    _sampleProperty = value;
-                    NotifyPropertyChanged("SampleProperty");
-                }
-            }
-        }
-
-        private string _SearchText = string.Empty;
-        public string SearchText
-        {
-            get
-            {
-                return _SearchText;
-            }
-
-            set
-            {
-                if (_SearchText != value)
-                {
-                    _SearchText = value;
-                    NotifyPropertyChanged("SearchText");
-                }
-            }
-        }
-
-      
+                      
         #region Commands 
 
         #region NavigateToSearchPageCommand
@@ -130,9 +170,10 @@ namespace TED7
         /// </summary>
         public void LoadData()
         {
-            this.FeedManager.Register(this.VideoProvider);
+            Provider videoProvider = this.VideoPageImpl.Value.Provider.Value;
 
-            this.VideoProvider.Request();
+            this.FeedManager.Register(videoProvider);
+            videoProvider.Request();
 
             this.IsDataLoaded = true;
         }
