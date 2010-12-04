@@ -90,7 +90,7 @@ namespace TED7
                     int index = 0;
                     foreach (var item in items)
                     {
-                        if (this._VisibleCount < index)
+                        if (this._VisibleCount <= index)
                         {
                             break;
                         }

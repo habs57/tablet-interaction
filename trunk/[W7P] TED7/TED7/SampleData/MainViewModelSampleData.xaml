@@ -3,16 +3,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:TED7" 
     ApplicationTitle="TED 7"
-    Title="ted seven"
-    SampleProperty="Sample Text Property Value">
-    
-    <local:MainViewModel.Items>
-        <local:ItemViewModel LineOne="design one" LineTwo="Maecenas praesent accumsan bibendum" LineThree="Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur"/>
-        <local:ItemViewModel LineOne="design two" LineTwo="Dictumst eleifend facilisi faucibus" LineThree="Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent"/>
-        <local:ItemViewModel LineOne="design three" LineTwo="Habitant inceptos interdum lobortis" LineThree="Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat"/>
-        <local:ItemViewModel LineOne="design four" LineTwo="Nascetur pharetra placerat pulvinar" LineThree="Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum"/>
-        <local:ItemViewModel LineOne="design five" LineTwo="Sagittis senectus sociosqu suscipit" LineThree="Dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis"/>
-        <local:ItemViewModel LineOne="design six" LineTwo="Torquent ultrices vehicula volutpat" LineThree="Senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend"/>
-    </local:MainViewModel.Items>
+    Title="ted seven">
+
+    <local:MainViewModel.VideoItems>
+        <local:ItemViewModel Thumbnail="http://images.ted.com/images/ted/f920f84ddf26b82f7a4376b047109288fd26e4f8_132x99.jpg" LineTwo="design one" LineOne="Maecenas praesent accumsan bibendum" LineThree="Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur"/>
+        <local:ItemViewModel Thumbnail="http://images.ted.com/images/ted/f920f84ddf26b82f7a4376b047109288fd26e4f8_132x99.jpg" LineTwo="design two" LineOne="Dictumst eleifend facilisi faucibus" LineThree="Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent"/>
+        <local:ItemViewModel Thumbnail="http://images.ted.com/images/ted/f920f84ddf26b82f7a4376b047109288fd26e4f8_132x99.jpg" LineTwo="design three" LineOne="Habitant inceptos interdum lobortis" LineThree="Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat"/>
+        <local:ItemViewModel Thumbnail="http://images.ted.com/images/ted/f920f84ddf26b82f7a4376b047109288fd26e4f8_132x99.jpg" LineTwo="design four" LineOne="Nascetur pharetra placerat pulvinar" LineThree="Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum"/>
+        <local:ItemViewModel Thumbnail="http://images.ted.com/images/ted/f920f84ddf26b82f7a4376b047109288fd26e4f8_132x99.jpg" LineTwo="design five" LineOne="Sagittis senectus sociosqu suscipit" LineThree="Dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis"/>
+        <local:ItemViewModel Thumbnail="http://images.ted.com/images/ted/f920f84ddf26b82f7a4376b047109288fd26e4f8_132x99.jpg" LineTwo="design six" LineOne="Torquent ultrices vehicula volutpat" LineThree="Senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend"/>
+        <local:ItemViewModel Thumbnail="http://images.ted.com/images/ted/f920f84ddf26b82f7a4376b047109288fd26e4f8_132x99.jpg" LineTwo="design six" LineOne="Torquent ultrices vehicula volutpat" LineThree="Senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend"/>
+        <local:ItemViewModel Thumbnail="http://images.ted.com/images/ted/f920f84ddf26b82f7a4376b047109288fd26e4f8_132x99.jpg" LineTwo="design six" LineOne="Torquent ultrices vehicula volutpat" LineThree="Senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend"/>
+    </local:MainViewModel.VideoItems>
     
 </local:MainViewModel>
