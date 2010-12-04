@@ -23,10 +23,20 @@ namespace TED7
 {
     public abstract class TED7ViewModelBase : ViewModelBase
     {
+        protected virtual void OnDispatcherLoaded(Dispatcher dispatcher)
+        {
+
+        }
+
+        private Dispatcher _Dispatcher = null;
         public Dispatcher Dispatcher
         {
-            get;
-            internal set;
+            get { return _Dispatcher; }
+            internal set 
+            { 
+                _Dispatcher = value;
+                this.OnDispatcherLoaded(_Dispatcher);
+            }
         }
 
         private static FeedManager _FeedManager = null;
