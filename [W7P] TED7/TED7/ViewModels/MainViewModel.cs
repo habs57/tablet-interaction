@@ -20,7 +20,7 @@ using Pb.FeedLibrary;
 namespace TED7
 {
     public sealed class Lazy<T>
-    {
+    {        
         public Lazy(Func<T> initFunction)
         {
             this._InitFunction = initFunction;
@@ -47,14 +47,12 @@ namespace TED7
     /// </summary>
     public sealed class VideoPageImplmentation
     {
-        private Dispatcher _Dispatcher = null;
+        public Dispatcher Dispatcher { get; internal set; }
 
-        internal VideoPageImplmentation(Dispatcher dispatcher)
+        internal VideoPageImplmentation()
         {
-            this._Dispatcher = dispatcher;
-
             this.Items = new ObservableCollection<ItemViewModel>();
-            this.Filler = new Lazy<IFiller>(() => { return new TEDVideoFiller(this.Items, this._Dispatcher); });
+            this.Filler = new Lazy<IFiller>(() => { return new TEDVideoFiller(this.Items, this.Dispatcher, 8); });
             this.Provider = new Lazy<Provider>(() => { return new TEDVideoProvider(this.Filler.Value); });
         }
 
@@ -72,14 +70,12 @@ namespace TED7
     /// </summary>
     public sealed class BlogPageImplmentation
     {
-        private Dispatcher _Dispatcher = null;
+        public Dispatcher Dispatcher { get; internal set; }
 
-        public BlogPageImplmentation(Dispatcher dispatcher)
+        public BlogPageImplmentation()
         {
-            this._Dispatcher = dispatcher;
-
             this.Items = new ObservableCollection<ItemViewModel>();
-            this.Filler = new Lazy<IFiller>(() => { return new TEDBlogFiller(this.Items, this._Dispatcher); });
+            this.Filler = new Lazy<IFiller>(() => { return new TEDBlogFiller(this.Items, this.Dispatcher); });
             this.Provider = new Lazy<Provider>(() => { return new TEDBlogProvider(this.Filler.Value); });
         }
 
@@ -135,8 +131,8 @@ namespace TED7
             this.ApplicationTitle = "TED 7";
             this.Title = "ted seven";
 
-            this.VideoPageImpl = new Lazy<VideoPageImplmentation>(() => { return new VideoPageImplmentation(this.Dispatcher); });
-            this.BlogPageImpl = new Lazy<BlogPageImplmentation>(() => { return new BlogPageImplmentation(this.Dispatcher); });
+            this.VideoPageImpl = new Lazy<VideoPageImplmentation>(() => { return new VideoPageImplmentation(); });
+            this.BlogPageImpl = new Lazy<BlogPageImplmentation>(() => { return new BlogPageImplmentation(); });
         }
                       
         #region Commands 
@@ -175,9 +171,18 @@ namespace TED7
             this.FeedManager.Register(videoProvider);
             videoProvider.Request();
 
+            Provider blogProvider = this.BlogPageImpl.Value.Provider.Value;
+
+            this.FeedManager.Register(blogProvider);
+            blogProvider.Request();
+
             this.IsDataLoaded = true;
         }
 
-
+        protected override void OnDispatcherLoaded(Dispatcher dispatcher)
+        {
+            this.BlogPageImpl.Value.Dispatcher = dispatcher;
+            this.VideoPageImpl.Value.Dispatcher = dispatcher;
+        }
     }
 }
