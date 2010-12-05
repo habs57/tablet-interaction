@@ -10,13 +10,13 @@ namespace Pb.FeedLibrary
     /// <summary>
     /// Parser for feed blog
     /// </summary>
-    public class FeedParser : Parser
+    public class AtomFeedParser : Parser
     {
         /// <summary>
-        /// Constructor of RSS Parser
+        /// Constructor of Atom Feed Parser
         /// </summary>
-        public FeedParser()   
-            : base(XName.Get("feed"))
+        public AtomFeedParser()   
+            : base(XName.Get("feed", "http://www.w3.org/2005/Atom"))
         {
 
         }

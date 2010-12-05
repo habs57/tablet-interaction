@@ -8,14 +8,14 @@ namespace Pb.FeedLibrary
     /// <summary>
     /// Provider provides Blog Feeds 
     /// </summary>
-    public class FeedProvider : Provider
+    public class AtomFeedProvider : Provider
     {        
         /// <summary>
         /// Constrcutor
         /// </summary>
         /// <param name="uri">uri of RSS feed</param>
         /// <param name="filler">filler fills collection</param>
-        public FeedProvider(Uri uri, IFiller filler)
+        public AtomFeedProvider(Uri uri, IFiller filler)
             : base(uri, filler)
         {
             
@@ -27,7 +27,7 @@ namespace Pb.FeedLibrary
         /// <returns></returns>
         protected override Parser OnCreateParser()
         {
-            return new FeedParser();
+            return new AtomFeedParser();
         }
     }
 }
