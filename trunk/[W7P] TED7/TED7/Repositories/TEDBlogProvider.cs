@@ -13,7 +13,7 @@ using Pb.FeedLibrary;
 
 namespace TED7
 {
-    public class TEDBlogProvider : FeedProvider
+    public class TEDBlogProvider : AtomFeedProvider
     {
         public TEDBlogProvider(IFiller filler)
             : base(new Uri("http://feeds.feedburner.com/tedblog"), filler) 

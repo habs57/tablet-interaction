@@ -21,7 +21,7 @@ namespace TED7
         
         protected override void OnFill(Parser parser, ICollection<ItemViewModel> collection)
         {
-            FeedParser rssParser = parser as FeedParser;
+            AtomFeedParser rssParser = parser as AtomFeedParser;
             if (rssParser == null)
             {
                 return;
@@ -43,15 +43,14 @@ namespace TED7
                     int index = 0;
                     foreach (var item in items)
                     {
-                        string thumbnail = item.Element(XName.Get("thumbnail", "http://search.yahoo.com/mrss/")).FirstAttribute.Value;
-                        string title = item.Element(XName.Get("subtitle", "http://www.itunes.com/dtds/podcast-1.0.dtd")).Value;
-                        string description = item.Element(XName.Get("author", "http://www.itunes.com/dtds/podcast-1.0.dtd")).Value;
-
+                        string title = item.Element(XName.Get("title", "http://www.w3.org/2005/Atom")).Value;
+                        var author = item.Element(XName.Get("author", "http://www.w3.org/2005/Atom"));
+                        string name = author.Element(XName.Get("name", "http://www.w3.org/2005/Atom")).Value;
+                        
                         var itemVM = new ItemViewModel()
                         {
-                            Thumbnail = thumbnail,
                             LineOne = title,
-                            LineTwo = string.Format("by {0}", description)
+                            LineTwo = name
                         };
 
                         collection.Add(itemVM);
