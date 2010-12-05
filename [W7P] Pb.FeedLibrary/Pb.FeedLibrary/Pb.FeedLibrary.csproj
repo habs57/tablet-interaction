@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Filler\IFiller.cs" />
-    <Compile Include="Parser\FeedParser.cs" />
+    <Compile Include="Parser\AtomFeedParser.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Filler\Filler.cs" />
     <Compile Include="Parser\RSSParser.cs" />
@@ -95,7 +95,7 @@
     <Compile Include="FeedManager.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Provider\FeedProvider.cs" />
+    <Compile Include="Provider\AtomFeedProvider.cs" />
     <Compile Include="Provider\Provider.cs" />
     <Compile Include="Provider\RSSProvider.cs" />
   </ItemGroup>

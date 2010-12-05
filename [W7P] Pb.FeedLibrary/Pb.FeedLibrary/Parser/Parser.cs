@@ -60,7 +60,7 @@ namespace Pb.FeedLibrary
             }
             else
             {
-                top = _Document.Descendants(this._RootName);
+                top = _Document.Descendants(this._RootName);                
             }
 
             var value = from item in top
@@ -78,12 +78,12 @@ namespace Pb.FeedLibrary
         {
             var root = this.GetRoot();
 
-            if (root == null)
+            if (root.FirstOrDefault() == null)
             {
                 return null;
             }
 
-            var value = from item in root.Descendants(XName.Get(name))
+            var value = from item in root.Descendants(XName.Get(name, _RootName.NamespaceName))
                         select item;
 
             return value;
