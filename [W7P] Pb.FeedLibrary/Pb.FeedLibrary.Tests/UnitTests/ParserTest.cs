@@ -43,7 +43,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         }
 
         [TestMethod]
-        public void Parser_FeedParseTest()
+        public void Parser_AtomFeedParserTest()
         {
             StreamResourceInfo info = Application.GetResourceStream(new Uri("UnitTests/atomfeed.xml", UriKind.Relative));
             using (var stream = info.Stream)
