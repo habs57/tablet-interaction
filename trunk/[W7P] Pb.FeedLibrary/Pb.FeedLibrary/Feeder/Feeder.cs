@@ -110,7 +110,10 @@ namespace Pb.FeedLibrary
             catch (WebException e)
             {
                 // Need to handle the exception
-                Logger.Log(e);
+                if (this.OnError != null)
+                {
+                    this.OnError(e);
+                }                                
             }
         }
 
@@ -135,7 +138,10 @@ namespace Pb.FeedLibrary
             }
             catch (WebException e)
             {
-                Logger.Log(e);
+                if (this.OnError != null)
+                {
+                    this.OnError(e);
+                }                                
             }
 
             return null;
@@ -147,6 +153,8 @@ namespace Pb.FeedLibrary
         public Uri Uri { get; set; }
 
         public Action<TextReader> OnRead { get; set; }
+
+        public Action<Exception> OnError { get; set; }
         
     }
 }

@@ -48,6 +48,11 @@ namespace Pb.FeedLibrary
                 provider.Parser.Load(r);
                 provider.Filler.Fill(provider.Parser);
             });
+
+            feeder.OnError = new Action<Exception>(err =>
+            {
+                Logger.Log(err.ToString());
+            });
            
             this.Items.Add(provider, feeder);
 
