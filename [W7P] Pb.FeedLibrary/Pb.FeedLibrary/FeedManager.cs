@@ -49,9 +49,14 @@ namespace Pb.FeedLibrary
                 provider.Filler.Fill(provider.Parser);
             });
 
-            feeder.OnError = new Action<Exception>(err =>
-            {
+            feeder.OnError = new Action<FeedErrorEventArgs>(err =>
+            {                
                 Logger.Log(err.ToString());
+
+                if (Error != null)
+                {
+                    Error(this, err);
+                }
             });
            
             this.Items.Add(provider, feeder);
@@ -101,5 +106,10 @@ namespace Pb.FeedLibrary
         {
             return this.Items.ContainsKey(provider);
         }
+
+        /// <summary>
+        /// ErrorHandler 
+        /// </summary>
+        public event EventHandler<FeedErrorEventArgs> Error;
     }
 }

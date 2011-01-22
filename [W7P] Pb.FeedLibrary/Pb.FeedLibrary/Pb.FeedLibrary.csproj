@@ -86,6 +86,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeedErrorEventArgs.cs" />
     <Compile Include="Filler\IFiller.cs" />
     <Compile Include="Parser\ItemsFeedParser.cs" />
     <Compile Include="Parser\Parser.cs" />
