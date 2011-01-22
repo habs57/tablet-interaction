@@ -72,8 +72,11 @@ namespace Pb.FeedLibrary
             }
             catch (WebException e)
             {
-                // Need to handle the exception
-                Logger.Log(e);
+                // Need to handle the exception                
+                if (this.OnError != null)
+                {
+                    this.OnError(e);
+                }                      
             }
         }
 
