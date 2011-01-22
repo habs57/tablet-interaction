@@ -75,7 +75,7 @@ namespace Pb.FeedLibrary
                 // Need to handle the exception                
                 if (this.OnError != null)
                 {
-                    this.OnError(e);
+                    this.OnError(new FeedErrorEventArgs(this.GetType().Name, e));
                 }                      
             }
         }
@@ -115,7 +115,7 @@ namespace Pb.FeedLibrary
                 // Need to handle the exception
                 if (this.OnError != null)
                 {
-                    this.OnError(e);
+                    this.OnError(new FeedErrorEventArgs(this.GetType().Name, e));
                 }                                
             }
         }
@@ -143,7 +143,7 @@ namespace Pb.FeedLibrary
             {
                 if (this.OnError != null)
                 {
-                    this.OnError(e);
+                    this.OnError(new FeedErrorEventArgs(this.GetType().Name, e));
                 }                                
             }
 
@@ -157,7 +157,7 @@ namespace Pb.FeedLibrary
 
         public Action<TextReader> OnRead { get; set; }
 
-        public Action<Exception> OnError { get; set; }
+        public Action<FeedErrorEventArgs> OnError { get; set; }
         
     }
 }
