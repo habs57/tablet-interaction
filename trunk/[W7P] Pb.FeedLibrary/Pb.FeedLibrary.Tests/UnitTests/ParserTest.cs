@@ -15,7 +15,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
         [TestMethod]
         public void Parser_ConstructorTest()
         {
-            var parser = new RSSParser();
+            var parser = ItemsFeedParser.RSSParser;
             Assert.IsNotNull(parser);
         }
 
@@ -26,7 +26,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
             using (var stream = info.Stream)
             {
                 TextReader reader = new StreamReader(stream);
-                var parser = new RSSParser(); 
+                var parser = ItemsFeedParser.RSSParser; 
 
                 //넘어온 데이터로 XDocument를 만드는지 확인
                 bool canLoad = parser.Load(reader);
@@ -49,7 +49,7 @@ namespace Pb.FeedLibrary.Tests.UnitTests
             using (var stream = info.Stream)
             {
                 TextReader reader = new StreamReader(stream);
-                var parser = new AtomFeedParser();
+                var parser = ItemsFeedParser.AtomParser;
 
                 //넘어온 데이터로 XDocument를 만드는지 확인
                 bool canLoad = parser.Load(reader);
