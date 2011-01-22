@@ -27,7 +27,7 @@ namespace Pb.FeedLibrary
         /// <returns></returns>
         protected override Parser OnCreateParser()
         {
-            return new AtomFeedParser();
+            return ItemsFeedParser.AtomParser;
         }
     }
 }

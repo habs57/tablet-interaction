@@ -87,10 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Filler\IFiller.cs" />
-    <Compile Include="Parser\AtomFeedParser.cs" />
+    <Compile Include="Parser\ItemsFeedParser.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Filler\Filler.cs" />
-    <Compile Include="Parser\RSSParser.cs" />
     <Compile Include="Feeder\Feeder.cs" />
     <Compile Include="FeedManager.cs" />
     <Compile Include="Logger.cs" />
