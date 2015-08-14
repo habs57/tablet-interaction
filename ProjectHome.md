@@ -1,0 +1,1 @@
+We design pen-finger multi-touch interaction for next-generation tablet PCs. It will be applicable to all devices using Windows 7 including Dell Latitude series. Moreover, iPad also able to use this interaction scenario.
